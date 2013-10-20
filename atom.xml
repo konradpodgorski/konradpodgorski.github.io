@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.github.io/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.github.io/"/>
-  <updated>2013-10-20T21:38:54+02:00</updated>
+  <updated>2013-10-20T21:41:45+02:00</updated>
   <id>http://konradpodgorski.github.io/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -242,9 +242,9 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[WTF of the day :D]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day/"/>
+    <link href="http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day-d/"/>
     <updated>2013-09-01T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day</id>
+    <id>http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day-d</id>
     <content type="html"><![CDATA[<p>Why bother to use forms when you can use routing!</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
