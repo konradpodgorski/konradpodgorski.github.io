@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.github.io/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.github.io/"/>
-  <updated>2013-10-20T19:18:46+02:00</updated>
+  <updated>2013-10-20T21:38:54+02:00</updated>
   <id>http://konradpodgorski.github.io/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -38,9 +38,9 @@
 ERROR: Failed to build gem native extension.
 </code></pre>
 
-<p>Guide bellow was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
+<p>Guide below was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
 
-<p>My ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
+<p>My Ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
 
 <pre><code>$sudo apt-get install ruby1.9.1-full
 </code></pre>
@@ -81,79 +81,144 @@ $sudo rake deploy
 
 <p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
 
-<pre><code>&lt;?php
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">namespace</span> <span class="nx">KP\Brand\MainBundle\Util</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="nx">KP\Brand\MainBundle\Entity\Brand</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">BrandUtil</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="sd">/**</span>
+</span><span class='line'><span class="sd">     * @param bool $withLabels</span>
+</span><span class='line'><span class="sd">     *</span>
+</span><span class='line'><span class="sd">     * @return array</span>
+</span><span class='line'><span class="sd">     */</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getAvailableLanguageCodes</span><span class="p">(</span><span class="nv">$withLabels</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$choices</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>            <span class="s1">&#39;pl&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Polish&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s1">&#39;en&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;English&#39;</span>
+</span><span class='line'>        <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nv">$withLabels</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nv">$choices</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">array_keys</span><span class="p">(</span><span class="nv">$choices</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-namespace KP\Brand\MainBundle\Util;
-
-use KP\Brand\MainBundle\Entity\Brand;
-
-class BrandUtil
-{
-
-    /**
-     * @param bool $withLabels
-     *
-     * @return array
-     */
-    public static function getAvailableLanguageCodes($withLabels = false)
-    {
-        $choices = array(
-            'pl' =&gt; 'Polish',
-            'en' =&gt; 'English'
-        );
-
-        if ($withLabels) {
-            return $choices;
-        } else {
-            return array_keys($choices);
-        }
-    }
-}
-</code></pre>
 
 <p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
 
 <p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
 
-<pre><code>&lt;?php
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">namespace</span> <span class="nx">KP\Brand\MainBundle\Form</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="nx">KP\Brand\MainBundle\Util\BrandUtil</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">BrandType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="sd">/**</span>
+</span><span class='line'><span class="sd">     * @param FormBuilderInterface $builder</span>
+</span><span class='line'><span class="sd">     * @param array $options</span>
+</span><span class='line'><span class="sd">     */</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$builder</span>
+</span><span class='line'>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;languageCode&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="s1">&#39;choice&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>                    <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Language&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="nx">BrandUtil</span><span class="o">::</span><span class="na">getAvailableLanguageCodes</span><span class="p">(</span><span class="k">true</span><span class="p">),</span>
+</span><span class='line'>                <span class="p">)</span>
+</span><span class='line'>            <span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-namespace KP\Brand\MainBundle\Form;
-
-use KP\Brand\MainBundle\Util\BrandUtil;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-class BrandType extends AbstractType
-{
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            -&gt;add('name')
-            -&gt;add(
-                'languageCode',
-                'choice',
-                array(
-                    'label' =&gt; 'Language',
-                    'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
-                )
-            );
-    }
-
-}
-</code></pre>
 
 <p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
 
-<pre><code>KP\Brand\MainBundle\Entity\Brand:
-properties:
-    languageCode:
-        - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nx">KP\Brand\MainBundle\Entity\Brand</span><span class="o">:</span>
+</span><span class='line'><span class="nx">properties</span><span class="o">:</span>
+</span><span class='line'>    <span class="nx">languageCode</span><span class="o">:</span>
+</span><span class='line'>        <span class="o">-</span> <span class="nx">Choice</span><span class="o">:</span> <span class="p">{</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">[</span><span class="nx">KP\Brand\MainBundle\Util\BrandUtil</span><span class="p">,</span> <span class="nx">getAvailableLanguageCodes</span><span class="p">]</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 ]]></content>
   </entry>
   
@@ -213,7 +278,12 @@ properties:
     <link href="http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/"/>
     <updated>2013-08-26T00:00:00+02:00</updated>
     <id>http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>To enable autocomplete in tests add to project External Libraries following path (assuming you used pear channel to install phpunit)</p>
+
+<pre><code>/usr/share/php/PHPUnit
+</code></pre>
+
+<p>Now autocomplete should work in all classes that extends \PHPUnit_Framework_TestCase</p>
 ]]></content>
   </entry>
   
@@ -222,7 +292,15 @@ properties:
     <link href="http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/"/>
     <updated>2013-08-24T00:00:00+02:00</updated>
     <id>http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>Today I thought that maybe I should upgrade my dropbox account to pro. I don’t really need these 100GB but versioning files would be nice. Especially for keeping KeePass database. Last thing I would want is to lose that.</p>
+
+<p>So I started reading terms of service and found interesting paragraph there.</p>
+
+<blockquote><p>You, and not Dropbox, are responsible for maintaining and protecting all of your stuff. Dropbox will not be liable for any loss or corruption of your stuff, or for any costs or expenses associated with backing up or restoring any of your stuff.</p></blockquote>
+
+<p><a href="https://www.dropbox.com/pricing_terms#terms">https://www.dropbox.com/pricing_terms#terms</a></p>
+
+<p>Cool, so I COULD store my backups there but if something happen it’s MY not their problem, because I could backup my files (right?) :) Where? Maybe on S3? Nope, their TOS probably covers same topic in same way. Funny world, right?</p>
 ]]></content>
   </entry>
   
@@ -231,7 +309,42 @@ properties:
     <link href="http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code/"/>
     <updated>2013-06-05T00:00:00+02:00</updated>
     <id>http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>Simple answer: use automated code inspectors with ruleset (coding standard) that is official for framework you currently use.</p>
+
+<h3>Installing Code Sniffer for PHP</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pear install PHP_CodeSniffer</span></code></pre></td></tr></table></div></figure>
+
+
+<p>DO NOT use version from other package managers because its seriously outdated at the moment and won’t work with most of IDE’s</p>
+
+<h3>Configure IDE</h3>
+
+<p>Personally I use PHP Storm, if you use other IDE unfortunately you’re on your own</p>
+
+<p><em>File &ndash;> Default Settings &ndash;> PHP &ndash;> Code Sniffer</em></p>
+
+<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/06/php-code-sniffer-configuration.png" title="php-code-sniffer-configuration" ></p>
+
+<h3>Enable in project</h3>
+
+<p>This step has to be repeated in each project, however if you for example develop only Symfony 2 applications you can set it to enabled by default in Default Settings, from this moment each project created will have this validation enabled by default.</p>
+
+<p><em>File &ndash;> Settings &ndash;> Inspections &ndash;> PHP &ndash;> PHP Code Sniffer validation</em></p>
+
+<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/06/php-code-sniffer-validation.png" title="php-code-sniffer-validation" ></p>
+
+<p>In Coding standard select ruleset you want to use</p>
+
+<h3>Ruleset for PSR-2</h3>
+
+<p><a href="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml">https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml</a></p>
+
+<h3>Ruleset for Symfony 2</h3>
+
+<p><a href="https://github.com/opensky/Symfony2-coding-standard">https://github.com/opensky/Symfony2-coding-standard</a>
+If you encounter any problem with this how to please leave a comment so I can improve it. If this post helped you let me know, it’s always nice to know that I could help someone :)</p>
 ]]></content>
   </entry>
   
@@ -240,7 +353,29 @@ properties:
     <link href="http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/"/>
     <updated>2013-04-22T00:00:00+02:00</updated>
     <id>http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl</id>
-    <content type="html"><![CDATA[
+    <content type="html"><![CDATA[<p>Jeden z klientów poprosił mnie o utworzenie dla niego osobnego konta ftp w ramach usługi hostingu na home.pl</p>
+
+<p>Proste? Nie w home.pl</p>
+
+<p>Programiści home.pl chyba nie wiedzą czym różni się radio button od checkbox buttona. Nie ma to jak wolność wyboru. Jeżeli zaznaczymy tę opcję to jedyną opcją jej odznaczenia jest wyjście z formularza lub zabawa firebugiem/web inspectorem.</p>
+
+<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/04/Panel-home.pl_.png" title="Panel home.pl" ></p>
+
+<p>Ale zaraz! dodatkowo jest to wymagane pole. Bardzo ciekawe</p>
+
+<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/04/Panel-home.pl2_.png" title="Panel home.pl2" ></p>
+
+<p>No ale dobrze, gdy już w ramach testu zgodziłem się udostępnić kontu FTP dostęp do całej zawartości serwisu WWW (cokolwiek to znaczy, chyba powinno być serwera?).</p>
+
+<p>Próbujemy się zalogować wykorzystując bezpieczne hasło wygenerowane przez panel home.pl zapisane bezpiecznie w lokalnym keyringu lub po prostu przeniesione metodą kopiuj wklej.</p>
+
+<p>Efekt</p>
+
+<p><strong>530 Login incorrect.</strong></p>
+
+<p>Teraz pewnie liczą, że poświęcę swój czas (= pieniądze), żeby im to zgłosić, a jakiś “wykwalifikowany” Pan (lub Pani) z supportu będą mi tłumaczyć jak używać FTP, nie dzięki!</p>
+
+<p>Jest tyle lepszych alternatyw dla hostingu, czemu home.pl jest taki popularny?</p>
 ]]></content>
   </entry>
   

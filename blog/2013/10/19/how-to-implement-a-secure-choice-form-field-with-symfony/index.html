@@ -9,7 +9,17 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="Create Util class for your entity, in my case entity is called &lsquo;Brand&rsquo; src/KP/Brand/MainBundle/Util/BrandUtil.php &lt;?php namespace KP\ &hellip;">
+  <meta name="description" content="Create Util class for your entity, in my case entity is called &lsquo;Brand&rsquo; src/KP/Brand/MainBundle/Util/BrandUtil.php 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -110,79 +120,144 @@
 
 <p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
 
-<pre><code>&lt;?php
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">namespace</span> <span class="nx">KP\Brand\MainBundle\Util</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="nx">KP\Brand\MainBundle\Entity\Brand</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">BrandUtil</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="sd">/**</span>
+</span><span class='line'><span class="sd">     * @param bool $withLabels</span>
+</span><span class='line'><span class="sd">     *</span>
+</span><span class='line'><span class="sd">     * @return array</span>
+</span><span class='line'><span class="sd">     */</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getAvailableLanguageCodes</span><span class="p">(</span><span class="nv">$withLabels</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$choices</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>            <span class="s1">&#39;pl&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Polish&#39;</span><span class="p">,</span>
+</span><span class='line'>            <span class="s1">&#39;en&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;English&#39;</span>
+</span><span class='line'>        <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nv">$withLabels</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nv">$choices</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>            <span class="k">return</span> <span class="nb">array_keys</span><span class="p">(</span><span class="nv">$choices</span><span class="p">);</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-namespace KP\Brand\MainBundle\Util;
-
-use KP\Brand\MainBundle\Entity\Brand;
-
-class BrandUtil
-{
-
-    /**
-     * @param bool $withLabels
-     *
-     * @return array
-     */
-    public static function getAvailableLanguageCodes($withLabels = false)
-    {
-        $choices = array(
-            'pl' =&gt; 'Polish',
-            'en' =&gt; 'English'
-        );
-
-        if ($withLabels) {
-            return $choices;
-        } else {
-            return array_keys($choices);
-        }
-    }
-}
-</code></pre>
 
 <p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
 
 <p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
 
-<pre><code>&lt;?php
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">namespace</span> <span class="nx">KP\Brand\MainBundle\Form</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">use</span> <span class="nx">KP\Brand\MainBundle\Util\BrandUtil</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
+</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">BrandType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="sd">/**</span>
+</span><span class='line'><span class="sd">     * @param FormBuilderInterface $builder</span>
+</span><span class='line'><span class="sd">     * @param array $options</span>
+</span><span class='line'><span class="sd">     */</span>
+</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">{</span>
+</span><span class='line'>        <span class="nv">$builder</span>
+</span><span class='line'>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
+</span><span class='line'>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
+</span><span class='line'>                <span class="s1">&#39;languageCode&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="s1">&#39;choice&#39;</span><span class="p">,</span>
+</span><span class='line'>                <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>                    <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Language&#39;</span><span class="p">,</span>
+</span><span class='line'>                    <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="nx">BrandUtil</span><span class="o">::</span><span class="na">getAvailableLanguageCodes</span><span class="p">(</span><span class="k">true</span><span class="p">),</span>
+</span><span class='line'>                <span class="p">)</span>
+</span><span class='line'>            <span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-namespace KP\Brand\MainBundle\Form;
-
-use KP\Brand\MainBundle\Util\BrandUtil;
-use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-class BrandType extends AbstractType
-{
-    /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
-        $builder
-            -&gt;add('name')
-            -&gt;add(
-                'languageCode',
-                'choice',
-                array(
-                    'label' =&gt; 'Language',
-                    'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
-                )
-            );
-    }
-
-}
-</code></pre>
 
 <p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
 
-<pre><code>KP\Brand\MainBundle\Entity\Brand:
-properties:
-    languageCode:
-        - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nx">KP\Brand\MainBundle\Entity\Brand</span><span class="o">:</span>
+</span><span class='line'><span class="nx">properties</span><span class="o">:</span>
+</span><span class='line'>    <span class="nx">languageCode</span><span class="o">:</span>
+</span><span class='line'>        <span class="o">-</span> <span class="nx">Choice</span><span class="o">:</span> <span class="p">{</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">[</span><span class="nx">KP\Brand\MainBundle\Util\BrandUtil</span><span class="p">,</span> <span class="nx">getAvailableLanguageCodes</span><span class="p">]</span> <span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 

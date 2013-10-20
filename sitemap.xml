@@ -10,23 +10,23 @@
         <loc>
             http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/
         </loc>
-        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+        <lastmod>2013-10-20T21:38:50+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code/</loc>
-        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+        <lastmod>2013-10-20T21:36:50+02:00</lastmod>
     </url>
     <url>
         <loc>
             http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/
         </loc>
-        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+        <lastmod>2013-10-20T21:18:49+02:00</lastmod>
     </url>
     <url>
         <loc>
             http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/
         </loc>
-        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+        <lastmod>2013-10-20T21:30:09+02:00</lastmod>
     </url>
     <url>
         <loc>
@@ -52,11 +52,11 @@
         <loc>
             http://konradpodgorski.github.io/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/
         </loc>
-        <lastmod>2013-10-20T19:18:41+02:00</lastmod>
+        <lastmod>2013-10-20T21:16:39+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu/</loc>
-        <lastmod>2013-10-20T17:05:40+02:00</lastmod>
+        <lastmod>2013-10-20T21:14:50+02:00</lastmod>
     </url>
     <url>
         <loc>
@@ -66,15 +66,15 @@
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/</loc>
-        <lastmod>2013-10-20T19:18:41+02:00</lastmod>
+        <lastmod>2013-10-20T21:38:50+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/blog/archives/</loc>
-        <lastmod>2013-10-20T19:18:41+02:00</lastmod>
+        <lastmod>2013-10-20T21:38:50+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/about-me/</loc>
-        <lastmod>2013-10-20T19:18:41+02:00</lastmod>
+        <lastmod>2013-10-20T21:38:50+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/robots.txt</loc>
@@ -82,6 +82,6 @@
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/skills/</loc>
-        <lastmod>2013-10-20T19:18:41+02:00</lastmod>
+        <lastmod>2013-10-20T21:38:50+02:00</lastmod>
     </url>
 </urlset>

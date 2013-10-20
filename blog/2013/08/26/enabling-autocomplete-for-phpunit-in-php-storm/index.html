@@ -9,8 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="To enable autocomplete in tests add to project External Libraries following path (assuming you used pear channel to install phpunit) /usr/share/php/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,7 +106,12 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>To enable autocomplete in tests add to project External Libraries following path (assuming you used pear channel to install phpunit)</p>
+
+<pre><code>/usr/share/php/PHPUnit
+</code></pre>
+
+<p>Now autocomplete should work in all classes that extends \PHPUnit_Framework_TestCase</p>
 </div>
 
 

@@ -9,8 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="Simple answer: use automated code inspectors with ruleset (coding standard) that is official for framework you currently use. Installing Code Sniffer &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,7 +106,42 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>Simple answer: use automated code inspectors with ruleset (coding standard) that is official for framework you currently use.</p>
+
+<h3>Installing Code Sniffer for PHP</h3>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pear install PHP_CodeSniffer</span></code></pre></td></tr></table></div></figure>
+
+
+<p>DO NOT use version from other package managers because its seriously outdated at the moment and won’t work with most of IDE’s</p>
+
+<h3>Configure IDE</h3>
+
+<p>Personally I use PHP Storm, if you use other IDE unfortunately you’re on your own</p>
+
+<p><em>File &ndash;> Default Settings &ndash;> PHP &ndash;> Code Sniffer</em></p>
+
+<p><img src="/wp-content/uploads/2013/06/php-code-sniffer-configuration.png" title="php-code-sniffer-configuration" ></p>
+
+<h3>Enable in project</h3>
+
+<p>This step has to be repeated in each project, however if you for example develop only Symfony 2 applications you can set it to enabled by default in Default Settings, from this moment each project created will have this validation enabled by default.</p>
+
+<p><em>File &ndash;> Settings &ndash;> Inspections &ndash;> PHP &ndash;> PHP Code Sniffer validation</em></p>
+
+<p><img src="/wp-content/uploads/2013/06/php-code-sniffer-validation.png" title="php-code-sniffer-validation" ></p>
+
+<p>In Coding standard select ruleset you want to use</p>
+
+<h3>Ruleset for PSR-2</h3>
+
+<p><a href="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml">https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml</a></p>
+
+<h3>Ruleset for Symfony 2</h3>
+
+<p><a href="https://github.com/opensky/Symfony2-coding-standard">https://github.com/opensky/Symfony2-coding-standard</a>
+If you encounter any problem with this how to please leave a comment so I can improve it. If this post helped you let me know, it’s always nice to know that I could help someone :)</p>
 </div>
 
 
