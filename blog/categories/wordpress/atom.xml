@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: wordpress | Konrad Podgórski - Web Developer]]></title>
+  <link href="http://konradpodgorski.com/blog/categories/wordpress/atom.xml" rel="self"/>
+  <link href="http://konradpodgorski.com/"/>
+  <updated>2013-10-20T22:12:02+02:00</updated>
+  <id>http://konradpodgorski.com/</id>
+  <author>
+    <name><![CDATA[Konrad Podgórski]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to change wp-content folder name in WordPress]]></title>
+    <link href="http://konradpodgorski.com/blog/2011/10/07/how-to-change-wp-content-folder-name-in-wordpress/"/>
+    <updated>2011-10-07T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.com/blog/2011/10/07/how-to-change-wp-content-folder-name-in-wordpress</id>
+    <content type="html"><![CDATA[<p>wp-content folder contains WordPress themes and plugins, or we just call them extensions, which makes your WordPress different from others.</p>
+
+<p>More or less, we all need to install some to enhance our WordPress system, just like we install softwares on our OS, but it also bring risks. Do not install any untrust extension unless you know exactly what it’s doing.We all heard about viruses and trojans, right? Although WP extensions are open source, people might not take the time to read the code line by line. On the other hand, writing secure code is a skill not every developer learns that well, it’s possible that an useful plugin become a backdoor for hackers. So, be careful to install something new.</p>
+
+<h2>Renaming wp-content folder</h2>
+
+<p>I think WP should make this step a mandatory one at the beginning, and it’s also helpful for hiding that your system is WordPress.</p>
+
+<p>Before renaming the wp-content folder, I should tell that some plugins and themes use “wp-content” directly in the code, which is not supposed. In such cases, these extensions should be fixed at first WP Widget Cache fix this in version 0.25.3, using WP_CONTENT_DIR or WP_CONTENT_URL instead.</p>
+
+<blockquote><p>To check if plugins your wordpress is using are well written and compatible with WordPress API you can run FIND function plugins and themes directory for “wp-content” term. There shouldn’t be any because plugin developers should use content_url() function or WP_CONTENT_DIR constant. Every decent coding IDE has FIND in project function.</p></blockquote>
+
+<p>Open the wp-config.php file in the root folder, and add these lines before this:</p>
+
+<p>```php</p>
+
+<pre><code>require_once ABSPATH . ‘wp-settings.php’
+</code></pre>
+
+<p>```</p>
+
+<p>normally the last line</p>
+
+<p>```php</p>
+
+<pre><code>define ('WP_CONTENT_FOLDERNAME', 'your-content');
+define ('WP_CONTENT_DIR', ABSPATH . WP_CONTENT_FOLDERNAME) ;
+define ('WP_CONTENT_URL', 'http://your-domain/'.WP_CONTENT_FOLDERNAME);
+define ('WP_PLUGIN_DIR', WP_CONTENT_DIR . '/plugins');
+define ('WP_PLUGIN_URL', WP_CONTENT_URL.'/plugins');
+</code></pre>
+
+<p>```</p>
+
+<p>Replace your-content with a new name you like, and replace your-domain with your site domain, then, you can rename “wp-content” folder to the new name.</p>
+
+<h2>Tip for theme and plugin developers</h2>
+
+<p>In your code use content_url() function instead WP_CONTENT_URL, otherwise sooner or later you or some of you clients will run into problems with SSL certificate</p>
+
+<p><a href="http://codex.wordpress.org/Function_Reference/content_url">http://codex.wordpress.org/Function_Reference/content_url</a></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -83,7 +83,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/">Nowe Zastosowanie Radio Buttona Według Programistów home.pl</a></h1>
+      <h1 class="entry-title"><a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl/">Nowe Zastosowanie Radio Buttona Według Programistów home.pl</a></h1>
     
     
       <p class="meta">
@@ -101,8 +101,8 @@
 
 <time datetime="2013-04-22T00:00:00+02:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2013</time>
         
-           | <a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/#disqus_thread"
-             data-disqus-identifier="http://konradpodgorski.com/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/">Comments</a>
+           | <a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl/">Comments</a>
         
       </p>
     
@@ -170,7 +170,541 @@
   </header>
 
 
-  <div class="entry-content">
+  <div class="entry-content"><p>This post is for my personal reference I will improve it in future.</p>
+
+<p>Create 2 folders in project web root:</p>
+
+<p>images/svg
+images/png</p>
+
+<p>Navigate to images/svg and run</p>
+
+<pre><code>for filename in `find . -regex ".*.svg"`; do `convert -background none $filename ../png/$filename.png` ; done
+</code></pre>
+
+<p>Now each file that used to be in a svg format has copy in images/png with suffix .png</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/">How to Avoid Memory Leaks in Symfony 2 Commands</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-01-18T00:00:00+01:00" pubdate data-updated="true">Jan 18<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>My recent job was to write Symfony 2 command that copy and transform enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script will be running for days or even weeks.</p>
+
+<p>I found out that when I run my newly created command for while it slowly consume more and more memory.</p>
+
+<p>It’s always nice to have method like this for monitoring memory usage.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">printMemoryUsage</span><span class="p">()</span>
+</span><span class='line'><span class="p">{</span>
+</span><span class='line'>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">output</span><span class="o">-&gt;</span><span class="na">writeln</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;Memory usage (currently) %dKB/ (max) %dKB&#39;</span><span class="p">,</span> <span class="nx">round</span><span class="p">(</span><span class="nb">memory_get_usage</span><span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">),</span> <span class="nb">memory_get_peak_usage</span><span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Right after start command used around 30MB – not much since I have 8GB right now, normally I wouldn’t even bother to optimize it more.</p>
+
+<p>But after a while it reached 40MB, 50MB and kept going, since Ubuntu by default have php memory limit in CLI set to -1 (unlimited) this script could consume whole RAM after couple of days.</p>
+
+<p><img src="/wp-content/uploads/2013/01/php-lazy-garbage-collector.png" title="php-lazy-garbage-collector" ></p>
+
+<p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but he doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nb">ini_set</span><span class="p">(</span><span class="s1">&#39;memory_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;32M&#39;</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Caused standard exhausted memory limit error, I asked myself why garbage collector didn’t clear unused objects that I could missed?</p>
+
+<p>Ok, it’s not time to be lazy and relay on g. collector, I’ve spent some time adding unset() for every object that was created. That still didn’t help :(</p>
+
+<p>After hours of debugging I’ve found 3 issues</p>
+
+<p>1st issue, lazy Garbage Collector
+If you use infinite loop like I did you should force GC to do it’s job by</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nb">gc_collect_cycles</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>2nd, dirty Entity Manager
+use clear() method once a while, it detaches doctrine objects that are not used any more.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>3rd issue, SQL Logger, this one was the worst to find
+Every time you query database SQL Logger stores information about that, normally it’s not a problem but in infinite running commands every kB counts.</p>
+
+<p>You can turn it off like this.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">)</span>
+</span><span class='line'>                <span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">();</span>
+</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span><span class="o">-&gt;</span><span class="na">getConnection</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getConfiguration</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setSQLLogger</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>If this post helped you let me know by leaving a comment, it’s always nice to know that I could help someone :)</strong></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/12/27/composer-symfony-backdoor-could-not-load-package-ztec-slash-security-active-directory/">Composer – Symfony Backdoor? Could Not Load Package Ztec/security-active_directory</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-27T00:00:00+01:00" pubdate data-updated="true">Dec 27<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/12/27/composer-symfony-backdoor-could-not-load-package-ztec-slash-security-active-directory/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/12/27/composer-symfony-backdoor-could-not-load-package-ztec-slash-security-active-directory/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today during routine production server update using capifony I got error like this</p>
+
+<pre><code>[RuntimeException]
+  Could not load package ztec/security-active_directory in http://packagist.org: [UnexpectedValueException] Could not parse version constraint v4.0-stable
+
+  [UnexpectedValueException]
+  Could not parse version constraint v4.0-stable
+Thing is we never used bundle ztec/security-active_directory and CTRL + F on project shows 0 results for this string.
+</code></pre>
+
+<p>Does anyone know why composer tries to install ztec/security-active_directory during php composer.phar install?</p>
+
+<p><strong>If you get here by Google please post your thoughts about this in comment, then maybe you could help me solve this issue by providing more information</strong></p>
+
+<p>If you want to use this bundle and get error from above it’s caused by dependency <a href="https://packagist.org/packages/adldap/adldap">https://packagist.org/packages/adldap/adldap</a> and disapered after running php composer.phar self-update</p>
+
+<p>Update #1</p>
+
+<p>Found commit that is cause of this error, but still we don’t have a clue why this bundle is loaded into our project :/</p>
+
+<p><a href="https://github.com/ztec/ZtecSecurityActiveDirectoryBundle/commit/19d2a5569e6585d498b379e21189ee307299b7ac#commitcomment-2318994">https://github.com/ztec/ZtecSecurityActiveDirectoryBundle/commit/19d2a5569e6585d498b379e21189ee307299b7ac#commitcomment-2318994</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/26/php-ini-used-by-direct-admin-panel/">php.ini Used by Direct Admin Panel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-26T00:00:00+01:00" pubdate data-updated="true">Nov 26<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/11/26/php-ini-used-by-direct-admin-panel/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/11/26/php-ini-used-by-direct-admin-panel/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Not so obvious location for php.in file that is used by Direct Admin</p>
+
+<pre><code>/usr/local/etc/php5/cgi/php.ini
+</code></pre>
+
+<p>Source:</p>
+
+<p><a href="http://help.directadmin.com/item.php?id=301">http://help.directadmin.com/item.php?id=301</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/11/15/postgresql-9-1-on-debian-6-0/">Postgresql 9.1 on Debian 6.0</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-15T00:00:00+01:00" pubdate data-updated="true">Nov 15<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/11/15/postgresql-9-1-on-debian-6-0/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/11/15/postgresql-9-1-on-debian-6-0/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p><a href="http://serverfault.com/questions/413211/cannot-install-postgres-9-1-on-a-fresh-debian-6-0">http://serverfault.com/questions/413211/cannot-install-postgres-9-1-on-a-fresh-debian-6-0</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/26/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/">Capifony Fix for Deployment on Servers With Strict Permission Settings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-26T00:00:00+02:00" pubdate data-updated="true">Jul 26<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/07/26/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/07/26/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Some servers (for instance VPS I use) doesn’t allow to run script if it’s group writeable.</p>
+
+<p>Solution is to run chmod 644 on files and chmod 755 on directories inside current release. You could use this one liner: Setting permissions for files and directories</p>
+
+<p>BUT it’s really pain in ass to do every deploy, not to mention few more seconds of downtime. To fix this add to your deploy.rb following lines</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Fix persmissions on VPS</span>
+</span><span class='line'><span class="n">after</span> <span class="s2">&quot;deploy:update_code&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">capifony_pretty_print</span> <span class="s2">&quot;--&gt; Fixing permissions&quot;</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type f -exec chmod 644 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type d -exec chmod 755 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
+</span><span class='line'>  <span class="n">capifony_puts_ok</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is sample deploy.rb file with above fix, don’t use it without thinking :&ndash;)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># deploy.rb</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:application</span><span class="p">,</span>   <span class="s2">&quot;My App&quot;</span>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:deploy_to</span><span class="p">,</span>     <span class="s2">&quot;/var/www/my-app.com&quot;</span>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:domain</span><span class="p">,</span>        <span class="s2">&quot;my-app.com&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:scm</span><span class="p">,</span>           <span class="ss">:git</span>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:repository</span><span class="p">,</span>    <span class="s2">&quot;ssh-gitrepo-domain.com:/path/to/repo.git&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">role</span>  <span class="ss">:web</span><span class="p">,</span>           <span class="n">domain</span>
+</span><span class='line'><span class="n">role</span>  <span class="ss">:app</span><span class="p">,</span>           <span class="n">domain</span>
+</span><span class='line'><span class="n">role</span>  <span class="ss">:db</span><span class="p">,</span>            <span class="n">domain</span><span class="p">,</span> <span class="ss">:primary</span> <span class="o">=&gt;</span> <span class="kp">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:use_sudo</span><span class="p">,</span>      <span class="kp">false</span>
+</span><span class='line'><span class="n">set</span>   <span class="ss">:keep_releases</span><span class="p">,</span> <span class="mi">3</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1"># Fix persmissions on VPS</span>
+</span><span class='line'><span class="n">after</span> <span class="s2">&quot;deploy:update_code&quot;</span> <span class="k">do</span>
+</span><span class='line'>  <span class="n">capifony_pretty_print</span> <span class="s2">&quot;--&gt; Fixing permissions&quot;</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type f -exec chmod 644 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
+</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type d -exec chmod 755 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
+</span><span class='line'>  <span class="n">capifony_puts_ok</span>
+</span><span class='line'><span class="k">end</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/07/13/setting-permissions-for-files-and-directories/">Setting Permissions for Files and Directories</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-07-13T00:00:00+02:00" pubdate data-updated="true">Jul 13<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/07/13/setting-permissions-for-files-and-directories/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/07/13/setting-permissions-for-files-and-directories/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recursively sets permission 644 to all files, and 755 to all directories within current location.</p>
+
+<p>One liner for my reference :)</p>
+
+<pre><code>find . -type f -exec chmod 644 {} \;; find . -type d -exec chmod 755 {} \;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2012/04/09/removing-strong-password-policy-in-windows-2008/">Removing Strong Password Policy in Windows 2008</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-09T00:00:00+02:00" pubdate data-updated="true">Apr 9<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/04/09/removing-strong-password-policy-in-windows-2008/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/04/09/removing-strong-password-policy-in-windows-2008/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>You can use gpedit.msc to change the password policy, also you can change the domain policy if you are a member of a domain to change it that way as well.</p>
+
+<p>You can run gpedit.msc by doing the following.</p>
+
+<ol>
+<li><p>click on the start menu, click run, type in gpedit.msc then press Enter.</p></li>
+<li><p>Locate the “Local Computer policy / Computer Configuration / Windows Settings / Security settings / Password Policy</p></li>
+<li><p>Change the keys you wish to change according to your existing password policies in your work place.</p></li>
+</ol>
+
+
+<p>source: <a href="http://www.experts-exchange.com/Microsoft/Development/MS-SQL-Server/SQL-Server-2005/Q_23612846.html">http://www.experts-exchange.com/Microsoft/Development/MS-SQL-Server/SQL-Server-2005/Q_23612846.html</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/">[How to] Symfony 2, Please Install the ‘intl’ Extension for Full Localization Capabilities</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-29T00:00:00+01:00" pubdate data-updated="true">Dec 29<span>th</span>, 2011</time>
+        
+           | <a href="/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Full error message</p>
+
+<pre><code>The Symfony\Component\Locale\Stub\StubNumberFormatter::parse() method’s argument $type value 2 behavior is not implemented. Please install the ‘intl’ extension for full localization capabilities.
+</code></pre>
+
+<p>To fix this install php5-intl extension</p>
+
+<h3>Ubuntu</h3>
+
+<pre><code>sudo apt-get install php5-intl
+</code></pre>
+
+<h3>Fedora/Cent OS</h3>
+
+<pre><code>sudo yum install php-intl
+</code></pre>
+
+<p>Don’t forget to restart apache2</p>
+
+<pre><code>sudo service apache2 restart
+</code></pre>
+
+<p>or</p>
+
+<pre><code>sudo service httpd restart
+</code></pre>
+
+<p>Let me know if it was helpful</p>
 </div>
   
   
@@ -179,6 +713,8 @@
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/3/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -209,7 +745,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2013/09/25/python-2-dot-7-on-centos/">Python 2.7 on Centos</a>
+        <a href="/blog/2013/09/25/python-2-7-on-centos/">Python 2.7 on Centos</a>
       </li>
     
   </ul>

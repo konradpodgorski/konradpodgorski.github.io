@@ -9,8 +9,8 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="
-">
+  <meta name="description" content="This post is for my personal reference I will improve it in future. Create 2 folders in project web root: images/svg
+images/png Navigate to images/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,7 +107,19 @@
   </header>
 
 
-<div class="entry-content">
+<div class="entry-content"><p>This post is for my personal reference I will improve it in future.</p>
+
+<p>Create 2 folders in project web root:</p>
+
+<p>images/svg
+images/png</p>
+
+<p>Navigate to images/svg and run</p>
+
+<pre><code>for filename in `find . -regex ".*.svg"`; do `convert -background none $filename ../png/$filename.png` ; done
+</code></pre>
+
+<p>Now each file that used to be in a svg format has copy in images/png with suffix .png</p>
 </div>
 
 
@@ -149,8 +161,10 @@
     
     <p class="meta">
       
+        <a class="basic-alignment left" href="/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/" title="Previous Post: How to avoid memory leaks in Symfony 2 Commands">&laquo; How to avoid memory leaks in Symfony 2 Commands</a>
       
-        <a class="basic-alignment right" href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/" title="Next Post: Nowe zastosowanie radio buttona według programistów home.pl">Nowe zastosowanie radio buttona według programistów home.pl &raquo;</a>
+      
+        <a class="basic-alignment right" href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl/" title="Next Post: Nowe zastosowanie radio buttona według programistów home.pl">Nowe zastosowanie radio buttona według programistów home.pl &raquo;</a>
       
     </p>
   </footer>
@@ -187,7 +201,7 @@
       </li>
     
       <li class="post">
-        <a href="/blog/2013/09/25/python-2-dot-7-on-centos/">Python 2.7 on Centos</a>
+        <a href="/blog/2013/09/25/python-2-7-on-centos/">Python 2.7 on Centos</a>
       </li>
     
   </ul>
