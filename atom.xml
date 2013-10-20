@@ -1,16 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[My Octopress Blog]]></title>
+  <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.github.io/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.github.io/"/>
-  <updated>2013-10-20T12:12:33+02:00</updated>
+  <updated>2013-10-20T15:56:26+02:00</updated>
   <id>http://konradpodgorski.github.io/</id>
   <author>
-    <name><![CDATA[Your Name]]></name>
+    <name><![CDATA[Konrad Podgórski]]></name>
     
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to handle Angular JS api errors using response interceptors]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/"/>
+    <updated>2013-10-08T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors</id>
+    <content type="html"><![CDATA[<p><a href="http://blog.brunoscopelliti.com/http-response-interceptors">http://blog.brunoscopelliti.com/http-response-interceptors</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[WTF of the day :D]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day/"/>
+    <updated>2013-09-01T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day</id>
+    <content type="html"><![CDATA[<p>Why bother to use forms when you can use routing!</p>
+
+<pre><code>backend_new_user:
+    pattern:        /admin/new-user/{username}/{password}/{email}
+</code></pre>
+
+<ul>
+<li>of course this is not my code.</li>
+</ul>
+
+]]></content>
+  </entry>
   
 </feed>
