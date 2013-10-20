@@ -202,6 +202,121 @@ $sudo rake deploy
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/">How to Implement a Secure Choice Form Field With Symfony</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-19T19:17:00+02:00" pubdate data-updated="true">Oct 19<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Create Util class for your entity, in my case entity is called &lsquo;Brand&rsquo;</p>
+
+<p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
+
+<pre><code>&lt;?php
+
+namespace KP\Brand\MainBundle\Util;
+
+use KP\Brand\MainBundle\Entity\Brand;
+
+class BrandUtil
+{
+
+    /**
+     * @param bool $withLabels
+     *
+     * @return array
+     */
+    public static function getAvailableLanguageCodes($withLabels = false)
+    {
+        $choices = array(
+            'pl' =&gt; 'Polish',
+            'en' =&gt; 'English'
+        );
+
+        if ($withLabels) {
+            return $choices;
+        } else {
+            return array_keys($choices);
+        }
+    }
+}
+</code></pre>
+
+<p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
+
+<p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
+
+<pre><code>&lt;?php
+
+namespace KP\Brand\MainBundle\Form;
+
+use KP\Brand\MainBundle\Util\BrandUtil;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class BrandType extends AbstractType
+{
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            -&gt;add('name')
+            -&gt;add(
+                'languageCode',
+                'choice',
+                array(
+                    'label' =&gt; 'Language',
+                    'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
+                )
+            );
+    }
+
+}
+</code></pre>
+
+<p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
+
+<pre><code>KP\Brand\MainBundle\Entity\Brand:
+properties:
+    languageCode:
+        - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">How to Handle Angular JS Api Errors Using Response Interceptors</a></h1>
     
     
@@ -485,45 +600,6 @@ $sudo rake deploy
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/">Nowe Zastosowanie Radio Buttona Według Programistów home.pl</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-22T00:00:00+02:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2013</time>
-        
-           | <a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/#disqus_thread"
-             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content">
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -547,15 +623,15 @@ $sudo rake deploy
       </li>
     
       <li class="post">
+        <a href="/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/">How to Implement a Secure Choice Form Field With Symfony</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">How to Handle Angular JS Api Errors Using Response Interceptors</a>
       </li>
     
       <li class="post">
         <a href="/blog/2013/09/25/python-2-dot-7-on-centos/">Python 2.7 on Centos</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/01/wtf-of-the-day/">WTF of the Day :D</a>
       </li>
     
   </ul>

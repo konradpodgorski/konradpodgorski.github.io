@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.github.io/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.github.io/"/>
-  <updated>2013-10-20T19:13:10+02:00</updated>
+  <updated>2013-10-20T19:18:46+02:00</updated>
   <id>http://konradpodgorski.github.io/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -69,6 +69,91 @@ $sudo rake deploy
 </code></pre>
 
 <p>Hope it&rsquo;s helpful for you, thanks</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to implement a secure choice form field with Symfony]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/"/>
+    <updated>2013-10-19T19:17:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
+    <content type="html"><![CDATA[<p>Create Util class for your entity, in my case entity is called &lsquo;Brand&rsquo;</p>
+
+<p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
+
+<pre><code>&lt;?php
+
+namespace KP\Brand\MainBundle\Util;
+
+use KP\Brand\MainBundle\Entity\Brand;
+
+class BrandUtil
+{
+
+    /**
+     * @param bool $withLabels
+     *
+     * @return array
+     */
+    public static function getAvailableLanguageCodes($withLabels = false)
+    {
+        $choices = array(
+            'pl' =&gt; 'Polish',
+            'en' =&gt; 'English'
+        );
+
+        if ($withLabels) {
+            return $choices;
+        } else {
+            return array_keys($choices);
+        }
+    }
+}
+</code></pre>
+
+<p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
+
+<p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
+
+<pre><code>&lt;?php
+
+namespace KP\Brand\MainBundle\Form;
+
+use KP\Brand\MainBundle\Util\BrandUtil;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class BrandType extends AbstractType
+{
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            -&gt;add('name')
+            -&gt;add(
+                'languageCode',
+                'choice',
+                array(
+                    'label' =&gt; 'Language',
+                    'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
+                )
+            );
+    }
+
+}
+</code></pre>
+
+<p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
+
+<pre><code>KP\Brand\MainBundle\Entity\Brand:
+properties:
+    languageCode:
+        - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
+</code></pre>
 ]]></content>
   </entry>
   
