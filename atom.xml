@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
-  <link href="http://konradpodgorski.github.io/atom.xml" rel="self"/>
-  <link href="http://konradpodgorski.github.io/"/>
-  <updated>2013-10-20T21:41:45+02:00</updated>
-  <id>http://konradpodgorski.github.io/</id>
+  <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
+  <link href="http://konradpodgorski.com/"/>
+  <updated>2013-10-20T21:45:32+02:00</updated>
+  <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to recursively download an entire website using WGET]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/10/20/download-a-whole-website-using-wget/"/>
+    <link href="http://konradpodgorski.com/blog/2013/10/20/download-a-whole-website-using-wget/"/>
     <updated>2013-10-20T18:54:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/10/20/download-a-whole-website-using-wget</id>
+    <id>http://konradpodgorski.com/blog/2013/10/20/download-a-whole-website-using-wget</id>
     <content type="html"><![CDATA[<p>Wget snippet to recursively download an entire website using WGET</p>
 
 <pre><code>wget -p http://konradpodgorski.com --recursive --no-clobber --page-requisites --html-extension --convert-links --domains konradpodgorski.com
@@ -27,9 +27,9 @@
   
   <entry>
     <title type="html"><![CDATA[Configuring Octopress on Ubuntu]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu/"/>
+    <link href="http://konradpodgorski.com/blog/2013/10/20/octopress-on-ubuntu/"/>
     <updated>2013-10-20T16:54:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu</id>
+    <id>http://konradpodgorski.com/blog/2013/10/20/octopress-on-ubuntu</id>
     <content type="html"><![CDATA[<p>How to copied from <a href="http://stackoverflow.com/a/14353864/1562884">http://stackoverflow.com/a/14353864/1562884</a> for my refference, thanks to</p>
 
 <p>Helped me with this error during configuring Octopress on Ubuntu</p>
@@ -74,9 +74,9 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[How to implement a secure choice form field with Symfony]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/"/>
+    <link href="http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/"/>
     <updated>2013-10-19T19:17:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
+    <id>http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
     <content type="html"><![CDATA[<p>Create Util class for your entity, in my case entity is called &lsquo;Brand&rsquo;</p>
 
 <p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
@@ -224,27 +224,27 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[How to handle Angular JS api errors using response interceptors]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/"/>
+    <link href="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/"/>
     <updated>2013-10-08T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors</id>
+    <id>http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors</id>
     <content type="html"><![CDATA[<p><a href="http://blog.brunoscopelliti.com/http-response-interceptors">http://blog.brunoscopelliti.com/http-response-interceptors</a></p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[Python 2.7 on Centos]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/09/25/python-2-dot-7-on-centos/"/>
+    <link href="http://konradpodgorski.com/blog/2013/09/25/python-2-dot-7-on-centos/"/>
     <updated>2013-09-25T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/09/25/python-2-dot-7-on-centos</id>
+    <id>http://konradpodgorski.com/blog/2013/09/25/python-2-dot-7-on-centos</id>
     <content type="html"><![CDATA[
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[WTF of the day :D]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day-d/"/>
+    <link href="http://konradpodgorski.com/blog/2013/09/01/wtf-of-the-day-d/"/>
     <updated>2013-09-01T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day-d</id>
+    <id>http://konradpodgorski.com/blog/2013/09/01/wtf-of-the-day-d</id>
     <content type="html"><![CDATA[<p>Why bother to use forms when you can use routing!</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -260,9 +260,9 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[Monitor your website with Status Monitor]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/08/30/monitor-your-website-with-status-monitor/"/>
+    <link href="http://konradpodgorski.com/blog/2013/08/30/monitor-your-website-with-status-monitor/"/>
     <updated>2013-08-30T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/08/30/monitor-your-website-with-status-monitor</id>
+    <id>http://konradpodgorski.com/blog/2013/08/30/monitor-your-website-with-status-monitor</id>
     <content type="html"><![CDATA[<p>Recently I launched a simple tool to help me and my colleagues monitor websites we developed.</p>
 
 <p>Its really simple and it will stay this way. You can use it for free.</p>
@@ -275,9 +275,9 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[Enabling autocomplete for PHPUnit in PHP Storm]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/"/>
+    <link href="http://konradpodgorski.com/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/"/>
     <updated>2013-08-26T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm</id>
+    <id>http://konradpodgorski.com/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm</id>
     <content type="html"><![CDATA[<p>To enable autocomplete in tests add to project External Libraries following path (assuming you used pear channel to install phpunit)</p>
 
 <pre><code>/usr/share/php/PHPUnit
@@ -289,9 +289,9 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[Dropbox for storing backups? This is not what you think]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/"/>
+    <link href="http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/"/>
     <updated>2013-08-24T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think</id>
+    <id>http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think</id>
     <content type="html"><![CDATA[<p>Today I thought that maybe I should upgrade my dropbox account to pro. I don’t really need these 100GB but versioning files would be nice. Especially for keeping KeePass database. Last thing I would want is to lose that.</p>
 
 <p>So I started reading terms of service and found interesting paragraph there.</p>
@@ -306,9 +306,9 @@ $sudo rake deploy
   
   <entry>
     <title type="html"><![CDATA[How to write better PHP code]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code/"/>
+    <link href="http://konradpodgorski.com/blog/2013/06/05/how-to-write-better-php-code/"/>
     <updated>2013-06-05T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code</id>
+    <id>http://konradpodgorski.com/blog/2013/06/05/how-to-write-better-php-code</id>
     <content type="html"><![CDATA[<p>Simple answer: use automated code inspectors with ruleset (coding standard) that is official for framework you currently use.</p>
 
 <h3>Installing Code Sniffer for PHP</h3>
@@ -325,7 +325,7 @@ $sudo rake deploy
 
 <p><em>File &ndash;> Default Settings &ndash;> PHP &ndash;> Code Sniffer</em></p>
 
-<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/06/php-code-sniffer-configuration.png" title="php-code-sniffer-configuration" ></p>
+<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/06/php-code-sniffer-configuration.png" title="php-code-sniffer-configuration" ></p>
 
 <h3>Enable in project</h3>
 
@@ -333,7 +333,7 @@ $sudo rake deploy
 
 <p><em>File &ndash;> Settings &ndash;> Inspections &ndash;> PHP &ndash;> PHP Code Sniffer validation</em></p>
 
-<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/06/php-code-sniffer-validation.png" title="php-code-sniffer-validation" ></p>
+<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/06/php-code-sniffer-validation.png" title="php-code-sniffer-validation" ></p>
 
 <p>In Coding standard select ruleset you want to use</p>
 
@@ -350,20 +350,20 @@ If you encounter any problem with this how to please leave a comment so I can im
   
   <entry>
     <title type="html"><![CDATA[Nowe zastosowanie radio buttona według programistów home.pl]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/"/>
+    <link href="http://konradpodgorski.com/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/"/>
     <updated>2013-04-22T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl</id>
+    <id>http://konradpodgorski.com/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl</id>
     <content type="html"><![CDATA[<p>Jeden z klientów poprosił mnie o utworzenie dla niego osobnego konta ftp w ramach usługi hostingu na home.pl</p>
 
 <p>Proste? Nie w home.pl</p>
 
 <p>Programiści home.pl chyba nie wiedzą czym różni się radio button od checkbox buttona. Nie ma to jak wolność wyboru. Jeżeli zaznaczymy tę opcję to jedyną opcją jej odznaczenia jest wyjście z formularza lub zabawa firebugiem/web inspectorem.</p>
 
-<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/04/Panel-home.pl_.png" title="Panel home.pl" ></p>
+<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/04/Panel-home.pl_.png" title="Panel home.pl" ></p>
 
 <p>Ale zaraz! dodatkowo jest to wymagane pole. Bardzo ciekawe</p>
 
-<p><img src="http://konradpodgorski.github.io/wp-content/uploads/2013/04/Panel-home.pl2_.png" title="Panel home.pl2" ></p>
+<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/04/Panel-home.pl2_.png" title="Panel home.pl2" ></p>
 
 <p>No ale dobrze, gdy już w ramach testu zgodziłem się udostępnić kontu FTP dostęp do całej zawartości serwisu WWW (cokolwiek to znaczy, chyba powinno być serwera?).</p>
 
@@ -381,9 +381,9 @@ If you encounter any problem with this how to please leave a comment so I can im
   
   <entry>
     <title type="html"><![CDATA[Batch conversion SVG to PNG using ImageMagick]]></title>
-    <link href="http://konradpodgorski.github.io/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/"/>
+    <link href="http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/"/>
     <updated>2013-03-14T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.github.io/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick</id>
+    <id>http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick</id>
     <content type="html"><![CDATA[
 ]]></content>
   </entry>
