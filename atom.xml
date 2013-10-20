@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-20T22:12:02+02:00</updated>
+  <updated>2013-10-20T22:27:40+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[How to recursively download an entire website using WGET]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/20/download-a-whole-website-using-wget/"/>
+    <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/"/>
     <updated>2013-10-20T18:54:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/20/download-a-whole-website-using-wget</id>
+    <id>http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget</id>
     <content type="html"><![CDATA[<p>Wget snippet to recursively download an entire website using WGET</p>
 
 <pre><code>wget -p http://konradpodgorski.com --recursive --no-clobber --page-requisites --html-extension --convert-links --domains konradpodgorski.com

@@ -115,7 +115,9 @@
         <lastmod>2013-10-20T21:14:50+02:00</lastmod>
     </url>
     <url>
-        <loc>http://konradpodgorski.com/blog/2013/10/20/download-a-whole-website-using-wget/</loc>
+        <loc>
+            http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/
+        </loc>
         <lastmod>2013-10-20T18:57:06+02:00</lastmod>
     </url>
     <url>
