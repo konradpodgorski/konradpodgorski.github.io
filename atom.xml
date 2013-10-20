@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-20T22:48:36+02:00</updated>
+  <updated>2013-10-20T22:52:14+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -28,6 +28,9 @@
  --html-extension \
  --convert-links
 </code></pre>
+
+<!-- more -->
+
 
 <p>Dump from wget &mdash;help for further reference</p>
 
