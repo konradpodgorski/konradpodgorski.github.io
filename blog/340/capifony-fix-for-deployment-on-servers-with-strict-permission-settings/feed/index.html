@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Capifony fix for deployment on servers with strict permission settings</title>
+	<atom:link href="http://konradpodgorski.com/blog/340/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/feed/" rel="self" type="application/rss+xml" />
+	<link>http://konradpodgorski.com/blog/340/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/</link>
+	<description>Personal blog about developing web applications using Symfony, Node JS and Angular JS</description>
+	<lastBuildDate>Tue, 08 Oct 2013 09:52:42 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.6.1</generator>
+	<item>
+		<title>By: Konrad Podgórski</title>
+		<link>http://konradpodgorski.com/blog/340/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/#comment-1842</link>
+		<dc:creator>Konrad Podgórski</dc:creator>
+		<pubDate>Tue, 25 Jun 2013 07:42:26 +0000</pubDate>
+		<guid isPermaLink="false">http://konradpodgorski.com/?p=340#comment-1842</guid>
+		<description><![CDATA[Hi @Damion
+
+I&#039;ve updated post. Now it&#039;s compatible  with Capifony 2.1.x+
+
+They added capifony_ prefix to the methods pretty_print and puts_ok
+
+&lt;code&gt;after &quot;deploy:update_code&quot; do
+&#160;&#160;capifony_pretty_print &quot;--&gt; Fixing permissions&quot;
+&#160;&#160;run &quot;cd #{latest_release} &amp;&amp; find . -type f -exec chmod 644 {} \\;&quot;
+&#160;&#160;run &quot;cd #{latest_release} &amp;&amp; find . -type d -exec chmod 755 {} \\;&quot;
+&#160;&#160;capifony_puts_ok
+end&lt;/code&gt;]]></description>
+		<content:encoded><![CDATA[<p>Hi @Damion</p>
+<p>I&#8217;ve updated post. Now it&#8217;s compatible  with Capifony 2.1.x+</p>
+<p>They added capifony_ prefix to the methods pretty_print and puts_ok</p>
+<p><code>after "deploy:update_code" do<br />
+&nbsp;&nbsp;capifony_pretty_print "--> Fixing permissions"<br />
+&nbsp;&nbsp;run "cd #{latest_release} &#038;&#038; find . -type f -exec chmod 644 {} \\;"<br />
+&nbsp;&nbsp;run "cd #{latest_release} &#038;&#038; find . -type d -exec chmod 755 {} \\;"<br />
+&nbsp;&nbsp;capifony_puts_ok<br />
+end</code></p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Damion</title>
+		<link>http://konradpodgorski.com/blog/340/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/#comment-1841</link>
+		<dc:creator>Damion</dc:creator>
+		<pubDate>Tue, 25 Jun 2013 02:35:50 +0000</pubDate>
+		<guid isPermaLink="false">http://konradpodgorski.com/?p=340#comment-1841</guid>
+		<description><![CDATA[I was getting an error on puts_ok also.. Took both of them out and works fine with the following:
+
+after &quot;deploy:update_code&quot; do
+  run &quot;cd #{latest_release} &amp;&amp; find . -type f -exec chmod 644 {} \\;&quot;
+  run &quot;cd #{latest_release} &amp;&amp; find . -type d -exec chmod 755 {} \\;&quot;
+end
+
+I&#039;m now a happy boy :)]]></description>
+		<content:encoded><![CDATA[<p>I was getting an error on puts_ok also.. Took both of them out and works fine with the following:</p>
+<p>after &#8220;deploy:update_code&#8221; do<br />
+  run &#8220;cd #{latest_release} &amp;&amp; find . -type f -exec chmod 644 {} \\;&#8221;<br />
+  run &#8220;cd #{latest_release} &amp;&amp; find . -type d -exec chmod 755 {} \\;&#8221;<br />
+end</p>
+<p>I&#8217;m now a happy boy <img src='http://konradpodgorski.com/wp-includes/images/smilies/icon_smile.gif' alt=':)' class='wp-smiley' /> </p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Damion</title>
+		<link>http://konradpodgorski.com/blog/340/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/#comment-1840</link>
+		<dc:creator>Damion</dc:creator>
+		<pubDate>Tue, 25 Jun 2013 01:10:48 +0000</pubDate>
+		<guid isPermaLink="false">http://konradpodgorski.com/?p=340#comment-1840</guid>
+		<description><![CDATA[Which version of capistrano are you using? I would love to have this, I have to talk to the host every deploy, very time consuming..
+
+I get:
+/Library/Ruby/Gems/1.8/gems/capistrano-2.15.4/lib/capistrano/configuration/variables.rb:122:in `method_missing&#039;: undefined method `pretty_print&#039;]]></description>
+		<content:encoded><![CDATA[<p>Which version of capistrano are you using? I would love to have this, I have to talk to the host every deploy, very time consuming..</p>
+<p>I get:<br />
+/Library/Ruby/Gems/1.8/gems/capistrano-2.15.4/lib/capistrano/configuration/variables.rb:122:in `method_missing&#8217;: undefined method `pretty_print&#8217;</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: cordoval</title>
+		<link>http://konradpodgorski.com/blog/340/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/#comment-227</link>
+		<dc:creator>cordoval</dc:creator>
+		<pubDate>Fri, 27 Jul 2012 11:50:43 +0000</pubDate>
+		<guid isPermaLink="false">http://konradpodgorski.com/?p=340#comment-227</guid>
+		<description><![CDATA[neat thanks for sharing this]]></description>
+		<content:encoded><![CDATA[<p>neat thanks for sharing this</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>

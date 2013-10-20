@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+		>
+<channel>
+	<title>Comments on: Timestampable Entity in Symfony 2.0 &#8211; 2.3</title>
+	<atom:link href="http://konradpodgorski.com/blog/249/timestampable-entity-in-symfony-2-0/feed/" rel="self" type="application/rss+xml" />
+	<link>http://konradpodgorski.com/blog/249/timestampable-entity-in-symfony-2-0/</link>
+	<description>Personal blog about developing web applications using Symfony, Node JS and Angular JS</description>
+	<lastBuildDate>Tue, 08 Oct 2013 09:52:42 +0000</lastBuildDate>
+	<sy:updatePeriod>hourly</sy:updatePeriod>
+	<sy:updateFrequency>1</sy:updateFrequency>
+	<generator>http://wordpress.org/?v=3.6.1</generator>
+	<item>
+		<title>By: Konrad Podgórski</title>
+		<link>http://konradpodgorski.com/blog/249/timestampable-entity-in-symfony-2-0/#comment-1597</link>
+		<dc:creator>Konrad Podgórski</dc:creator>
+		<pubDate>Fri, 12 Apr 2013 08:36:18 +0000</pubDate>
+		<guid isPermaLink="false">http://konradpodgorski.com/?p=249#comment-1597</guid>
+		<description><![CDATA[Hi @Sarel
+
+are you sure property is updating? PreUpdate Callback shouldn&#039;t fire if you didn&#039;t change anything. Doctrine skips this query at ORM level]]></description>
+		<content:encoded><![CDATA[<p>Hi @Sarel</p>
+<p>are you sure property is updating? PreUpdate Callback shouldn&#8217;t fire if you didn&#8217;t change anything. Doctrine skips this query at ORM level</p>
+]]></content:encoded>
+	</item>
+	<item>
+		<title>By: Sarel</title>
+		<link>http://konradpodgorski.com/blog/249/timestampable-entity-in-symfony-2-0/#comment-1595</link>
+		<dc:creator>Sarel</dc:creator>
+		<pubDate>Thu, 11 Apr 2013 20:46:58 +0000</pubDate>
+		<guid isPermaLink="false">http://konradpodgorski.com/?p=249#comment-1595</guid>
+		<description><![CDATA[This is very cool, thanks. One thing that&#039;s missing (and I can&#039;t find it anywhere yet) is that if you update an Entity, but nothing changed, the updated_at still updates to the current time.]]></description>
+		<content:encoded><![CDATA[<p>This is very cool, thanks. One thing that&#8217;s missing (and I can&#8217;t find it anywhere yet) is that if you update an Entity, but nothing changed, the updated_at still updates to the current time.</p>
+]]></content:encoded>
+	</item>
+</channel>
+</rss>

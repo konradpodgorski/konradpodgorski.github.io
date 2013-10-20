@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<!--[if IE 7]>
+<html class="ie ie7" lang="en-US" xmlns:fb="http://ogp.me/ns/fb#" xmlns:addthis="http://www.addthis.com/help/api-spec"  prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if IE 8]>
+<html class="ie ie8" lang="en-US" xmlns:fb="http://ogp.me/ns/fb#" xmlns:addthis="http://www.addthis.com/help/api-spec"  prefix="og: http://ogp.me/ns#">
+<![endif]-->
+<!--[if !(IE 7) | !(IE 8)  ]><!-->
+<html lang="en-US" xmlns:fb="http://ogp.me/ns/fb#" xmlns:addthis="http://www.addthis.com/help/api-spec"  prefix="og: http://ogp.me/ns#">
+<!--<![endif]-->
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width">
+	<title>How to implement a secure choice field with Symfony</title>
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	<link rel="pingback" href="../../../xmlrpc.php">
+	<!--[if lt IE 9]>
+	<script src="http://konradpodgorski.com/wp-content/themes/twentythirteen/js/html5.js"></script>
+	<![endif]-->
+	
+<!-- This site is optimized with the Yoast WordPress SEO plugin v1.4.15 - http://yoast.com/wordpress/seo/ -->
+<meta name="description" content="https://gist.github.com/konradpodgorski/7053983"/>
+<link rel="canonical" href="../../../index.html%3Fp=578.html" />
+<link rel="author" href="https://plus.google.com/u/0/114997465791213403444"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="How to implement a secure choice field with Symfony"/>
+<meta property="og:description" content="https://gist.github.com/konradpodgorski/7053983"/>
+<meta property="og:url" content="http://konradpodgorski.com/blog/578/implement-secure-choice-field-symfony/"/>
+<meta property="og:site_name" content="Developer Notes"/>
+<!-- / Yoast WordPress SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Developer Notes &raquo; Feed" href="../../../feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Developer Notes &raquo; Comments Feed" href="../../../comments/feed/index.html" />
+<link rel="alternate" type="application/rss+xml" title="Developer Notes &raquo; How to implement a secure choice field with Symfony Comments Feed" href="feed/index.html" />
+<link rel='stylesheet' id='output-css'  href='../../../wp-content/plugins/addthis/css/output.css%3Fver=3.6.1.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentythirteen-fonts-css'  href='http://fonts.googleapis.com/css?family=Source+Sans+Pro%3A300%2C400%2C700%2C300italic%2C400italic%2C700italic%7CBitter%3A400%2C700&amp;subset=latin%2Clatin-ext' type='text/css' media='all' />
+<link rel='stylesheet' id='genericons-css'  href='../../../wp-content/themes/twentythirteen/fonts/genericons.css%3Fver=2.09.css' type='text/css' media='all' />
+<link rel='stylesheet' id='twentythirteen-style-css'  href='../../../wp-content/themes/twentythirteen/style.css%3Fver=2013-07-18.css' type='text/css' media='all' />
+<!--[if lt IE 9]>
+<link rel='stylesheet' id='twentythirteen-ie-css'  href='http://konradpodgorski.com/wp-content/themes/twentythirteen/css/ie.css?ver=2013-07-18' type='text/css' media='all' />
+<![endif]-->
+<script type='text/javascript' src='http://konradpodgorski.com/wp-includes/js/jquery/jquery.js?ver=1.10.2'></script>
+<script type='text/javascript' src='http://konradpodgorski.com/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+<script type='text/javascript' src='../../../wp-content/plugins/wp-external-links/js/wp-external-links.js%3Fver=1.41'></script>
+<script type='text/javascript' src='http://konradpodgorski.com/wp-includes/js/comment-reply.min.js?ver=3.6.1'></script>
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="../../../xmlrpc.php%3Frsd" />
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://konradpodgorski.com/wp-includes/wlwmanifest.xml" /> 
+<meta name="generator" content="WordPress 3.6.1" />
+<link rel='shortlink' href='../../../index.html%3Fp=578.html' />
+<script type="text/javascript">/* <![CDATA[ */
+/* WP External Links Plugin */
+var wpExtLinks = { baseUrl: 'http://konradpodgorski.com', target: '_blank', excludeClass: '' };
+/* ]]> */</script>
+	<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-21178598-2']);
+  _gaq.push(['_setDomainName', 'konradpodgorski.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+
+<body class="single single-post postid-578 single-format-link single-author">
+	<div id="page" class="hfeed site">
+		<header id="masthead" class="site-header" role="banner">
+			<a class="home-link" href="../../author/konrad-podgorski/index.html" title="Developer Notes" rel="home">
+				<h1 class="site-title">Developer Notes</h1>
+				<h2 class="site-description">Personal blog about developing web applications using Symfony, Node JS and Angular JS</h2>
+			</a>
+
+			<div id="navbar" class="navbar">
+				<nav id="site-navigation" class="navigation main-navigation" role="navigation">
+					<h3 class="menu-toggle">Menu</h3>
+					<a class="screen-reader-text skip-link" href="../../../index.html%3Fp=578.html#content" title="Skip to content">Skip to content</a>
+					<div class="menu-main-container"><ul id="menu-main" class="nav-menu"><li id="menu-item-102" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-102"><a href="../../author/konrad-podgorski/index.html">Home</a></li>
+<li id="menu-item-559" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-559"><a href="../../../skills/index.html">Skills</a></li>
+<li id="menu-item-101" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-101"><a href="../../../about-me/index.html">About me</a></li>
+</ul></div>					<form role="search" method="get" class="search-form" action="../../author/konrad-podgorski/index.html">
+				<label>
+					<span class="screen-reader-text">Search for:</span>
+					<input type="search" class="search-field" placeholder="Search &hellip;" value="" name="s" title="Search for:" />
+				</label>
+				<input type="submit" class="search-submit" value="Search" />
+			</form>				</nav><!-- #site-navigation -->
+			</div><!-- #navbar -->
+		</header><!-- #masthead -->
+
+		<div id="main" class="site-main">
+	<div id="primary" class="content-area">
+		<div id="content" class="site-content" role="main">
+
+						
+				
+<article id="post-578" class="post-578 post type-post status-publish format-link hentry category-general">
+	<header class="entry-header">
+		<h1 class="entry-title">
+			<a href="https://gist.github.com/konradpodgorski/7053983" rel="external nofollow" title="" class="ext-link">How to implement a secure choice field with Symfony</a>
+		</h1>
+
+		<div class="entry-meta">
+			<span class="date"><a href="../../../index.html%3Fp=578.html" title="Permalink to How to implement a secure choice field with Symfony" rel="bookmark"><time class="entry-date" datetime="2013-10-19T11:10:29+00:00">October 19, 2013</time></a></span>					</div><!-- .entry-meta -->
+	</header><!-- .entry-header -->
+
+	<div class="entry-content">
+		<p><a href="https://gist.github.com/konradpodgorski/7053983" rel="external nofollow" title="" class="ext-link">https://gist.github.com/konradpodgorski/7053983</a></p>
+			</div><!-- .entry-content -->
+
+		<footer class="entry-meta">
+		<span class="categories-links"><a href="../../../about/general/index.html" title="View all posts in General" rel="category tag">General</a></span><span class="author vcard"><a class="url fn n" href="../../author/konrad-podgorski/index.html" title="View all posts by Konrad Podgórski" rel="author">Konrad Podgórski</a></span>			</footer><!-- .entry-meta -->
+	</article><!-- #post -->
+					<nav class="navigation post-navigation" role="navigation">
+		<h1 class="screen-reader-text">Post navigation</h1>
+		<div class="nav-links">
+
+			<a href="../../../index.html%3Fp=573.html" rel="prev"><span class="meta-nav">&larr;</span> How to handle Angular JS api errors using response interceptors</a>			
+		</div><!-- .nav-links -->
+	</nav><!-- .navigation -->
+					
+<div id="comments" class="comments-area">
+
+	
+									<div id="respond" class="comment-respond">
+				<h3 id="reply-title" class="comment-reply-title">Leave a Reply <small><a rel="nofollow" id="cancel-comment-reply-link" href="../../../index.html%3Fp=578.html#respond" style="display:none;">Cancel reply</a></small></h3>
+									<form action="http://konradpodgorski.com/wp-comments-post.php" method="post" id="commentform" class="comment-form" novalidate>
+																			<p class="comment-notes">Your email address will not be published. Required fields are marked <span class="required">*</span></p>							<p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input id="author" name="author" type="text" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" type="email" value="" size="30" aria-required='true' /></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" type="url" value="" size="30" /></p>
+												<p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" aria-required="true"></textarea></p>						<p class="form-allowed-tags">You may use these <abbr title="HyperText Markup Language">HTML</abbr> tags and attributes:  <code>&lt;a href=&quot;&quot; title=&quot;&quot;&gt; &lt;abbr title=&quot;&quot;&gt; &lt;acronym title=&quot;&quot;&gt; &lt;b&gt; &lt;blockquote cite=&quot;&quot;&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=&quot;&quot;&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=&quot;&quot;&gt; &lt;strike&gt; &lt;strong&gt; </code></p>						<p class="form-submit">
+							<input name="submit" type="submit" id="submit" value="Post Comment" />
+							<input type='hidden' name='comment_post_ID' value='578' id='comment_post_ID' />
+<input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+						</p>
+						<p style="display: none;"><input type="hidden" id="akismet_comment_nonce" name="akismet_comment_nonce" value="980fdd09dc" /></p>					</form>
+							</div><!-- #respond -->
+						
+</div><!-- #comments -->
+			
+		</div><!-- #content -->
+	</div><!-- #primary -->
+
+
+		</div><!-- #main -->
+		<footer id="colophon" class="site-footer" role="contentinfo">
+				<div id="secondary" class="sidebar-container" role="complementary">
+		<div class="widget-area">
+					<aside id="recent-posts-2" class="widget widget_recent_entries">		<h3 class="widget-title">Recent Posts</h3>		<ul>
+					<li>
+				<a href="../../../index.html%3Fp=578.html" title="How to implement a secure choice field with Symfony">How to implement a secure choice field with Symfony</a>
+						</li>
+					<li>
+				<a href="../../../index.html%3Fp=573.html" title="How to handle Angular JS api errors using response interceptors">How to handle Angular JS api errors using response interceptors</a>
+						</li>
+					<li>
+				<a href="../../../index.html%3Fp=571.html" title="Python 2.7 on Centos">Python 2.7 on Centos</a>
+						</li>
+					<li>
+				<a href="../../../index.html%3Fp=529.html" title="WTF of the day :D">WTF of the day :D</a>
+						</li>
+					<li>
+				<a href="../../../index.html%3Fp=532.html" title="Monitor your website with Status Monitor">Monitor your website with Status Monitor</a>
+						</li>
+				</ul>
+		</aside><aside id="nav_menu-3" class="widget widget_nav_menu"><div class="menu-side-menu-container"><ul id="menu-side-menu" class="menu"><li id="menu-item-560" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-560"><a href="https://github.com/konradpodgorski" rel="external nofollow" title="" class="ext-link">Github account</a></li>
+<li id="menu-item-561" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-561"><a href="https://twitter.com/konradpodgorski" rel="external nofollow" title="" class="ext-link">Twitter account</a></li>
+<li id="menu-item-562" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-562"><a href="https://plus.google.com/114997465791213403444" rel="external nofollow" title="" class="ext-link">Google+ account</a></li>
+</ul></div></aside><aside id="categories-2" class="widget widget_categories"><h3 class="widget-title">Categories</h3>		<ul>
+	<li class="cat-item cat-item-1"><a href="../../../about/general/index.html" title="general category for entries">General</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="../../../about/how-tos/index.html" title="View all posts filed under How to&#039;s">How to&#039;s</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="../../../about/javascript/index.html" title="View all posts filed under Javascript">Javascript</a>
+</li>
+	<li class="cat-item cat-item-38"><a href="../../../about/linux/index.html" title="View all posts filed under Linux">Linux</a>
+</li>
+	<li class="cat-item cat-item-59"><a href="../../../about/off-topic/index.html" title="View all posts filed under Off topic">Off topic</a>
+</li>
+	<li class="cat-item cat-item-70"><a href="../../../about/projects/index.html" title="View all posts filed under Projects">Projects</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="../../../about/references/index.html" title="View all posts filed under References">References</a>
+</li>
+	<li class="cat-item cat-item-74"><a href="../../../about/projects/status-monitor/index.html" title="View all posts filed under Status Monitor">Status Monitor</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="../../../about/symfony/index.html" title="Symfony is a PHP framework for web projects.">Symfony Development</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="../../../about/wordpress/index.html" title="View all posts filed under Wordpress">Wordpress</a>
+</li>
+		</ul>
+</aside><aside id="tag_cloud-2" class="widget widget_tag_cloud"><h3 class="widget-title">Tags</h3><div class="tagcloud"><a href='../../../tag/amazon-ec2/index.html' class='tag-link-33' title='1 topic' style='font-size: 8pt;'>amazon ec2</a>
+<a href='../../../tag/autostart/index.html' class='tag-link-34' title='1 topic' style='font-size: 8pt;'>autostart</a>
+<a href='../../../tag/capifony/index.html' class='tag-link-51' title='1 topic' style='font-size: 8pt;'>capifony</a>
+<a href='../../../tag/code-snippet/index.html' class='tag-link-4' title='1 topic' style='font-size: 8pt;'>code snippet</a>
+<a href='../../../tag/console-log/index.html' class='tag-link-29' title='1 topic' style='font-size: 8pt;'>console.log</a>
+<a href='http://konradpodgorski.com/tag/couldn%e2%80%99t-locate-driver-named-pgsql/' class='tag-link-10' title='1 topic' style='font-size: 8pt;'>Couldn’t locate driver named pgsql</a>
+<a href='../../../tag/cygwin/index.html' class='tag-link-15' title='1 topic' style='font-size: 8pt;'>cygwin</a>
+<a href='../../../tag/data-load/index.html' class='tag-link-18' title='1 topic' style='font-size: 8pt;'>data-load</a>
+<a href='../../../tag/doctrine-2-0/index.html' class='tag-link-19' title='1 topic' style='font-size: 8pt;'>Doctrine 2.0</a>
+<a href='../../../tag/file-upload/index.html' class='tag-link-22' title='1 topic' style='font-size: 8pt;'>file upload</a>
+<a href='../../../tag/forms/index.html' class='tag-link-41' title='1 topic' style='font-size: 8pt;'>forms</a>
+<a href='../../../tag/fosuserbundle/index.html' class='tag-link-39' title='1 topic' style='font-size: 8pt;'>FOSUserBundle</a>
+<a href='../../../tag/git/index.html' class='tag-link-26' title='1 topic' style='font-size: 8pt;'>git</a>
+<a href='../../../tag/git-clone/index.html' class='tag-link-27' title='1 topic' style='font-size: 8pt;'>git clone</a>
+<a href='../../../tag/git-svn/index.html' class='tag-link-11' title='1 topic' style='font-size: 8pt;'>git svn</a>
+<a href='../../../tag/httpd-service/index.html' class='tag-link-31' title='1 topic' style='font-size: 8pt;'>httpd service</a>
+<a href='../../../tag/i18n/index.html' class='tag-link-5' title='1 topic' style='font-size: 8pt;'>i18n</a>
+<a href='../../../tag/internet-explorer/index.html' class='tag-link-30' title='1 topic' style='font-size: 8pt;'>Internet Explorer</a>
+<a href='../../../tag/javascript/index.html' class='tag-link-28' title='1 topic' style='font-size: 8pt;'>Javascript</a>
+<a href='../../../tag/lamp/index.html' class='tag-link-42' title='1 topic' style='font-size: 8pt;'>lamp</a>
+<a href='../../../tag/less/index.html' class='tag-link-45' title='1 topic' style='font-size: 8pt;'>less</a>
+<a href='../../../tag/lesscss/index.html' class='tag-link-44' title='1 topic' style='font-size: 8pt;'>lesscss</a>
+<a href='../../../tag/linux-3/index.html' class='tag-link-37' title='2 topics' style='font-size: 11.6pt;'>linux</a>
+<a href='../../../tag/memory-leak/index.html' class='tag-link-55' title='1 topic' style='font-size: 8pt;'>memory leak</a>
+<a href='../../../tag/node-js/index.html' class='tag-link-35' title='1 topic' style='font-size: 8pt;'>node.js</a>
+<a href='../../../tag/nodejs/index.html' class='tag-link-43' title='2 topics' style='font-size: 11.6pt;'>nodejs</a>
+<a href='../../../tag/password-policy/index.html' class='tag-link-47' title='1 topic' style='font-size: 8pt;'>password policy</a>
+<a href='../../../tag/permissions/index.html' class='tag-link-52' title='1 topic' style='font-size: 8pt;'>permissions</a>
+<a href='../../../tag/pg_dump/index.html' class='tag-link-13' title='2 topics' style='font-size: 11.6pt;'>pg_dump</a>
+<a href='../../../tag/pg_restore/index.html' class='tag-link-14' title='1 topic' style='font-size: 8pt;'>pg_restore</a>
+<a href='../../../tag/php_fileinfo/index.html' class='tag-link-25' title='1 topic' style='font-size: 8pt;'>php_fileinfo</a>
+<a href='../../../tag/postgresql/index.html' class='tag-link-9' title='3 topics' style='font-size: 14pt;'>postgresql</a>
+<a href='../../../tag/postgresql-service/index.html' class='tag-link-32' title='1 topic' style='font-size: 8pt;'>postgresql service</a>
+<a href='../../../tag/public_html/index.html' class='tag-link-8' title='2 topics' style='font-size: 11.6pt;'>public_html</a>
+<a href='../../../tag/references/index.html' class='tag-link-20' title='1 topic' style='font-size: 8pt;'>References</a>
+<a href='../../../tag/security/index.html' class='tag-link-54' title='1 topic' style='font-size: 8pt;'>security</a>
+<a href='../../../tag/sfdoctrineguardplugin/index.html' class='tag-link-17' title='1 topic' style='font-size: 8pt;'>sfDoctrineGuardPlugin</a>
+<a href='../../../tag/symfony-3/index.html' class='tag-link-50' title='2 topics' style='font-size: 11.6pt;'>symfony</a>
+<a href='../../../tag/symfony-1-4/index.html' class='tag-link-16' title='3 topics' style='font-size: 14pt;'>symfony 1.4</a>
+<a href='../../../tag/symfony-2/index.html' class='tag-link-6' title='9 topics' style='font-size: 22pt;'>Symfony 2</a>
+<a href='../../../tag/symfony-framework/index.html' class='tag-link-24' title='2 topics' style='font-size: 11.6pt;'>Symfony Framework</a>
+<a href='../../../tag/thumbnails/index.html' class='tag-link-40' title='1 topic' style='font-size: 8pt;'>thumbnails</a>
+<a href='../../../tag/ubuntu/index.html' class='tag-link-36' title='2 topics' style='font-size: 11.6pt;'>ubuntu</a>
+<a href='../../../tag/web/index.html' class='tag-link-7' title='2 topics' style='font-size: 11.6pt;'>web</a>
+<a href='../../../tag/windows-2008/index.html' class='tag-link-48' title='1 topic' style='font-size: 8pt;'>windows 2008</a></div>
+</aside>		</div><!-- .widget-area -->
+	</div><!-- #secondary -->
+
+			<div class="site-info">
+								<a href="http://wordpress.org/" title="Semantic Personal Publishing Platform" rel="external nofollow" class="ext-link">Proudly powered by WordPress</a>
+			</div><!-- .site-info -->
+		</footer><!-- #colophon -->
+	</div><!-- #page -->
+
+	<script type="text/javascript">if (typeof(addthis_share) == "undefined"){ addthis_share = {"url_transforms":{"shorten":{"twitter":"bitly"}},"shorteners":{"bitly":""}};}
+var addthis_options = "facebook_like,google_plusone,wykop";
+var addthis_config = {"data_track_clickback":true,"data_track_addressbar":false,"data_track_textcopy":false,"ui_atversion":"300"};
+var addthis_product = 'wpp-3.5.1';
+</script><script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=5fe2dda6930acfb8279deabe908a3327"></script><script type='text/javascript' src='http://konradpodgorski.com/wp-includes/js/jquery/jquery.masonry.min.js?ver=2.1.05'></script>
+<script type='text/javascript' src='../../../wp-content/themes/twentythirteen/js/functions.js%3Fver=2013-07-18'></script>
+<!--wp_footer--></body>
+</html>

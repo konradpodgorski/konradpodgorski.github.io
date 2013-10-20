@@ -9,8 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="http://blog.brunoscopelliti.com/http-response-interceptors
-">
+  <meta name="description" content="Wget snippet to recursively download an entire website using WGET wget -p http://konradpodgorski.com --recursive --no-clobber --page-requisites -- &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -32,6 +31,18 @@
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-21178598-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
@@ -72,6 +83,125 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/blog/2013/10/20/download-a-whole-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-20T18:54:00+02:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/10/20/download-a-whole-website-using-wget/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/10/20/download-a-whole-website-using-wget/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Wget snippet to recursively download an entire website using WGET</p>
+
+<pre><code>wget -p http://konradpodgorski.com --recursive --no-clobber --page-requisites --html-extension --convert-links --domains konradpodgorski.com
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/20/octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-20T16:54:00+02:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/10/20/octopress-on-ubuntu/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>How to copied from <a href="http://stackoverflow.com/a/14353864/1562884">http://stackoverflow.com/a/14353864/1562884</a> for my refference, thanks to</p>
+
+<p>Helped me with this error during configuring Octopress on Ubuntu</p>
+
+<pre><code>Error installing RedCloth:
+ERROR: Failed to build gem native extension.
+</code></pre>
+
+<p>Guide bellow was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
+
+<p>My ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
+
+<pre><code>$sudo apt-get install ruby1.9.1-full
+</code></pre>
+
+<p>you can execute command:</p>
+
+<pre><code>$sudo update-alternatives --config ruby
+</code></pre>
+
+<p>to select the alternative ruby which you have installed. and then, execute below commands to finish the octopress deploy:</p>
+
+<pre><code>$git clone https://github.com/erizhang/octopress.git octopress
+$cd octopress/
+$sudo gem install bundler
+$sudo gem install RedCloth -v '4.2.9'
+$bundle install
+$rake install
+</code></pre>
+
+<p>below commands you can find from octopress deploy guideline page:</p>
+
+<pre><code>$rake setup_github_pages
+$sudo rake setup_github_pages
+$sudo rake generate
+$sudo rake deploy
+</code></pre>
+
+<p>Hope it&rsquo;s helpful for you, thanks</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">How to Handle Angular JS Api Errors Using Response Interceptors</a></h1>
     
     
@@ -90,12 +220,54 @@
 
 <time datetime="2013-10-08T00:00:00+02:00" pubdate data-updated="true">Oct 8<span>th</span>, 2013</time>
         
+           | <a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">Comments</a>
+        
       </p>
     
   </header>
 
 
   <div class="entry-content"><p><a href="http://blog.brunoscopelliti.com/http-response-interceptors">http://blog.brunoscopelliti.com/http-response-interceptors</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/25/python-2-dot-7-on-centos/">Python 2.7 on Centos</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-25T00:00:00+02:00" pubdate data-updated="true">Sep 25<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/09/25/python-2-dot-7-on-centos/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/09/25/python-2-dot-7-on-centos/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
 </div>
   
   
@@ -126,6 +298,9 @@
 
 <time datetime="2013-09-01T00:00:00+02:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
         
+           | <a href="/blog/2013/09/01/wtf-of-the-day/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day/">Comments</a>
+        
       </p>
     
   </header>
@@ -133,14 +308,215 @@
 
   <div class="entry-content"><p>Why bother to use forms when you can use routing!</p>
 
-<pre><code>backend_new_user:
-    pattern:        /admin/new-user/{username}/{password}/{email}
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">backend_new_user</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">/admin/new-user/{username}/{password}/{email}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<ul>
-<li>of course this is not my code.</li>
-</ul>
 
+<p>* of course this is not my code.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/30/monitor-your-website-with-status-monitor/">Monitor Your Website With Status Monitor</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-30T00:00:00+02:00" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/08/30/monitor-your-website-with-status-monitor/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/08/30/monitor-your-website-with-status-monitor/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recently I launched a simple tool to help me and my colleagues monitor websites we developed.</p>
+
+<p>Its really simple and it will stay this way. You can use it for free.</p>
+
+<p><a href="http://status.konradpodgorski.com/">http://status.konradpodgorski.com/</a></p>
+
+<p>If you like it leave a comment, or even better spread a word around you. Any help promoting tool is welcome!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/">Enabling Autocomplete for PHPUnit in PHP Storm</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-26T00:00:00+02:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/">Dropbox for Storing Backups? This Is Not What You Think</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-24T00:00:00+02:00" pubdate data-updated="true">Aug 24<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/06/05/how-to-write-better-php-code/">How to Write Better PHP Code</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-06-05T00:00:00+02:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/06/05/how-to-write-better-php-code/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/">Nowe Zastosowanie Radio Buttona Według Programistów home.pl</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-04-22T00:00:00+02:00" pubdate data-updated="true">Apr 22<span>nd</span>, 2013</time>
+        
+           | <a href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content">
 </div>
   
   
@@ -149,6 +525,8 @@
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -161,7 +539,19 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/20/download-a-whole-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/20/octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">How to Handle Angular JS Api Errors Using Response Interceptors</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/09/25/python-2-dot-7-on-centos/">Python 2.7 on Centos</a>
       </li>
     
       <li class="post">
@@ -202,6 +592,15 @@
 
 
 
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/114997465791213403444?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
 
 
   
@@ -217,7 +616,29 @@
 </footer>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'konradpodgorski';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 

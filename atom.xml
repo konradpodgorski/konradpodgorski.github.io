@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.github.io/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.github.io/"/>
-  <updated>2013-10-20T15:56:26+02:00</updated>
+  <updated>2013-10-20T19:09:30+02:00</updated>
   <id>http://konradpodgorski.github.io/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to recursively download an entire website using WGET]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/10/20/download-a-whole-website-using-wget/"/>
+    <updated>2013-10-20T18:54:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/10/20/download-a-whole-website-using-wget</id>
+    <content type="html"><![CDATA[<p>Wget snippet to recursively download an entire website using WGET</p>
+
+<pre><code>wget -p http://konradpodgorski.com --recursive --no-clobber --page-requisites --html-extension --convert-links --domains konradpodgorski.com
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Configuring Octopress on Ubuntu]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu/"/>
+    <updated>2013-10-20T16:54:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>How to copied from <a href="http://stackoverflow.com/a/14353864/1562884">http://stackoverflow.com/a/14353864/1562884</a> for my refference, thanks to</p>
+
+<p>Helped me with this error during configuring Octopress on Ubuntu</p>
+
+<pre><code>Error installing RedCloth:
+ERROR: Failed to build gem native extension.
+</code></pre>
+
+<p>Guide bellow was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
+
+<p>My ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
+
+<pre><code>$sudo apt-get install ruby1.9.1-full
+</code></pre>
+
+<p>you can execute command:</p>
+
+<pre><code>$sudo update-alternatives --config ruby
+</code></pre>
+
+<p>to select the alternative ruby which you have installed. and then, execute below commands to finish the octopress deploy:</p>
+
+<pre><code>$git clone https://github.com/erizhang/octopress.git octopress
+$cd octopress/
+$sudo gem install bundler
+$sudo gem install RedCloth -v '4.2.9'
+$bundle install
+$rake install
+</code></pre>
+
+<p>below commands you can find from octopress deploy guideline page:</p>
+
+<pre><code>$rake setup_github_pages
+$sudo rake setup_github_pages
+$sudo rake generate
+$sudo rake deploy
+</code></pre>
+
+<p>Hope it&rsquo;s helpful for you, thanks</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to handle Angular JS api errors using response interceptors]]></title>
@@ -23,20 +82,89 @@
   </entry>
   
   <entry>
+    <title type="html"><![CDATA[Python 2.7 on Centos]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/09/25/python-2-dot-7-on-centos/"/>
+    <updated>2013-09-25T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/09/25/python-2-dot-7-on-centos</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[WTF of the day :D]]></title>
     <link href="http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day/"/>
     <updated>2013-09-01T00:00:00+02:00</updated>
     <id>http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day</id>
     <content type="html"><![CDATA[<p>Why bother to use forms when you can use routing!</p>
 
-<pre><code>backend_new_user:
-    pattern:        /admin/new-user/{username}/{password}/{email}
-</code></pre>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">backend_new_user</span><span class="p-Indicator">:</span>
+</span><span class='line'>    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">/admin/new-user/{username}/{password}/{email}</span>
+</span></code></pre></td></tr></table></div></figure>
 
-<ul>
-<li>of course this is not my code.</li>
-</ul>
 
+<p>* of course this is not my code.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Monitor your website with Status Monitor]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/08/30/monitor-your-website-with-status-monitor/"/>
+    <updated>2013-08-30T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/08/30/monitor-your-website-with-status-monitor</id>
+    <content type="html"><![CDATA[<p>Recently I launched a simple tool to help me and my colleagues monitor websites we developed.</p>
+
+<p>Its really simple and it will stay this way. You can use it for free.</p>
+
+<p><a href="http://status.konradpodgorski.com/">http://status.konradpodgorski.com/</a></p>
+
+<p>If you like it leave a comment, or even better spread a word around you. Any help promoting tool is welcome!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Enabling autocomplete for PHPUnit in PHP Storm]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/"/>
+    <updated>2013-08-26T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dropbox for storing backups? This is not what you think]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/"/>
+    <updated>2013-08-24T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to write better PHP code]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code/"/>
+    <updated>2013-06-05T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Nowe zastosowanie radio buttona według programistów home.pl]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/"/>
+    <updated>2013-04-22T00:00:00+02:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Batch conversion SVG to PNG using ImageMagick]]></title>
+    <link href="http://konradpodgorski.github.io/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/"/>
+    <updated>2013-03-14T00:00:00+01:00</updated>
+    <id>http://konradpodgorski.github.io/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick</id>
+    <content type="html"><![CDATA[
 ]]></content>
   </entry>
   

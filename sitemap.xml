@@ -1,25 +1,81 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
+        <loc>
+            http://konradpodgorski.github.io/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/
+        </loc>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://konradpodgorski.github.io/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-dot-pl/
+        </loc>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://konradpodgorski.github.io/blog/2013/06/05/how-to-write-better-php-code/</loc>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://konradpodgorski.github.io/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/
+        </loc>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://konradpodgorski.github.io/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/
+        </loc>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://konradpodgorski.github.io/blog/2013/08/30/monitor-your-website-with-status-monitor/
+        </loc>
+        <lastmod>2013-10-20T18:12:39+02:00</lastmod>
+    </url>
+    <url>
         <loc>http://konradpodgorski.github.io/blog/2013/09/01/wtf-of-the-day/</loc>
-        <lastmod>2013-10-20T15:55:30+02:00</lastmod>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://konradpodgorski.github.io/blog/2013/09/25/python-2-dot-7-on-centos/</loc>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
     </url>
     <url>
         <loc>
             http://konradpodgorski.github.io/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/
         </loc>
-        <lastmod>2013-10-20T12:31:42+02:00</lastmod>
+        <lastmod>2013-10-20T18:15:59+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://konradpodgorski.github.io/blog/2013/10/20/octopress-on-ubuntu/</loc>
+        <lastmod>2013-10-20T17:05:40+02:00</lastmod>
+    </url>
+    <url>
+        <loc>
+            http://konradpodgorski.github.io/blog/2013/10/20/download-a-whole-website-using-wget/
+        </loc>
+        <lastmod>2013-10-20T18:57:06+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/</loc>
-        <lastmod>2013-10-20T15:55:30+02:00</lastmod>
+        <lastmod>2013-10-20T18:57:06+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/blog/archives/</loc>
-        <lastmod>2013-10-20T15:55:30+02:00</lastmod>
+        <lastmod>2013-10-20T18:57:06+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://konradpodgorski.github.io/about-me/</loc>
+        <lastmod>2013-10-20T18:59:07+02:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.github.io/robots.txt</loc>
         <lastmod>2013-10-20T12:09:41+02:00</lastmod>
+    </url>
+    <url>
+        <loc>http://konradpodgorski.github.io/skills/</loc>
+        <lastmod>2013-10-20T18:58:40+02:00</lastmod>
     </url>
 </urlset>
