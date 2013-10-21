@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-21T09:48:32+02:00</updated>
+  <updated>2013-10-21T09:49:39+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -109,6 +109,53 @@ disqus_show_comment_count: true
 <h3>That&rsquo;s it</h3>
 
 <p>for now</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Setup Octopress on Ubuntu]]></title>
+    <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/"/>
+    <updated>2013-10-20T16:54:00+02:00</updated>
+    <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
+    <content type="html"><![CDATA[<p>Guide was copied from <a href="http://stackoverflow.com/a/14353864/1562884">http://stackoverflow.com/a/14353864/1562884</a> for my reference</p>
+
+<p>Helped me with this error during configuring Octopress on Ubuntu</p>
+
+<pre><code>Error installing RedCloth:
+ERROR: Failed to build gem native extension.
+</code></pre>
+
+<p>Guide below was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
+
+<p>My Ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
+
+<pre><code>$sudo apt-get install ruby1.9.1-full
+</code></pre>
+
+<p>you can execute command:</p>
+
+<pre><code>$sudo update-alternatives --config ruby
+</code></pre>
+
+<p>to select the alternative ruby which you have installed. and then, execute below commands to finish the octopress deploy:</p>
+
+<pre><code>$git clone https://github.com/erizhang/octopress.git octopress
+$cd octopress/
+$sudo gem install bundler
+$sudo gem install RedCloth -v '4.2.9'
+$bundle install
+$rake install
+</code></pre>
+
+<p>below commands you can find from octopress deploy guideline page:</p>
+
+<pre><code>$rake setup_github_pages
+$sudo rake setup_github_pages
+$sudo rake generate
+$sudo rake deploy
+</code></pre>
+
+<p>Hope it&rsquo;s helpful for you, thanks</p>
 ]]></content>
   </entry>
   

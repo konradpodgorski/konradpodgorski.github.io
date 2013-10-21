@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-21T09:48:32+02:00</updated>
+  <updated>2013-10-21T09:49:39+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -302,7 +302,7 @@ Recursive accept/reject:
   </entry>
   
   <entry>
-    <title type="html"><![CDATA[Configuring Octopress on Ubuntu]]></title>
+    <title type="html"><![CDATA[How to Setup Octopress on Ubuntu]]></title>
     <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/"/>
     <updated>2013-10-20T16:54:00+02:00</updated>
     <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
