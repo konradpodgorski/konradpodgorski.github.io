@@ -9,7 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="Wget snippet to recursively download an entire website using WGET wget http://example.com \ --domains example.com \ --recursive \ --page-requisites &hellip;">
+  <meta name="description" content="Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting Reason for this change is probably the same as yours &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -85,6 +85,59 @@
       
   <header>
     
+      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">How I Migrated My Blog From Wordpress to Octopress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-10-21T08:40:00+02:00" datetime="2013-10-21T08:40:00+02:00" pubdate data-updated="true">Oct 21<span>st</span>, 2013</time>
+        
+           | <a href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting</p>
+
+<p>Reason for this change is probably the same as yours, person who reads this</p>
+
+<ul>
+<li>Wordpress sucks at formatting code</li>
+<li>Most of my &ldquo;notes&rdquo; and &ldquo;readme&rdquo; from various projects are markdown files, so if I decided to publish one of them, copy paste wasn&rsquo;t enough</li>
+<li>3rd, and probably most important. &ldquo;Hey, we are programmers&rdquo; we can&rsquo;t use Wordpress ;&ndash;)</li>
+</ul>
+
+
+</div>
+  
+  
+    <footer>
+      <a rel="full-article" href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">Read on &rarr;</a>
+    </footer>
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></h1>
     
     
@@ -138,7 +191,7 @@
       
   <header>
     
-      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/10/20/octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a></h1>
+      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a></h1>
     
     
       <p class="meta">
@@ -156,8 +209,8 @@
 
 <time itemprop="datePublished" content="2013-10-20T16:54:00+02:00" datetime="2013-10-20T16:54:00+02:00" pubdate data-updated="true">Oct 20<span>th</span>, 2013</time>
         
-           | <a href="/blog/2013/10/20/octopress-on-ubuntu/#disqus_thread"
-             data-disqus-identifier="http://konradpodgorski.com/blog/2013/10/20/octopress-on-ubuntu/">Comments</a>
+           | <a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">Comments</a>
         
       </p>
     
@@ -654,80 +707,6 @@ $sudo rake deploy
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/06/05/how-to-write-better-php-code/">How to Write Better PHP Code</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-06-05T00:00:00+02:00" datetime="2013-06-05T00:00:00+02:00" pubdate data-updated="true">Jun 5<span>th</span>, 2013</time>
-        
-           | <a href="/blog/2013/06/05/how-to-write-better-php-code/#disqus_thread"
-             data-disqus-identifier="http://konradpodgorski.com/blog/2013/06/05/how-to-write-better-php-code/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Simple answer: use automated code inspectors with ruleset (coding standard) that is official for framework you currently use.</p>
-
-<h3>Installing Code Sniffer for PHP</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pear install PHP_CodeSniffer</span></code></pre></td></tr></table></div></figure>
-
-
-<p>DO NOT use version from other package managers because its seriously outdated at the moment and won’t work with most of IDE’s</p>
-
-<h3>Configure IDE</h3>
-
-<p>Personally I use PHP Storm, if you use other IDE unfortunately you’re on your own</p>
-
-<p><em>File &ndash;> Default Settings &ndash;> PHP &ndash;> Code Sniffer</em></p>
-
-<p><img src="/wp-content/uploads/2013/06/php-code-sniffer-configuration.png" title="php-code-sniffer-configuration" ></p>
-
-<h3>Enable in project</h3>
-
-<p>This step has to be repeated in each project, however if you for example develop only Symfony 2 applications you can set it to enabled by default in Default Settings, from this moment each project created will have this validation enabled by default.</p>
-
-<p><em>File &ndash;> Settings &ndash;> Inspections &ndash;> PHP &ndash;> PHP Code Sniffer validation</em></p>
-
-<p><img src="/wp-content/uploads/2013/06/php-code-sniffer-validation.png" title="php-code-sniffer-validation" ></p>
-
-<p>In Coding standard select ruleset you want to use</p>
-
-<h3>Ruleset for PSR-2</h3>
-
-<p><a href="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml">https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml</a></p>
-
-<h3>Ruleset for Symfony 2</h3>
-
-<p><a href="https://github.com/opensky/Symfony2-coding-standard">https://github.com/opensky/Symfony2-coding-standard</a>
-If you encounter any problem with this how to please leave a comment so I can improve it. If this post helped you let me know, it’s always nice to know that I could help someone :)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -743,11 +722,15 @@ If you encounter any problem with this how to please leave a comment so I can im
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">How I Migrated My Blog From Wordpress to Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/10/20/octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a>
+        <a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a>
       </li>
     
       <li class="post">
@@ -756,10 +739,6 @@ If you encounter any problem with this how to please leave a comment so I can im
     
       <li class="post">
         <a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">How to Handle Angular JS Api Errors Using Response Interceptors</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/25/python-2-7-on-centos/">Python 2.7 on Centos</a>
       </li>
     
   </ul>

@@ -9,11 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="I presume you’re using FOSUserBundle with Symfony2, make sure you added to app/config/security.yml these lines 1
-2
-3
-4
-# app/config/security.yml &hellip;">
+  <meta name="description" content="Full error message The Symfony\Component\Locale\Stub\StubNumberFormatter::parse() method’s argument $type value 2 behavior is not implemented. Please &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -83,6 +79,72 @@
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" itemprop="name" ><a href="/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/">[How to] Symfony 2, Please Install the ‘intl’ Extension for Full Localization Capabilities</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-12-29T00:00:00+01:00" datetime="2011-12-29T00:00:00+01:00" pubdate data-updated="true">Dec 29<span>th</span>, 2011</time>
+        
+           | <a href="/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Full error message</p>
+
+<pre><code>The Symfony\Component\Locale\Stub\StubNumberFormatter::parse() method’s argument $type value 2 behavior is not implemented. Please install the ‘intl’ extension for full localization capabilities.
+</code></pre>
+
+<p>To fix this install php5-intl extension</p>
+
+<h3>Ubuntu</h3>
+
+<pre><code>sudo apt-get install php5-intl
+</code></pre>
+
+<h3>Fedora/Cent OS</h3>
+
+<pre><code>sudo yum install php-intl
+</code></pre>
+
+<p>Don’t forget to restart apache2</p>
+
+<pre><code>sudo service apache2 restart
+</code></pre>
+
+<p>or</p>
+
+<pre><code>sudo service httpd restart
+</code></pre>
+
+<p>Let me know if it was helpful</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -264,11 +326,15 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">How I Migrated My Blog From Wordpress to Octopress</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a>
       </li>
     
       <li class="post">
-        <a href="/blog/2013/10/20/octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a>
+        <a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">Configuring Octopress on Ubuntu</a>
       </li>
     
       <li class="post">
@@ -277,10 +343,6 @@
     
       <li class="post">
         <a href="/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/">How to Handle Angular JS Api Errors Using Response Interceptors</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/09/25/python-2-7-on-centos/">Python 2.7 on Centos</a>
       </li>
     
   </ul>

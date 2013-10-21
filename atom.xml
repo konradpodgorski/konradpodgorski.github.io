@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-21T02:01:57+02:00</updated>
+  <updated>2013-10-21T09:48:32+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -12,6 +12,105 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How I migrated my blog from Wordpress to Octopress]]></title>
+    <link href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/"/>
+    <updated>2013-10-21T08:40:00+02:00</updated>
+    <id>http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress</id>
+    <content type="html"><![CDATA[<p>Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting</p>
+
+<p>Reason for this change is probably the same as yours, person who reads this</p>
+
+<ul>
+<li>Wordpress sucks at formatting code</li>
+<li>Most of my &ldquo;notes&rdquo; and &ldquo;readme&rdquo; from various projects are markdown files, so if I decided to publish one of them, copy paste wasn&rsquo;t enough</li>
+<li>3rd, and probably most important. &ldquo;Hey, we are programmers&rdquo; we can&rsquo;t use Wordpress ;&ndash;)</li>
+</ul>
+
+
+<!-- more -->
+
+
+<p>If you have more reasons, fell free to give a comment below.</p>
+
+<p><strong>This is not a complete guide, I decided to write few keypoints that could help others with migrating their Wordpress to Octopress.</strong></p>
+
+<h2>Installing Octopress</h2>
+
+<p><a href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to setup Octopress on Ubuntu</a></p>
+
+<h2>Migrating permalinks</h2>
+
+<p>On old Wordpress blog I had this permalink structure</p>
+
+<pre><code>/blog/:id/:title
+</code></pre>
+
+<p>while it was ok back then, because I could modify title without loosing back links, with Octopress ids aren&rsquo;t used anymore.</p>
+
+<p>I decided to go with standard permalink structure</p>
+
+<pre><code>/blog/:year/:month/:day/:title
+</code></pre>
+
+<p>Ok, but problem is</p>
+
+<h2>How to keep old Wordpress links working in Octopress</h2>
+
+<p>My first thought was: 301 redirect</p>
+
+<p>Unfortunately this cannot be done the &ldquo;HTTP way&rdquo; (without JS) on Github pages</p>
+
+<p>Solution is to include an entire Wordpress blog in read only mode</p>
+
+<p>Dump an entire Wordpress blog to your disk using wget</p>
+
+<p><a href="http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></p>
+
+<p>In my case all downloaded posts were in /blog directory, so to get them still working on Octopress I had to copy</p>
+
+<pre><code>/wp-content
+/blog
+</code></pre>
+
+<p>to</p>
+
+<pre><code>/source/wp-content
+/source/blog
+</code></pre>
+
+<p>If you used other permalink structure for instance</p>
+
+<pre><code>/:title
+</code></pre>
+
+<p>You need to copy every directory, sorry! :(</p>
+
+<h3>Migrating comments</h3>
+
+<p>I decided to go with Disqus</p>
+
+<ol>
+<li>Register on Disqus</li>
+<li>On still working Wordpress blog change permalink structure to the same as your new Octopress blog (very important!)</li>
+<li>With changed structure install &ldquo;Disqus&rdquo; plugin, log in and export current Comments.</li>
+<li>Because we changed permalink structure all comments will get mapped to the one that will be used in Octopress</li>
+</ol>
+
+
+<p>edit _config.yml and enter your shortname</p>
+
+<pre><code># Disqus Comments
+disqus_short_name: konradpodgorski
+disqus_show_comment_count: true
+</code></pre>
+
+<h3>That&rsquo;s it</h3>
+
+<p>for now</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to recursively download an entire website using WGET]]></title>
@@ -204,9 +303,9 @@ Recursive accept/reject:
   
   <entry>
     <title type="html"><![CDATA[Configuring Octopress on Ubuntu]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/20/octopress-on-ubuntu/"/>
+    <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/"/>
     <updated>2013-10-20T16:54:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/20/octopress-on-ubuntu</id>
+    <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
     <content type="html"><![CDATA[<p>Guide was copied from <a href="http://stackoverflow.com/a/14353864/1562884">http://stackoverflow.com/a/14353864/1562884</a> for my reference</p>
 
 <p>Helped me with this error during configuring Octopress on Ubuntu</p>
@@ -822,42 +921,6 @@ Thing is we never used bundle ztec/security-active_directory and CTRL + F on pro
 
 
 <p>source: <a href="http://www.experts-exchange.com/Microsoft/Development/MS-SQL-Server/SQL-Server-2005/Q_23612846.html">http://www.experts-exchange.com/Microsoft/Development/MS-SQL-Server/SQL-Server-2005/Q_23612846.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[[How to] Symfony 2, Please install the ‘intl’ extension for full localization capabilities]]></title>
-    <link href="http://konradpodgorski.com/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/"/>
-    <updated>2011-12-29T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities</id>
-    <content type="html"><![CDATA[<p>Full error message</p>
-
-<pre><code>The Symfony\Component\Locale\Stub\StubNumberFormatter::parse() method’s argument $type value 2 behavior is not implemented. Please install the ‘intl’ extension for full localization capabilities.
-</code></pre>
-
-<p>To fix this install php5-intl extension</p>
-
-<h3>Ubuntu</h3>
-
-<pre><code>sudo apt-get install php5-intl
-</code></pre>
-
-<h3>Fedora/Cent OS</h3>
-
-<pre><code>sudo yum install php-intl
-</code></pre>
-
-<p>Don’t forget to restart apache2</p>
-
-<pre><code>sudo service apache2 restart
-</code></pre>
-
-<p>or</p>
-
-<pre><code>sudo service httpd restart
-</code></pre>
-
-<p>Let me know if it was helpful</p>
 ]]></content>
   </entry>
   
