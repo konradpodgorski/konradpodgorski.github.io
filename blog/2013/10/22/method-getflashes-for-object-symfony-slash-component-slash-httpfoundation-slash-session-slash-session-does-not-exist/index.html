@@ -113,6 +113,9 @@
 
 <blockquote><p>Method &ldquo;getFlashes&rdquo; for object &ldquo;Symfony\Component\HttpFoundation\Session\Session&rdquo; does not exist</p></blockquote>
 
+<!-- more -->
+
+
 <p>Change</p>
 
 <pre><code>app.session.getFlashes()
@@ -125,7 +128,35 @@
 
 <p>Before</p>
 
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{% for key, message in app.session.getFlashes() %}
+</span><span class='line'>&lt;div class="alert alert-{{ key }}" style="margin-top: 3px;"&gt;
+</span><span class='line'>    &lt;a class="close" data-dismiss="alert"&gt;×&lt;/a&gt;
+</span><span class='line'>    &lt;strong&gt;{{ ('alert_message.' ~ key)|trans }}&lt;/strong&gt; {{ message }}
+</span><span class='line'>&lt;/div&gt;
+</span><span class='line'>{% endfor %}</span></code></pre></td></tr></table></div></figure>
+
+
 <p>After change</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>{% for key, message in app.session.get('flashes') %}
+</span><span class='line'>&lt;div class="alert alert-{{ key }}"&gt;
+</span><span class='line'>    &lt;a class="close" data-dismiss="alert"&gt;×&lt;/a&gt;
+</span><span class='line'>    &lt;strong&gt;{{ ('alert_message.' ~ key) | trans }}&lt;/strong&gt; {{ message | trans }}
+</span><span class='line'>&lt;/div&gt;
+</span><span class='line'>{% endfor %}</span></code></pre></td></tr></table></div></figure>
+
 
 <p>That&rsquo;s it</p>
 </div>
