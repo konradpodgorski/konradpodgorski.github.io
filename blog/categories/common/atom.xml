@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Common | Konrad Podgórski - Web Developer]]></title>
+  <link href="http://konradpodgorski.com/blog/categories/common/atom.xml" rel="self"/>
+  <link href="http://konradpodgorski.com/"/>
+  <updated>2013-10-22T12:39:40+02:00</updated>
+  <id>http://konradpodgorski.com/</id>
+  <author>
+    <name><![CDATA[Konrad Podgórski]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist]]></title>
+    <link href="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/"/>
+    <updated>2013-10-22T12:34:00+02:00</updated>
+    <id>http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist</id>
+    <content type="html"><![CDATA[<p>Quick reference for people upgrading Symfony</p>
+
+<p>Error</p>
+
+<pre><code>Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist
+</code></pre>
+
+<p>Change</p>
+
+<pre><code>app.session.getFlashes()
+</code></pre>
+
+<p>to</p>
+
+<pre><code>app.session.get('flashes')
+</code></pre>
+
+<p>Before</p>
+
+<pre><code> 
+</code></pre>
+
+<p>After change</p>
+
+<pre><code> 
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

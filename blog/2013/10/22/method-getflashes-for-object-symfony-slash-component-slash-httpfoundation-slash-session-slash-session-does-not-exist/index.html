@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Dropbox for storing backups? This is not what you think - Konrad Podgórski - Web Developer</title>
+  <title>Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist - Konrad Podgórski - Web Developer</title>
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="Today I thought that maybe I should upgrade my dropbox account to pro. I don’t really need these 100GB but versioning files would be nice. Especially &hellip;">
+  <meta name="description" content="Quick reference for people upgrading Symfony Error Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think">
+  <link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://konradpodgorski.com/atom.xml" rel="alternate" title="Konrad Podgórski - Web Developer" type="application/atom+xml">
@@ -81,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title" itemprop="name" >Dropbox for Storing Backups? This Is Not What You Think</h1>
+      <h1 class="entry-title" itemprop="name" >Method "getFlashes" for Object "Symfony\Component\HttpFoundation\Session\Session" Does Not Exist</h1>
     
     
       <p class="meta">
@@ -97,7 +97,7 @@
   
 
 
-<time itemprop="datePublished" content="2013-08-24T00:00:00+02:00" datetime="2013-08-24T00:00:00+02:00" pubdate data-updated="true">Aug 24<span>th</span>, 2013</time>
+<time itemprop="datePublished" content="2013-10-22T12:34:00+02:00" datetime="2013-10-22T12:34:00+02:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://konradpodgorski.com">Comments</a>
@@ -107,15 +107,26 @@
   </header>
 
 
-<div class="entry-content"><p>Today I thought that maybe I should upgrade my dropbox account to pro. I don’t really need these 100GB but versioning files would be nice. Especially for keeping KeePass database. Last thing I would want is to lose that.</p>
+<div class="entry-content"><p>Quick reference for people upgrading Symfony</p>
 
-<p>So I started reading terms of service and found interesting paragraph there.</p>
+<p>Error</p>
 
-<blockquote><p>You, and not Dropbox, are responsible for maintaining and protecting all of your stuff. Dropbox will not be liable for any loss or corruption of your stuff, or for any costs or expenses associated with backing up or restoring any of your stuff.</p></blockquote>
+<pre><code>Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist
+</code></pre>
 
-<p><a href="https://www.dropbox.com/pricing_terms#terms">https://www.dropbox.com/pricing_terms#terms</a></p>
+<p>Change</p>
 
-<p>Cool, so I COULD store my backups there but if something happen it’s MY not their problem, because I could backup my files (right?) :) Where? Maybe on S3? Nope, their TOS probably covers same topic in same way. Funny world, right?</p>
+<pre><code>app.session.getFlashes()
+</code></pre>
+
+<p>to</p>
+
+<pre><code>app.session.get('flashes')
+</code></pre>
+
+<p>Before</p>
+
+<p>After change</p>
 </div>
 
 
@@ -139,15 +150,21 @@
   
 
 
-<time itemprop="datePublished" content="2013-08-24T00:00:00+02:00" datetime="2013-08-24T00:00:00+02:00" pubdate data-updated="true">Aug 24<span>th</span>, 2013</time>
+<time itemprop="datePublished" content="2013-10-22T12:34:00+02:00" datetime="2013-10-22T12:34:00+02:00" pubdate data-updated="true">Oct 22<span>nd</span>, 2013</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/common/'>Common</a>, <a class='category' href='/blog/categories/errors/'>errors</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -160,10 +177,8 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/06/05/how-to-write-better-php-code/" title="Previous Post: How to write better PHP code">&laquo; How to write better PHP code</a>
+        <a class="basic-alignment left" href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/" title="Previous Post: How I migrated my blog from Wordpress to Octopress">&laquo; How I migrated my blog from Wordpress to Octopress</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/" title="Next Post: Enabling autocomplete for PHPUnit in PHP Storm">Enabling autocomplete for PHPUnit in PHP Storm &raquo;</a>
       
     </p>
   </footer>
@@ -267,8 +282,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/';
-        var disqus_url = 'http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/';
+        var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/';
+        var disqus_url = 'http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/';
         var disqus_script = 'embed.js';
       
     (function () {

@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-21T09:49:39+02:00</updated>
+  <updated>2013-10-22T12:39:40+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist]]></title>
+    <link href="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/"/>
+    <updated>2013-10-22T12:34:00+02:00</updated>
+    <id>http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist</id>
+    <content type="html"><![CDATA[<p>Quick reference for people upgrading Symfony</p>
+
+<p>Error</p>
+
+<pre><code>Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist
+</code></pre>
+
+<p>Change</p>
+
+<pre><code>app.session.getFlashes()
+</code></pre>
+
+<p>to</p>
+
+<pre><code>app.session.get('flashes')
+</code></pre>
+
+<p>Before</p>
+
+<p>After change</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How I migrated my blog from Wordpress to Octopress]]></title>
@@ -901,26 +929,6 @@ Thing is we never used bundle ztec/security-active_directory and CTRL + F on pro
 
 <pre><code>find . -type f -exec chmod 644 {} \;; find . -type d -exec chmod 755 {} \;
 </code></pre>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Removing strong password policy in Windows 2008]]></title>
-    <link href="http://konradpodgorski.com/blog/2012/04/09/removing-strong-password-policy-in-windows-2008/"/>
-    <updated>2012-04-09T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2012/04/09/removing-strong-password-policy-in-windows-2008</id>
-    <content type="html"><![CDATA[<p>You can use gpedit.msc to change the password policy, also you can change the domain policy if you are a member of a domain to change it that way as well.</p>
-
-<p>You can run gpedit.msc by doing the following.</p>
-
-<ol>
-<li><p>click on the start menu, click run, type in gpedit.msc then press Enter.</p></li>
-<li><p>Locate the “Local Computer policy / Computer Configuration / Windows Settings / Security settings / Password Policy</p></li>
-<li><p>Change the keys you wish to change according to your existing password policies in your work place.</p></li>
-</ol>
-
-
-<p>source: <a href="http://www.experts-exchange.com/Microsoft/Development/MS-SQL-Server/SQL-Server-2005/Q_23612846.html">http://www.experts-exchange.com/Microsoft/Development/MS-SQL-Server/SQL-Server-2005/Q_23612846.html</a></p>
 ]]></content>
   </entry>
   
