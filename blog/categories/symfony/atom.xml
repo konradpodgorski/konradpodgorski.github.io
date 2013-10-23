@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Symfony | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/symfony/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-23T12:18:08+02:00</updated>
+  <updated>2013-10-23T14:46:27+02:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -68,9 +68,11 @@ Instruction might seem to you very long and I totally agree with you. It took me
 </ul>
 
 
-<p><strong>All steps should be done in order of reading. Configuration shouldn&rsquo;t take you more than 2 hours.
-It was tested by me on ~10 machines however if you find something not working don&rsquo;t hesitate to let me know.
+<p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
+It was tested by me on ~10 machines, however if you find something not working don&rsquo;t hesitate to let me know.
 I try to help you and correct/expand guide to cover your problem.</strong></p>
+
+<p>These steps are about preparing your server for PHP / Symfony application and do not cover code deployment itself.</p>
 
 <h1>Step by step guide how to configure server for Symfony project</h1>
 
@@ -659,7 +661,7 @@ sudo chown www-data:www-data /var/www/.composer
 
 <h1>That&rsquo;s it!</h1>
 
-<p>Thank you for taking a time to read this guide.</p>
+<p>Thank you for taking time to read this guide.</p>
 ]]></content>
   </entry>
   
