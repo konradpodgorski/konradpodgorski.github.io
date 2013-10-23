@@ -9,7 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="You can use gpedit.msc to change the password policy, also you can change the domain policy if you are a member of a domain to change it that way as &hellip;">
+  <meta name="description" content="Recursively sets permission 644 to all files, and 755 to all directories within current location. One liner for my reference :) find . -type f -exec &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -79,6 +79,50 @@
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" itemprop="name" ><a href="/blog/2012/07/13/setting-permissions-for-files-and-directories/">Setting Permissions for Files and Directories</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2012-07-13T00:00:00+02:00" datetime="2012-07-13T00:00:00+02:00" pubdate data-updated="true">Jul 13<span>th</span>, 2012</time>
+        
+           | <a href="/blog/2012/07/13/setting-permissions-for-files-and-directories/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2012/07/13/setting-permissions-for-files-and-directories/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Recursively sets permission 644 to all files, and 755 to all directories within current location.</p>
+
+<p>One liner for my reference :)</p>
+
+<pre><code>find . -type f -exec chmod 644 {} \;; find . -type d -exec chmod 755 {} \;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -376,6 +420,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/23/guide-how-to-configure-server-for-symfony/">Step by Step Guide How to Configure Server for Symfony Project</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/">Method &#8220;getFlashes&#8221; for Object &#8220;Symfony\Component\HttpFoundation\Session\Session&#8221; Does Not Exist</a>
       </li>
     
@@ -389,10 +437,6 @@
     
       <li class="post">
         <a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to Setup Octopress on Ubuntu</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/">How to Implement a Secure Choice Form Field With Symfony</a>
       </li>
     
   </ul>
