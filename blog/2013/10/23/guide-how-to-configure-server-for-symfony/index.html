@@ -115,7 +115,26 @@ Instruction might seem to you very long and I totally agree with you. It took me
 <!-- more -->
 
 
-<p><strong>If you found this useful leave a good word in comments, it&rsquo;s always good to know that someone (besides Googlebot) actually read this :)</strong></p>
+<p>These steps are about preparing your server for PHP / Symfony application and do not cover code deployment itself.</p>
+
+<p>If you found this useful leave a comment or share link to your friends, it&rsquo;s always good to know that someone (besides Googlebot) actually read this :)</p>
+
+<div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+
+<p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
+It was tested by me on ~10 machines, however if you find something not working don&rsquo;t hesitate to let me know.
+I try to help you and correct/expand guide to cover your problem.</strong></p>
 
 <p>Requirements:</p>
 
@@ -158,13 +177,7 @@ Instruction might seem to you very long and I totally agree with you. It took me
 </ul>
 
 
-<p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
-It was tested by me on ~10 machines, however if you find something not working don&rsquo;t hesitate to let me know.
-I try to help you and correct/expand guide to cover your problem.</strong></p>
-
-<p>These steps are about preparing your server for PHP / Symfony application and do not cover code deployment itself.</p>
-
-<h1>Step by step guide how to configure server for Symfony project</h1>
+<h1>Step by step guide how to configure server for PHP / Symfony project</h1>
 
 <h3>Mass replace</h3>
 
@@ -738,16 +751,14 @@ sudo chown www-data:www-data /var/www/APPDOMAINNAME
 sudo chown www-data:www-data /var/www/.composer
 </code></pre>
 
+<p>Also a Curl is required if you are using Capifony for deployment</p>
+
+<p>   sudo apt-get install curl</p>
+
 <h3>Test everything by restarting server</h3>
 
 <pre><code>sudo reboot
 </code></pre>
-
-<h3>Capifony</h3>
-
-<p>Curl is required if you are using Capifony for deployment</p>
-
-<p>   sudo apt-get install curl</p>
 
 <h1>That&rsquo;s it!</h1>
 
