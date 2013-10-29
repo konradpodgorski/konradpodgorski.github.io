@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-24T08:49:57+02:00</updated>
+  <updated>2013-10-29T14:33:30+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -12,6 +12,92 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to validate emails outside of form with Symfony Validator Component]]></title>
+    <link href="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/"/>
+    <updated>2013-10-29T14:09:00+01:00</updated>
+    <id>http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api.
+ This is very simple using Symfony Validator Component, but I noticed strange behavior when running tests. If I do
+  not pass any emails I get wrong status code. 200 OK instead of 400 bad request.</p>
+
+<p>After a while I found that using only \Symfony\Component\Validator\Constraints\Email() is not enough. Validator will
+ pass null values and empty string, which is obvious wrong in my case.
+  I had to also add NotBlank constraint, don&rsquo;t forget that in future.</p>
+
+<p>At first I thought that this is a bug, but since it&rsquo;s covered by separate 2 tests here
+<a href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35">https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35</a>
+I will leave it as it is.</p>
+
+<p>Credit goes to the functional tests! :)</p>
+
+<p>Snippet for further reference.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * Validates single email (or an array of email addresses</span>
+</span><span class='line'><span class="sd"> *</span>
+</span><span class='line'><span class="sd"> * @param array|string $emails</span>
+</span><span class='line'><span class="sd"> *</span>
+</span><span class='line'><span class="sd"> * @return array</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">validateEmails</span><span class="p">(</span><span class="nv">$emails</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$errors</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</span><span class='line'>    <span class="nv">$emails</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$emails</span> <span class="o">:</span> <span class="k">array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$validator</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;validator&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$constraints</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\Email</span><span class="p">(),</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\NotBlank</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$emails</span> <span class="k">as</span> <span class="nv">$email</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nv">$error</span> <span class="o">=</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validateValue</span><span class="p">(</span><span class="nv">$email</span><span class="p">,</span> <span class="nv">$constraints</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$errors</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$error</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$errors</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Step by step guide how to configure server for PHP / Symfony project]]></title>
@@ -1529,87 +1615,6 @@ Thing is we never used bundle ztec/security-active_directory and CTRL + F on pro
     <updated>2012-11-15T00:00:00+01:00</updated>
     <id>http://konradpodgorski.com/blog/2012/11/15/postgresql-9-1-on-debian-6-0</id>
     <content type="html"><![CDATA[<p><a href="http://serverfault.com/questions/413211/cannot-install-postgres-9-1-on-a-fresh-debian-6-0">http://serverfault.com/questions/413211/cannot-install-postgres-9-1-on-a-fresh-debian-6-0</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Capifony fix for deployment on servers with strict permission settings]]></title>
-    <link href="http://konradpodgorski.com/blog/2012/07/26/capifony-fix-for-deployment-on-servers-with-strict-permission-settings/"/>
-    <updated>2012-07-26T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2012/07/26/capifony-fix-for-deployment-on-servers-with-strict-permission-settings</id>
-    <content type="html"><![CDATA[<p>Some servers (for instance VPS I use) doesn’t allow to run script if it’s group writeable.</p>
-
-<p>Solution is to run chmod 644 on files and chmod 755 on directories inside current release. You could use this one liner: Setting permissions for files and directories</p>
-
-<p>BUT it’s really pain in ass to do every deploy, not to mention few more seconds of downtime. To fix this add to your deploy.rb following lines</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># Fix persmissions on VPS</span>
-</span><span class='line'><span class="n">after</span> <span class="s2">&quot;deploy:update_code&quot;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">capifony_pretty_print</span> <span class="s2">&quot;--&gt; Fixing permissions&quot;</span>
-</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type f -exec chmod 644 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
-</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type d -exec chmod 755 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
-</span><span class='line'>  <span class="n">capifony_puts_ok</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is sample deploy.rb file with above fix, don’t use it without thinking :&ndash;)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-</pre></td><td class='code'><pre><code class='ruby'><span class='line'><span class="c1"># deploy.rb</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:application</span><span class="p">,</span>   <span class="s2">&quot;My App&quot;</span>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:deploy_to</span><span class="p">,</span>     <span class="s2">&quot;/var/www/my-app.com&quot;</span>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:domain</span><span class="p">,</span>        <span class="s2">&quot;my-app.com&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:scm</span><span class="p">,</span>           <span class="ss">:git</span>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:repository</span><span class="p">,</span>    <span class="s2">&quot;ssh-gitrepo-domain.com:/path/to/repo.git&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">role</span>  <span class="ss">:web</span><span class="p">,</span>           <span class="n">domain</span>
-</span><span class='line'><span class="n">role</span>  <span class="ss">:app</span><span class="p">,</span>           <span class="n">domain</span>
-</span><span class='line'><span class="n">role</span>  <span class="ss">:db</span><span class="p">,</span>            <span class="n">domain</span><span class="p">,</span> <span class="ss">:primary</span> <span class="o">=&gt;</span> <span class="kp">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:use_sudo</span><span class="p">,</span>      <span class="kp">false</span>
-</span><span class='line'><span class="n">set</span>   <span class="ss">:keep_releases</span><span class="p">,</span> <span class="mi">3</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1"># Fix persmissions on VPS</span>
-</span><span class='line'><span class="n">after</span> <span class="s2">&quot;deploy:update_code&quot;</span> <span class="k">do</span>
-</span><span class='line'>  <span class="n">capifony_pretty_print</span> <span class="s2">&quot;--&gt; Fixing permissions&quot;</span>
-</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type f -exec chmod 644 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
-</span><span class='line'>  <span class="n">run</span> <span class="s2">&quot;cd </span><span class="si">#{</span><span class="n">latest_release</span><span class="si">}</span><span class="s2"> &amp;&amp; find . -type d -exec chmod 755 {} </span><span class="se">\\</span><span class="s2">;&quot;</span>
-</span><span class='line'>  <span class="n">capifony_puts_ok</span>
-</span><span class='line'><span class="k">end</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

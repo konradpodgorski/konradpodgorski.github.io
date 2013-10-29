@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Batch conversion SVG to PNG using ImageMagick - Konrad Podgórski - Web Developer</title>
+  <title>How to validate emails outside of form with Symfony Validator Component - Konrad Podgórski - Web Developer</title>
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="This post is for my personal reference I will improve it in future. Create 2 folders in project web root: images/svg
-images/png Navigate to images/ &hellip;">
+  <meta name="description" content="I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api. This is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ images/png Navigate to images/ &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick">
+  <link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://konradpodgorski.com/atom.xml" rel="alternate" title="Konrad Podgórski - Web Developer" type="application/atom+xml">
@@ -82,7 +81,7 @@ images/png Navigate to images/ &hellip;">
   
   <header>
     
-      <h1 class="entry-title" itemprop="name" >Batch Conversion SVG to PNG Using ImageMagick</h1>
+      <h1 class="entry-title" itemprop="name" >How to Validate Emails Outside of Form With Symfony Validator Component</h1>
     
     
       <p class="meta">
@@ -98,7 +97,7 @@ images/png Navigate to images/ &hellip;">
   
 
 
-<time itemprop="datePublished" content="2013-03-14T00:00:00+01:00" datetime="2013-03-14T00:00:00+01:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
+<time itemprop="datePublished" content="2013-10-29T14:09:00+01:00" datetime="2013-10-29T14:09:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2013</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://konradpodgorski.com">Comments</a>
@@ -108,19 +107,84 @@ images/png Navigate to images/ &hellip;">
   </header>
 
 
-<div class="entry-content"><p>This post is for my personal reference I will improve it in future.</p>
+<div class="entry-content"><p>I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api.
+ This is very simple using Symfony Validator Component, but I noticed strange behavior when running tests. If I do
+  not pass any emails I get wrong status code. 200 OK instead of 400 bad request.</p>
 
-<p>Create 2 folders in project web root:</p>
+<p>After a while I found that using only \Symfony\Component\Validator\Constraints\Email() is not enough. Validator will
+ pass null values and empty string, which is obvious wrong in my case.
+  I had to also add NotBlank constraint, don&rsquo;t forget that in future.</p>
 
-<p>images/svg
-images/png</p>
+<p>At first I thought that this is a bug, but since it&rsquo;s covered by separate 2 tests here
+<a href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35">https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35</a>
+I will leave it as it is.</p>
 
-<p>Navigate to images/svg and run</p>
+<p>Credit goes to the functional tests! :)</p>
 
-<pre><code>for filename in `find . -regex ".*.svg"`; do `convert -background none $filename ../png/$filename.png` ; done
-</code></pre>
+<p>Snippet for further reference.</p>
 
-<p>Now each file that used to be in a svg format has copy in images/png with suffix .png</p>
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * Validates single email (or an array of email addresses</span>
+</span><span class='line'><span class="sd"> *</span>
+</span><span class='line'><span class="sd"> * @param array|string $emails</span>
+</span><span class='line'><span class="sd"> *</span>
+</span><span class='line'><span class="sd"> * @return array</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">validateEmails</span><span class="p">(</span><span class="nv">$emails</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$errors</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</span><span class='line'>    <span class="nv">$emails</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$emails</span> <span class="o">:</span> <span class="k">array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$validator</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;validator&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$constraints</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\Email</span><span class="p">(),</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\NotBlank</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$emails</span> <span class="k">as</span> <span class="nv">$email</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nv">$error</span> <span class="o">=</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validateValue</span><span class="p">(</span><span class="nv">$email</span><span class="p">,</span> <span class="nv">$constraints</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$errors</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$error</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$errors</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
 </div>
 
 
@@ -144,7 +208,7 @@ images/png</p>
   
 
 
-<time itemprop="datePublished" content="2013-03-14T00:00:00+01:00" datetime="2013-03-14T00:00:00+01:00" pubdate data-updated="true">Mar 14<span>th</span>, 2013</time>
+<time itemprop="datePublished" content="2013-10-29T14:09:00+01:00" datetime="2013-10-29T14:09:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2013</time>
       
 
 
@@ -152,7 +216,7 @@ images/png</p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -165,10 +229,8 @@ images/png</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/" title="Previous Post: How to avoid memory leaks in Symfony 2 Commands">&laquo; How to avoid memory leaks in Symfony 2 Commands</a>
+        <a class="basic-alignment left" href="/blog/2013/10/23/guide-how-to-configure-server-for-symfony/" title="Previous Post: Step by step guide how to configure server for PHP / Symfony project">&laquo; Step by step guide how to configure server for PHP / Symfony project</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl/" title="Next Post: Nowe zastosowanie radio buttona według programistów home.pl">Nowe zastosowanie radio buttona według programistów home.pl &raquo;</a>
       
     </p>
   </footer>
@@ -272,8 +334,8 @@ images/png</p>
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/';
-        var disqus_url = 'http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/';
+        var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/';
+        var disqus_url = 'http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/';
         var disqus_script = 'embed.js';
       
     (function () {

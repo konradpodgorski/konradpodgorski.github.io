@@ -9,8 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="I decided to publish notes that I have been gathering lately about configuring servers.
-This is a complete guide how to configure server for &hellip;">
+  <meta name="description" content="I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api. This is &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +79,122 @@ This is a complete guide how to configure server for &hellip;">
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/">How to Validate Emails Outside of Form With Symfony Validator Component</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2013-10-29T14:09:00+01:00" datetime="2013-10-29T14:09:00+01:00" pubdate data-updated="true">Oct 29<span>th</span>, 2013</time>
+        
+           | <a href="/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api.
+ This is very simple using Symfony Validator Component, but I noticed strange behavior when running tests. If I do
+  not pass any emails I get wrong status code. 200 OK instead of 400 bad request.</p>
+
+<p>After a while I found that using only \Symfony\Component\Validator\Constraints\Email() is not enough. Validator will
+ pass null values and empty string, which is obvious wrong in my case.
+  I had to also add NotBlank constraint, don&rsquo;t forget that in future.</p>
+
+<p>At first I thought that this is a bug, but since it&rsquo;s covered by separate 2 tests here
+<a href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35">https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35</a>
+I will leave it as it is.</p>
+
+<p>Credit goes to the functional tests! :)</p>
+
+<p>Snippet for further reference.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="sd">/**</span>
+</span><span class='line'><span class="sd"> * Validates single email (or an array of email addresses</span>
+</span><span class='line'><span class="sd"> *</span>
+</span><span class='line'><span class="sd"> * @param array|string $emails</span>
+</span><span class='line'><span class="sd"> *</span>
+</span><span class='line'><span class="sd"> * @return array</span>
+</span><span class='line'><span class="sd"> */</span>
+</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">validateEmails</span><span class="p">(</span><span class="nv">$emails</span><span class="p">){</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$errors</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
+</span><span class='line'>    <span class="nv">$emails</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$emails</span> <span class="o">:</span> <span class="k">array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$validator</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;validator&#39;</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="nv">$constraints</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\Email</span><span class="p">(),</span>
+</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\NotBlank</span><span class="p">()</span>
+</span><span class='line'>    <span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$emails</span> <span class="k">as</span> <span class="nv">$email</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="nv">$error</span> <span class="o">=</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validateValue</span><span class="p">(</span><span class="nv">$email</span><span class="p">,</span> <span class="nv">$constraints</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>            <span class="nv">$errors</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$error</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">return</span> <span class="nv">$errors</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -666,51 +781,6 @@ $sudo rake deploy
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/08/30/monitor-your-website-with-status-monitor/">Monitor Your Website With Status Monitor</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-08-30T00:00:00+02:00" datetime="2013-08-30T00:00:00+02:00" pubdate data-updated="true">Aug 30<span>th</span>, 2013</time>
-        
-           | <a href="/blog/2013/08/30/monitor-your-website-with-status-monitor/#disqus_thread"
-             data-disqus-identifier="http://konradpodgorski.com/blog/2013/08/30/monitor-your-website-with-status-monitor/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Recently I launched a simple tool to help me and my colleagues monitor websites we developed.</p>
-
-<p>Its really simple and it will stay this way. You can use it for free.</p>
-
-<p><a href="http://status.konradpodgorski.com/">http://status.konradpodgorski.com/</a></p>
-
-<p>If you like it leave a comment, or even better spread a word around you. Any help promoting tool is welcome!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -726,6 +796,10 @@ $sudo rake deploy
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/">How to Validate Emails Outside of Form With Symfony Validator Component</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/23/guide-how-to-configure-server-for-symfony/">Step by Step Guide How to Configure Server for PHP / Symfony Project</a>
       </li>
     
@@ -739,10 +813,6 @@ $sudo rake deploy
     
       <li class="post">
         <a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to Setup Octopress on Ubuntu</a>
       </li>
     
   </ul>
