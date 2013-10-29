@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Symfony | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/symfony/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-29T14:33:30+01:00</updated>
+  <updated>2013-10-29T14:34:34+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[How to validate emails outside of form with Symfony Validator Component]]></title>
+    <link href="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/"/>
+    <updated>2013-10-29T14:09:00+01:00</updated>
+    <id>http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api.
+ This is very simple using Symfony Validator Component, but I noticed strange behavior when running tests. If I do
+  not pass any emails I get wrong status code. 200 OK instead of 400 bad request.</p>
+
+<p>After a while I found that using only \Symfony\Component\Validator\Constraints\Email() is not enough. Validator will
+ pass null values and empty string, which is obvious wrong in my case.
+  I had to also add NotBlank constraint, don&rsquo;t forget that in future.</p>
+
+<p>At first I thought that this is a bug, but since it&rsquo;s covered by separate 2 tests here
+<a href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35">https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35</a>
+I will leave it as it is.</p>
+
+<p>Credit goes to the functional tests! :)</p>
+
+<p>Snippet for further reference.</p>
+
+<p>```php</p>
+
+<pre><code>/**
+ * Validates single email (or an array of email addresses
+ *
+ * @param array|string $emails
+ *
+ * @return array
+ */
+public function validateEmails($emails){
+
+    $errors = array();
+    $emails = is_array($emails) ? $emails : array($emails);
+
+    $validator = $this-&gt;container-&gt;get('validator');
+
+    $constraints = array(
+        new \Symfony\Component\Validator\Constraints\Email(),
+        new \Symfony\Component\Validator\Constraints\NotBlank()
+    );
+
+    foreach ($emails as $email) {
+
+        $error = $validator-&gt;validateValue($email, $constraints);
+
+        if (count($error) &gt; 0) {
+            $errors[] = $error;
+        }
+    }
+
+    return $errors;
+}
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Step by step guide how to configure server for PHP / Symfony project]]></title>
