@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-31T22:09:11+01:00</updated>
+  <updated>2013-10-31T22:28:06+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -56,13 +56,15 @@
 
 <p>Ok, but problem is</p>
 
-<h2>How to keep old Wordpress links working in Octopress</h2>
+<p>Now it&rsquo;s time to get old Wordpress links working in Octopress</p>
 
-<p>My first thought was: 301 redirect</p>
+<h2>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
 
-<p>Unfortunately this cannot be done the &ldquo;HTTP way&rdquo; (without JS) on Github pages</p>
+<p>We want to keep old links working. Best solution would be 301 redirect all old posts.</p>
 
-<p>Solution is to include an entire Wordpress blog in read only mode</p>
+<p>Unfortunately this cannot be done the &ldquo;HTTP way&rdquo; by sending proper response headers (without JS) on Github pages. But there is a solution for that.</p>
+
+<p>First, include an entire Wordpress blog in read only mode.</p>
 
 <p>Dump an entire Wordpress blog to your disk using wget</p>
 
@@ -86,6 +88,23 @@
 </code></pre>
 
 <p>You need to copy every directory, sorry! :(</p>
+
+<p>Now edit each <code>/:title/index.html</code> file and put these inside <code>&lt;head&gt;</code></p>
+
+<p>```html</p>
+
+<pre><code>&lt;meta http-equiv="refresh" content="0; url=http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/"&gt;
+&lt;link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/" /&gt;
+</code></pre>
+
+<p>```</p>
+
+<p>Unfortunately you need to do this manually in most cases.</p>
+
+<p>Using <code>&lt;meta http-equiv="refresh"</code> will redirect each visitor to the new post.
+ As for Google Bot, it threats   <code>&lt;link rel="canonical" href=</code> as 301 redirect (well.. not exactly but effect is that you get your pages reindexed)</p>
+
+<p>Now there is no longer need to put any notice about the fact that this is archived post etc.</p>
 
 <h3>Migrating comments</h3>
 
