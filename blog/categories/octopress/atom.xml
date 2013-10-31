@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-31T22:28:06+01:00</updated>
+  <updated>2013-10-31T23:01:08+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -58,7 +58,7 @@
 
 <p>Now it&rsquo;s time to get old Wordpress links working in Octopress</p>
 
-<h2>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
+<h2><a name="redirect-301-on-github-pages"></a>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
 
 <p>We want to keep old links working. Best solution would be 301 redirect all old posts.</p>
 
