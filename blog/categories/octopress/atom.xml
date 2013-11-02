@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Octopress | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/octopress/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-10-31T23:01:08+01:00</updated>
+  <updated>2013-11-02T21:02:01+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -102,7 +102,7 @@
 <p>Unfortunately you need to do this manually in most cases.</p>
 
 <p>Using <code>&lt;meta http-equiv="refresh"</code> will redirect each visitor to the new post.
- As for Google Bot, it threats   <code>&lt;link rel="canonical" href=</code> as 301 redirect (well.. not exactly but effect is that you get your pages reindexed)</p>
+ As for Google Bot, it threats <code>&lt;link rel="canonical" href=</code> as 301 redirect, well.. not exactly but effect is that you get your pages reindexed and that is what you want.</p>
 
 <p>Now there is no longer need to put any notice about the fact that this is archived post etc.</p>
 
