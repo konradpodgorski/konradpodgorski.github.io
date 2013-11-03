@@ -5,15 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>[How to] No encoder has been configured for account - Konrad Podgórski - Web Developer</title>
+  <title>Ubuntu configuration for Symfony Developer - Konrad Podgórski - Web Developer</title>
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="I presume you’re using FOSUserBundle with Symfony2, make sure you added to app/config/security.yml these lines 1
-2
-3
-4
-# app/config/security.yml &hellip;">
+  <meta name="description" content="This is complete full instruction how to configure Ubuntu 11.10 / 11.04 fresh after installation to start developing with Symfony 2 Framework. I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -22,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://konradpodgorski.com/blog/2011/12/27/how-to-no-encoder-has-been-configured-for-account">
+  <link rel="canonical" href="http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://konradpodgorski.com/atom.xml" rel="alternate" title="Konrad Podgórski - Web Developer" type="application/atom+xml">
@@ -85,7 +81,7 @@
   
   <header>
     
-      <h1 class="entry-title" itemprop="name" >[How to] No Encoder Has Been Configured for Account</h1>
+      <h1 class="entry-title" itemprop="name" >Ubuntu Configuration for Symfony Developer</h1>
     
     
       <p class="meta">
@@ -101,7 +97,7 @@
   
 
 
-<time itemprop="datePublished" content="2011-12-27T00:00:00+01:00" datetime="2011-12-27T00:00:00+01:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+<time itemprop="datePublished" content="2012-01-24T02:40:00+01:00" datetime="2012-01-24T02:40:00+01:00" pubdate data-updated="true">Jan 24<span>th</span>, 2012</time>
         
            | <a href="#disqus_thread"
              data-disqus-identifier="http://konradpodgorski.com">Comments</a>
@@ -111,54 +107,104 @@
   </header>
 
 
-<div class="entry-content"><p>I presume you’re using FOSUserBundle with Symfony2, make sure you added to app/config/security.yml these lines</p>
+<div class="entry-content"><p><img src="/wp-content/uploads/2012/01/Symfony_with_Ubuntu.png"></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># app/config/security.yml</span>
-</span><span class='line'><span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">encoders</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">FOS\UserBundle\Model\UserInterface</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sha512</span>
-</span></code></pre></td></tr></table></div></figure>
+<p>This is complete full instruction how to configure Ubuntu 11.10 / 11.04 fresh after installation to start developing with Symfony 2 Framework.</p>
 
+<p>I haven’t tested it with Ubuntu 10.10 / 10.04 but it should work just fine.</p>
 
-<p>It should look like this:</p>
+<p>Installation of lamp server</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="c1"># app/config/security.yml</span>
-</span><span class='line'><span class="l-Scalar-Plain">security</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">encoders</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">Symfony\Component\Security\Core\User\User</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">plaintext</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">FOS\UserBundle\Model\UserInterface</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">sha512</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="l-Scalar-Plain">role_hierarchy</span><span class="p-Indicator">:</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">ROLE_ADMIN</span><span class="p-Indicator">:</span>       <span class="l-Scalar-Plain">ROLE_USER</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">ROLE_SUPER_ADMIN</span><span class="p-Indicator">:</span> <span class="p-Indicator">[</span><span class="nv">ROLE_USER</span><span class="p-Indicator">,</span> <span class="nv">ROLE_ADMIN</span><span class="p-Indicator">,</span> <span class="nv">ROLE_ALLOWED_TO_SWITCH</span><span class="p-Indicator">]</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>sudo apt-get install lamp-package^
+</code></pre>
 
+<p>now some required packages</p>
 
-<p>Other possibility might be that you’re loading bundles in wrong order, make sure that SecurityBundle is loaded before FOSUserBundle</p>
+<pre><code>sudo apt-get install php5-sqlite php5-intl
+</code></pre>
 
-<p>AppKernel</p>
+<p>and optional but recommended</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">new</span> <span class="nx">Symfony\Bundle\SecurityBundle\SecurityBundle</span><span class="p">,</span>
-</span><span class='line'><span class="o">...</span><span class="p">,</span>
-</span><span class='line'><span class="k">new</span> <span class="nx">FOS\UserBundle\FOSUserBundle</span><span class="p">(),</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code>sudo apt-get install php-apc php5-xdebug
+</code></pre>
 
+<p>Required changes to php.ini</p>
+
+<p>Remember to modify both php.ini files, /etc/php5/apache2/php.ini is for apache, second one /etc/php5/cli/php.ini is used for terminal commands</p>
+
+<pre><code>sudo gedit /etc/php5/apache2/php.ini
+</code></pre>
+
+<p><strong>/etc/php5/apache2/php.ini</strong></p>
+
+<pre><code>...
+
+[Date]
+; Defines the default timezone used by the date functions
+; http://php.net/date.timezone
+date.timezone = "Europe/Warsaw"
+
+...
+</code></pre>
+
+<p>Repeat this for <strong>/etc/php5/cli/php.ini</strong></p>
+
+<pre><code>sudo gedit /etc/php5/cli/php.ini
+</code></pre>
+
+<p>Apache2 Modules</p>
+
+<p>Now it’s time for apache2 modules, we will need to install mod rewrite</p>
+
+<pre><code>sudo a2enmod install rewrite
+</code></pre>
+
+<p>Restart Apache2</p>
+
+<pre><code>sudo service apache2 restart
+</code></pre>
+
+<p>Fixing permissions – ACL</p>
+
+<p>This is very important step, without this either apache (while viewing in browser) or your user (while clearing cache from CLI) wont be able to write in cache and logs directories</p>
+
+<p>First try this, if it won’t work read bellow, if it does – congratulations! You can skip this step</p>
+
+<pre><code>sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+</code></pre>
+
+<p>If above doesn’t work</p>
+
+<pre><code>sudo apt-get install acl
+</code></pre>
+
+<p>First we need to enable ACL support, to do this edit /etc/fstab file. You have to add “acl,” after “ext4″ and before “errors”. Please note that your fstab file might differ. Edit wisely!</p>
+
+<p><img src="/wp-content/uploads/2012/01/editing-fstab-to-get-acl-working-in-ubuntu.png"></p>
+
+<p>Reboot computer for changes to take effect. Alternatively if you keep project files on partition other than system one you could remount it but restarting computer would be probably easier :)</p>
+
+<p>Now commands mentioned in official book will work</p>
+
+<pre><code>sudo setfacl -R -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
+</code></pre>
+
+<p>more information about setfacl: <a href="http://symfony.com/doc/current/book/installation.html#configuration-and-setup">http://symfony.com/doc/current/book/installation.html#configuration-and-setup</a></p>
+
+<p>Other common problems</p>
+
+<p>If you get following warning in terminal, please see this post</p>
+
+<pre><code>PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’
+</code></pre>
+
+<p><a href="http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/">http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/</a></p>
+
+<p>reference</p>
+
+<p><a href="http://symfony.com/doc/current/book/installation.html#configuration-and-setup">http://symfony.com/doc/current/book/installation.html#configuration-and-setup</a></p>
 </div>
 
 
@@ -182,15 +228,21 @@
   
 
 
-<time itemprop="datePublished" content="2011-12-27T00:00:00+01:00" datetime="2011-12-27T00:00:00+01:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+<time itemprop="datePublished" content="2012-01-24T02:40:00+01:00" datetime="2012-01-24T02:40:00+01:00" pubdate data-updated="true">Jan 24<span>th</span>, 2012</time>
       
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/symfony/'>Symfony</a>
+  
+</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2011/12/27/how-to-no-encoder-has-been-configured-for-account/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2011/12/27/how-to-no-encoder-has-been-configured-for-account/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer/" >Tweet</a>
   
   
   <div class="g-plusone" data-size="medium"></div>
@@ -203,10 +255,10 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2011/10/07/how-to-change-wp-content-folder-name-in-wordpress/" title="Previous Post: How to change wp-content folder name in WordPress">&laquo; How to change wp-content folder name in WordPress</a>
+        <a class="basic-alignment left" href="/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/" title="Previous Post: [How to] Symfony 2, Please install the ‘intl’ extension for full localization capabilities">&laquo; [How to] Symfony 2, Please install the ‘intl’ extension for full localization capabilities</a>
       
       
-        <a class="basic-alignment right" href="/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/" title="Next Post: [Fix] PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’">[Fix] PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’ &raquo;</a>
+        <a class="basic-alignment right" href="/blog/2012/04/09/removing-strong-password-policy-in-windows-2008/" title="Next Post: Removing strong password policy in Windows 2008">Removing strong password policy in Windows 2008 &raquo;</a>
       
     </p>
   </footer>
@@ -310,8 +362,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://konradpodgorski.com/blog/2011/12/27/how-to-no-encoder-has-been-configured-for-account/';
-        var disqus_url = 'http://konradpodgorski.com/blog/2011/12/27/how-to-no-encoder-has-been-configured-for-account/';
+        var disqus_identifier = 'http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer/';
+        var disqus_url = 'http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer/';
         var disqus_script = 'embed.js';
       
     (function () {

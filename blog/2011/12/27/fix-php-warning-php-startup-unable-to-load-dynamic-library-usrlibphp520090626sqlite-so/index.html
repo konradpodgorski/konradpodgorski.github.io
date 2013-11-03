@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Category: Symfony - Konrad Podgórski - Web Developer</title>
+  <title>[Fix] PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’ - Konrad Podgórski - Web Developer</title>
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="Category: Symfony">
+  <meta name="description" content="PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’ To fix this annoying warning in CLI console every time I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://konradpodgorski.comblog/categories/symfony">
+  <link rel="canonical" href="http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="http://konradpodgorski.com/atom.xml" rel="alternate" title="Konrad Podgórski - Web Developer" type="application/atom+xml">
@@ -77,67 +77,112 @@
   <div id="main">
     <div id="content">
       <div>
-<article role="article">
+<article  itemscope itemtype="http://schema.org/Article"  class="hentry" role="article">
   
   <header>
-    <h1 class="entry-title">Category: Symfony</h1>
+    
+      <h1 class="entry-title" itemprop="name" >[Fix] PHP Warning: PHP Startup: Unable to Load Dynamic Library ‘/usr/lib/php5/20090626/sqlite.so’</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-12-27T17:22:00+01:00" datetime="2011-12-27T17:22:00+01:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com">Comments</a>
+        
+      </p>
     
   </header>
-  
-  <div id="blog-archives" class="category">
 
 
+<div class="entry-content"><p><strong>PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’</strong></p>
 
-  
-  <h2>2013</h2>
+<p>To fix this annoying warning in CLI console every time I ran php script I had to remove unused <strong>sqlite.ini</strong> file from <strong>/etc/php5/conf.d/</strong></p>
 
-<article>
-  
-<h1><a href="/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/">How to validate emails outside of form with Symfony Validator Component</a></h1>
-<time datetime="2013-10-29T14:09:00+01:00" pubdate><span class='month'>Oct</span> <span class='day'>29</span> <span class='year'>2013</span></time>
+<p>use this to remove this file</p>
 
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/how-to/'>How to</a>, <a class='category' href='/blog/categories/php/'>PHP</a>, <a class='category' href='/blog/categories/symfony/'>Symfony</a></span>
-</footer>
+<pre><code>sudo rm /etc/php5/conf.d/sqlite.ini
+</code></pre>
 
+<p>full error message</p>
 
-</article>
-
-
-
-<article>
-  
-<h1><a href="/blog/2013/10/23/guide-how-to-configure-server-for-symfony/">Step by step guide how to configure server for PHP / Symfony project</a></h1>
-<time datetime="2013-10-23T11:18:00+02:00" pubdate><span class='month'>Oct</span> <span class='day'>23</span> <span class='year'>2013</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/how-to/'>How to</a>, <a class='category' href='/blog/categories/php/'>PHP</a>, <a class='category' href='/blog/categories/symfony/'>Symfony</a></span>
-</footer>
-
-
-</article>
-
-
-
-  
-  <h2>2012</h2>
-
-<article>
-  
-<h1><a href="/blog/2012/01/24/ubuntu-configuration-for-symfony-developer/">Ubuntu configuration for Symfony Developer</a></h1>
-<time datetime="2012-01-24T02:40:00+01:00" pubdate><span class='month'>Jan</span> <span class='day'>24</span> <span class='year'>2012</span></time>
-
-<footer>
-  <span class="categories">posted in <a class='category' href='/blog/categories/linux/'>Linux</a>, <a class='category' href='/blog/categories/symfony/'>Symfony</a></span>
-</footer>
-
-
-</article>
-
+<blockquote><p>PHP Warning: PHP Startup: Unable to load dynamic library ‘/usr/lib/php5/20090626/sqlite.so’ – /usr/lib/php5/20090626/sqlite.so: cannot open shared object file: No such file or directory in Unknown on line 0</p></blockquote>
 </div>
 
+
+  <footer>
+    <p><strong>Found a typo, post is outdated? Give me a feedback in comments below, thanks!</strong></p>
+    <p class="meta">
+      
   
+
+<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="byline author vcard">Posted by <span itemprop="name" class="fn">Konrad Podgórski</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-12-27T17:22:00+01:00" datetime="2011-12-27T17:22:00+01:00" pubdate data-updated="true">Dec 27<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/common-errors/'>Common Errors</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2011/12/27/how-to-no-encoder-has-been-configured-for-account/" title="Previous Post: [How to] No encoder has been configured for account">&laquo; [How to] No encoder has been configured for account</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/12/29/how-to-symfony-2-please-install-the-intl-extension-for-full-localization-capabilities/" title="Next Post: [How to] Symfony 2, Please install the ‘intl’ extension for full localization capabilities">[How to] Symfony 2, Please install the ‘intl’ extension for full localization capabilities &raquo;</a>
+      
+    </p>
+  </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -230,7 +275,10 @@
       var disqus_shortname = 'konradpodgorski';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/';
+        var disqus_url = 'http://konradpodgorski.com/blog/2011/12/27/fix-php-warning-php-startup-unable-to-load-dynamic-library-usrlibphp520090626sqlite-so/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
