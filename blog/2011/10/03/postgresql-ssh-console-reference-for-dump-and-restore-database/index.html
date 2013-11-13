@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>PostgreSQL full backup and restore reference - Konrad Podgórski - Web Developer</title>
+  <meta name="author" content="Konrad Podgórski">
+
+  
+  <meta name="description" content="Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console. Feel free to enhance them by creating &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="http://konradpodgorski.com/atom.xml" rel="alternate" title="Konrad Podgórski - Web Developer" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-21178598-2']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Konrad Podgórski - Web Developer</a></h1>
+  
+    <h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="http://konradpodgorski.com/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:konradpodgorski.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/skills">Skills</a></li>
+  <li><a href="/about-me">About me</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article  itemscope itemtype="http://schema.org/Article"  class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title" itemprop="name" >PostgreSQL Full Backup and Restore Reference</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-10-03T16:23:00+02:00" datetime="2011-10-03T16:23:00+02:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2011</time>
+        
+           | <a href="#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console.</p>
+
+<p>Feel free to enhance them by creating automatic scripts, sample codes in comments are welcome :)</p>
+
+<h2>Full Backup selected database using pg_dump in PostreSQL</h2>
+
+<p>example usage:</p>
+
+<pre><code>pg_dump -i -h localhost -p 5432 -U postgres -F t -b -v -f "~/backups/backup-file.backup" database_name_to_backup
+</code></pre>
+
+<p>used arguments</p>
+
+<pre><code>-i, –ignore-version proceed even when server version mismatches. Useful while migrating data between servers.
+-h localhost, host to connect, can be IP address
+-p 5432, default port used by PostgreSQL
+-U postgres, this is default username, make sure user has rights to backup database
+-F t, -format used for backup, I suggest always using "t" (tar), other options are listed below
+-b, –blobs include large objects in dump
+-v, –verbose
+-f "~/backups/test-database.backup", file where backup will be stored
+database_name_to_backup, database name which we want to backup
+</code></pre>
+
+<p><em>in windows environment use pg_dump.exe instead</em></p>
+
+<p>If you get following error:</p>
+
+<blockquote><p>pg_dump: [tar archiver] could not open TOC file &ldquo;~/backups/test-database.backup&rdquo; for output: No such file or directory</p></blockquote>
+
+<p>There are 2 possible cause to this problem</p>
+
+<ul>
+<li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li>
+<li>Create directory “/home/ec2-user/backups”, backup file is created automatically but directories are not!</li>
+</ul>
+
+
+<p>This is just a example, correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
+
+<h3>Complete help for pg_dump</h3>
+
+<p>To get list of commands for pg_dump just type</p>
+
+<pre><code>pg_dump -?
+
+-p, –port=PORT database server port number
+-i, –ignore-version proceed even when server version mismatches
+-h, –host=HOSTNAME database server host or socket directory
+-U, –username=NAME connect as specified database user
+-W, –password force password prompt (should happen automatically)
+-d, –dbname=NAME connect to database name
+-v, –verbose verbose mode
+-F, –format=c|t|p output file format (custom, tar, plain text)
+-c, –clean clean (drop) schema prior to create
+-b, –blobs include large objects in dump
+-v, –verbose verbose mode
+-f, –file=FILENAME output file name
+</code></pre>
+
+<h2>Restore, load data using pg_restore</h2>
+
+<pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
+</code></pre>
+
+<p>To get list of commands for pg_restore just type</p>
+
+<pre><code>pg_restore -?
+
+
+
+-p, –port=PORT database server port number
+-i, –ignore-version proceed even when server version mismatches
+-h, –host=HOSTNAME database server host or socket directory
+-U, –username=NAME connect as specified database user
+-W, –password force password prompt (should happen automatically)
+-d, –dbname=NAME connect to database name
+-v, –verbose verbose mode
+</code></pre>
+</div>
+
+
+  <footer>
+    <p><strong>Found a typo, post is outdated? Give me a feedback in comments below, thanks!</strong></p>
+    <p class="meta">
+      
+  
+
+<span itemprop="author" itemscope itemtype="http://schema.org/Person" class="byline author vcard">Posted by <span itemprop="name" class="fn">Konrad Podgórski</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2011-10-03T16:23:00+02:00" datetime="2011-10-03T16:23:00+02:00" pubdate data-updated="true">Oct 3<span>rd</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/postgresql/'>postgresql</a>, <a class='category' href='/blog/categories/reference/'>reference</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/" >Tweet</a>
+  
+  
+  <div class="g-plusone" data-size="medium"></div>
+  
+  
+    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2011/10/07/how-to-change-wp-content-folder-name-in-wordpress/" title="Next Post: How to change wp-content folder name in WordPress">How to change wp-content folder name in WordPress &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/">How to Validate Emails Outside of Form With Symfony Validator Component</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/23/guide-how-to-configure-server-for-symfony/">Step by Step Guide How to Configure Server for PHP / Symfony Project</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/">Method "getFlashes" for Object "Symfony\Component\HttpFoundation\Session\Session" Does Not Exist</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">How I Migrated My Blog From Wordpress to Octopress</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/konradpodgorski">@konradpodgorski</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'konradpodgorski',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+
+<section class="googleplus">
+  <h1>
+    <a href="https://plus.google.com/114997465791213403444?rel=author">
+      <img src="http://www.google.com/images/icons/ui/gprofile_button-32.png" width="32" height="32">
+      Google+
+    </a>
+  </h1>
+</section>
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Konrad Podgórski -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'konradpodgorski';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/';
+        var disqus_url = 'http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id; js.async = true;
+  js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

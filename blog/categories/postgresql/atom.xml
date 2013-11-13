@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: postgresql | Konrad Podgórski - Web Developer]]></title>
+  <link href="http://konradpodgorski.com/blog/categories/postgresql/atom.xml" rel="self"/>
+  <link href="http://konradpodgorski.com/"/>
+  <updated>2013-11-13T11:13:34+01:00</updated>
+  <id>http://konradpodgorski.com/</id>
+  <author>
+    <name><![CDATA[Konrad Podgórski]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[PostgreSQL full backup and restore reference]]></title>
+    <link href="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/"/>
+    <updated>2011-10-03T16:23:00+02:00</updated>
+    <id>http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database</id>
+    <content type="html"><![CDATA[<p>Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console.</p>
+
+<p>Feel free to enhance them by creating automatic scripts, sample codes in comments are welcome :)</p>
+
+<h2>Full Backup selected database using pg_dump in PostreSQL</h2>
+
+<p>example usage:</p>
+
+<pre><code>pg_dump -i -h localhost -p 5432 -U postgres -F t -b -v -f "~/backups/backup-file.backup" database_name_to_backup
+</code></pre>
+
+<p>used arguments</p>
+
+<pre><code>-i, –ignore-version proceed even when server version mismatches. Useful while migrating data between servers.
+-h localhost, host to connect, can be IP address
+-p 5432, default port used by PostgreSQL
+-U postgres, this is default username, make sure user has rights to backup database
+-F t, -format used for backup, I suggest always using "t" (tar), other options are listed below
+-b, –blobs include large objects in dump
+-v, –verbose
+-f "~/backups/test-database.backup", file where backup will be stored
+database_name_to_backup, database name which we want to backup
+</code></pre>
+
+<p><em>in windows environment use pg_dump.exe instead</em></p>
+
+<p>If you get following error:</p>
+
+<blockquote><p>pg_dump: [tar archiver] could not open TOC file &ldquo;~/backups/test-database.backup&rdquo; for output: No such file or directory</p></blockquote>
+
+<p>There are 2 possible cause to this problem</p>
+
+<ul>
+<li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li>
+<li>Create directory “/home/ec2-user/backups”, backup file is created automatically but directories are not!</li>
+</ul>
+
+
+<p>This is just a example, correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
+
+<h3>Complete help for pg_dump</h3>
+
+<p>To get list of commands for pg_dump just type</p>
+
+<pre><code>pg_dump -?
+
+-p, –port=PORT database server port number
+-i, –ignore-version proceed even when server version mismatches
+-h, –host=HOSTNAME database server host or socket directory
+-U, –username=NAME connect as specified database user
+-W, –password force password prompt (should happen automatically)
+-d, –dbname=NAME connect to database name
+-v, –verbose verbose mode
+-F, –format=c|t|p output file format (custom, tar, plain text)
+-c, –clean clean (drop) schema prior to create
+-b, –blobs include large objects in dump
+-v, –verbose verbose mode
+-f, –file=FILENAME output file name
+</code></pre>
+
+<h2>Restore, load data using pg_restore</h2>
+
+<pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
+</code></pre>
+
+<p>To get list of commands for pg_restore just type</p>
+
+<pre><code>pg_restore -?
+
+
+
+-p, –port=PORT database server port number
+-i, –ignore-version proceed even when server version mismatches
+-h, –host=HOSTNAME database server host or socket directory
+-U, –username=NAME connect as specified database user
+-W, –password force password prompt (should happen automatically)
+-d, –dbname=NAME connect to database name
+-v, –verbose verbose mode
+</code></pre>
+]]></content>
+  </entry>
+  
+</feed>

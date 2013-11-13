@@ -2,6 +2,12 @@
 <urlset xmlns='http://www.sitemaps.org/schemas/sitemap/0.9'>
     <url>
         <loc>
+            http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/
+        </loc>
+        <lastmod>2013-11-13T10:44:59+01:00</lastmod>
+    </url>
+    <url>
+        <loc>
             http://konradpodgorski.com/blog/2011/10/07/how-to-change-wp-content-folder-name-in-wordpress/
         </loc>
         <lastmod>2013-10-31T22:54:08+01:00</lastmod>
@@ -158,15 +164,15 @@
     </url>
     <url>
         <loc>http://konradpodgorski.com/</loc>
-        <lastmod>2013-11-03T13:16:20+01:00</lastmod>
+        <lastmod>2013-11-13T10:44:59+01:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.com/blog/archives/</loc>
-        <lastmod>2013-11-03T13:16:20+01:00</lastmod>
+        <lastmod>2013-11-13T10:44:59+01:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.com/about-me/</loc>
-        <lastmod>2013-11-12T23:15:58+01:00</lastmod>
+        <lastmod>2013-11-13T10:44:59+01:00</lastmod>
     </url>
     <url>
         <loc>http://konradpodgorski.com/robots.txt</loc>
@@ -174,6 +180,6 @@
     </url>
     <url>
         <loc>http://konradpodgorski.com/skills/</loc>
-        <lastmod>2013-11-12T23:06:20+01:00</lastmod>
+        <lastmod>2013-11-13T10:44:59+01:00</lastmod>
     </url>
 </urlset>
