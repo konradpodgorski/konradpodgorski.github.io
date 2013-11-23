@@ -9,7 +9,7 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console. Feel free to enhance them by creating &hellip;">
+  <meta name="description" content="Here is a list of commands used by me most frequently to manage importing/exporting databases in PostgreSql using console. Feel free to enhance them &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,9 +108,9 @@
   </header>
 
 
-<div class="entry-content"><p>Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console.</p>
+<div class="entry-content"><p>Here is a list of commands used by me most frequently to manage importing/exporting databases in PostgreSql using console.</p>
 
-<p>Feel free to enhance them by creating automatic scripts, sample codes in comments are welcome :)</p>
+<p>Feel free to enhance them by creating automatic scripts. Sample codes in comments are welcome :)</p>
 
 <h2>Full Backup selected database using pg_dump in PostreSQL</h2>
 
@@ -134,11 +134,11 @@ database_name_to_backup, database name which we want to backup
 
 <p><em>in windows environment use pg_dump.exe instead</em></p>
 
-<p>If you get following error:</p>
+<p>If you get the following error:</p>
 
 <blockquote><p>pg_dump: [tar archiver] could not open TOC file &ldquo;~/backups/test-database.backup&rdquo; for output: No such file or directory</p></blockquote>
 
-<p>There are 2 possible cause to this problem</p>
+<p>There are 2 possible causes to this problem</p>
 
 <ul>
 <li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li>
@@ -146,11 +146,11 @@ database_name_to_backup, database name which we want to backup
 </ul>
 
 
-<p>This is just a example, correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
+<p>This is just an example of a correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
 
 <h3>Complete help for pg_dump</h3>
 
-<p>To get list of commands for pg_dump just type</p>
+<p>To get a list of commands for pg_dump just type</p>
 
 <pre><code>pg_dump -?
 
@@ -173,7 +173,7 @@ database_name_to_backup, database name which we want to backup
 <pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
 </code></pre>
 
-<p>To get list of commands for pg_restore just type</p>
+<p>To get a list of commands for pg_restore just type</p>
 
 <pre><code>pg_restore -?
 
@@ -191,7 +191,7 @@ database_name_to_backup, database name which we want to backup
 
 
   <footer>
-    <p><strong>Found a typo, post is outdated? Give me a feedback in comments below, thanks!</strong></p>
+    <p><strong>Found a typo, post is outdated? Give me feedback in comments below, thanks!</strong></p>
     <p class="meta">
       
   

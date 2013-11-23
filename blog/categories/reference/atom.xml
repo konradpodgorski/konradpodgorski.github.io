@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reference | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/reference/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-11-13T11:13:34+01:00</updated>
+  <updated>2013-11-23T22:21:03+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -18,9 +18,9 @@
     <link href="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/"/>
     <updated>2011-10-03T16:23:00+02:00</updated>
     <id>http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database</id>
-    <content type="html"><![CDATA[<p>Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console.</p>
+    <content type="html"><![CDATA[<p>Here is a list of commands used by me most frequently to manage importing/exporting databases in PostgreSql using console.</p>
 
-<p>Feel free to enhance them by creating automatic scripts, sample codes in comments are welcome :)</p>
+<p>Feel free to enhance them by creating automatic scripts. Sample codes in comments are welcome :)</p>
 
 <h2>Full Backup selected database using pg_dump in PostreSQL</h2>
 
@@ -44,11 +44,11 @@ database_name_to_backup, database name which we want to backup
 
 <p><em>in windows environment use pg_dump.exe instead</em></p>
 
-<p>If you get following error:</p>
+<p>If you get the following error:</p>
 
 <blockquote><p>pg_dump: [tar archiver] could not open TOC file &ldquo;~/backups/test-database.backup&rdquo; for output: No such file or directory</p></blockquote>
 
-<p>There are 2 possible cause to this problem</p>
+<p>There are 2 possible causes to this problem</p>
 
 <ul>
 <li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li>
@@ -56,11 +56,11 @@ database_name_to_backup, database name which we want to backup
 </ul>
 
 
-<p>This is just a example, correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
+<p>This is just an example of a correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
 
 <h3>Complete help for pg_dump</h3>
 
-<p>To get list of commands for pg_dump just type</p>
+<p>To get a list of commands for pg_dump just type</p>
 
 <pre><code>pg_dump -?
 
@@ -83,7 +83,7 @@ database_name_to_backup, database name which we want to backup
 <pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
 </code></pre>
 
-<p>To get list of commands for pg_restore just type</p>
+<p>To get a list of commands for pg_restore just type</p>
 
 <pre><code>pg_restore -?
 

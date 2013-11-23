@@ -569,7 +569,7 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
   </header>
 
 
-  <div class="entry-content"><p>I presume you’re using FOSUserBundle with Symfony2, make sure you added to app/config/security.yml these lines</p>
+  <div class="entry-content"><p>I presume you’re using FOSUserBundle with Symfony2, make sure you added the following lines to <code>app/config/security.yml</code></p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -605,7 +605,7 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Other possibility might be that you’re loading bundles in wrong order, make sure that SecurityBundle is loaded before FOSUserBundle</p>
+<p>Other possibility might be that you’re loading bundles in a wrong order. Make sure that SecurityBundle is loaded before FOSUserBundle</p>
 
 <p>AppKernel</p>
 
@@ -657,15 +657,15 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 
   <div class="entry-content"><p>wp-content folder contains WordPress themes and plugins, or we just call them extensions, which makes your WordPress different from others.</p>
 
-<p>More or less, we all need to install some to enhance our WordPress system, just like we install softwares on our OS, but it also bring risks. Do not install any untrust extension unless you know exactly what it’s doing.We all heard about viruses and trojans, right? Although WP extensions are open source, people might not take the time to read the code line by line. On the other hand, writing secure code is a skill not every developer learns that well, it’s possible that an useful plugin become a backdoor for hackers. So, be careful to install something new.</p>
+<p>More or less, we all need to install some to enhance our WordPress system, just like we install softwares on our OS, but it also bring risks. Do not install any unknown extension unless you know exactly what it’s doing.We all heard about viruses and trojans, right? Although WP extensions are open source, people might not take the time to read the code line by line. On the other hand, writing secure code is a skill not every developer learns that well, so it’s possible that a useful plugin becomes a backdoor for hackers. So, be careful when you install something new.</p>
 
 <h2>Renaming wp-content folder</h2>
 
-<p>I think WP should make this step a mandatory one at the beginning, and it’s also helpful for hiding that your system is WordPress.</p>
+<p>I think WP should make this step mandatory at the beginning, and it’s also helpful for hiding that your website is powered by Wordpress.</p>
 
-<p>Before renaming the wp-content folder, I should tell that some plugins and themes use “wp-content” directly in the code, which is not supposed. In such cases, these extensions should be fixed at first WP Widget Cache fix this in version 0.25.3, using WP_CONTENT_DIR or WP_CONTENT_URL instead.</p>
+<p>Before renaming the wp-content folder, I should mention that some plugins and themes use “wp-content” directly in the code. In such cases, these extensions should be fixed before changing wp-content name.</p>
 
-<blockquote><p>To check if plugins your wordpress is using are well written and compatible with WordPress API you can run FIND function plugins and themes directory for “wp-content” term. There shouldn’t be any because plugin developers should use content_url() function or WP_CONTENT_DIR constant. Every decent coding IDE has FIND in project function.</p></blockquote>
+<blockquote><p>To check if plugins your wordpress is using are written well and compatible with WordPress API you can run FIND function plugins and themes directory for “wp-content” term. There shouldn’t be any because plugin developers should use content_url() function or WP_CONTENT_DIR constant. Every decent coding IDE offers &ldquo;Find in project&rdquo; function.</p></blockquote>
 
 <p>Open the wp-config.php file in the root folder, and add these lines before this:</p>
 
@@ -689,11 +689,11 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Replace your-content with a new name you like, and replace your-domain with your site domain, then, you can rename “wp-content” folder to the new name.</p>
+<p>Replace <code>your-content</code> with a new name you like, and replace <code>your-domain</code> with your site domain, then, you can rename <code>wp-content</code> folder to the new name.</p>
 
 <h2>Tip for theme and plugin developers</h2>
 
-<p>In your code use content_url() function instead WP_CONTENT_URL, otherwise sooner or later you or some of you clients will run into problems with SSL certificate</p>
+<p>In your code use content_url() function instead WP_CONTENT_URL, otherwise sooner or later you or some of your clients will run into problems with SSL certificate</p>
 
 <p><a href="http://codex.wordpress.org/Function_Reference/content_url">http://codex.wordpress.org/Function_Reference/content_url</a></p>
 </div>
@@ -734,9 +734,9 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
   </header>
 
 
-  <div class="entry-content"><p>Here I list most used by me commands to manage importing/exporting databases in PostgreSql using console.</p>
+  <div class="entry-content"><p>Here is a list of commands used by me most frequently to manage importing/exporting databases in PostgreSql using console.</p>
 
-<p>Feel free to enhance them by creating automatic scripts, sample codes in comments are welcome :)</p>
+<p>Feel free to enhance them by creating automatic scripts. Sample codes in comments are welcome :)</p>
 
 <h2>Full Backup selected database using pg_dump in PostreSQL</h2>
 
@@ -760,11 +760,11 @@ database_name_to_backup, database name which we want to backup
 
 <p><em>in windows environment use pg_dump.exe instead</em></p>
 
-<p>If you get following error:</p>
+<p>If you get the following error:</p>
 
 <blockquote><p>pg_dump: [tar archiver] could not open TOC file &ldquo;~/backups/test-database.backup&rdquo; for output: No such file or directory</p></blockquote>
 
-<p>There are 2 possible cause to this problem</p>
+<p>There are 2 possible causes to this problem</p>
 
 <ul>
 <li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li>
@@ -772,11 +772,11 @@ database_name_to_backup, database name which we want to backup
 </ul>
 
 
-<p>This is just a example, correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
+<p>This is just an example of a correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p>
 
 <h3>Complete help for pg_dump</h3>
 
-<p>To get list of commands for pg_dump just type</p>
+<p>To get a list of commands for pg_dump just type</p>
 
 <pre><code>pg_dump -?
 
@@ -799,7 +799,7 @@ database_name_to_backup, database name which we want to backup
 <pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
 </code></pre>
 
-<p>To get list of commands for pg_restore just type</p>
+<p>To get a list of commands for pg_restore just type</p>
 
 <pre><code>pg_restore -?
 

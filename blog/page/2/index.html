@@ -434,11 +434,11 @@ images/png</p>
   </header>
 
 
-  <div class="entry-content"><p>My recent job was to write Symfony 2 command that copy and transform enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script will be running for days or even weeks.</p>
+  <div class="entry-content"><p>My recent job was to write Symfony 2 command that copies and transforms enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script would be running for days or even weeks.</p>
 
-<p>I found out that when I run my newly created command for while it slowly consume more and more memory.</p>
+<p>I found out that when I run my newly created command it takes a while for it to start gradually consume more and more memory.</p>
 
-<p>It’s always nice to have method like this for monitoring memory usage.</p>
+<p>It’s always nice to have a method like this for monitoring memory usage.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -451,35 +451,37 @@ images/png</p>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Right after start command used around 30MB – not much since I have 8GB right now, normally I wouldn’t even bother to optimize it more.</p>
+<p>Right after the start the command used around 30MB – not much since I have 8GB right now, normally I wouldn’t even bother to optimize it more.</p>
 
-<p>But after a while it reached 40MB, 50MB and kept going, since Ubuntu by default have php memory limit in CLI set to -1 (unlimited) this script could consume whole RAM after couple of days.</p>
+<p>But after a while it reached 40MB, 50MB and kept going and since Ubuntu by default has php memory limit in CLI set to -1 (unlimited) this script could consume the whole RAM after a couple of days.</p>
 
 <p><img src="/wp-content/uploads/2013/01/php-lazy-garbage-collector.png" title="php-lazy-garbage-collector" ></p>
 
-<p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but he doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p>
+<p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but it doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nb">ini_set</span><span class="p">(</span><span class="s1">&#39;memory_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;32M&#39;</span><span class="p">);</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Caused standard exhausted memory limit error, I asked myself why garbage collector didn’t clear unused objects that I could missed?</p>
+<p>caused standard exhausted memory limit error. Then I asked myself why garbage collector didn’t clear unused objects that I could miss?</p>
 
-<p>Ok, it’s not time to be lazy and relay on g. collector, I’ve spent some time adding unset() for every object that was created. That still didn’t help :(</p>
+<p>Ok, it’s not the time to be lazy and relay on g. collector, I spent some time adding unset() for every object that was created. That still didn’t help :(</p>
 
-<p>After hours of debugging I’ve found 3 issues</p>
+<p>After hours of debugging I’ve found 3 issues:</p>
 
-<p>1st issue, lazy Garbage Collector
-If you use infinite loop like I did you should force GC to do it’s job by</p>
+<h3>1st issue, lazy Garbage Collector</h3>
+
+<p>If you use infinite loop like I did you should force GC to do its job by</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 </pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nb">gc_collect_cycles</span><span class="p">();</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>2nd, dirty Entity Manager
-use clear() method once a while, it detaches doctrine objects that are not used any more.</p>
+<h3>2nd, dirty Entity Manager</h3>
+
+<p>Use clear() method once a while, it detaches doctrine objects that are not used any more.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -488,8 +490,9 @@ use clear() method once a while, it detaches doctrine objects that are not used 
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>3rd issue, SQL Logger, this one was the worst to find
-Every time you query database SQL Logger stores information about that, normally it’s not a problem but in infinite running commands every kB counts.</p>
+<h3>3rd issue, SQL Logger, this one was the worst to find</h3>
+
+<p>Every time you query database SQL Logger stores information about that. Normally, it’s not a problem but in commands running  infinitely every KB counts.</p>
 
 <p>You can turn it off like this.</p>
 
