@@ -4,7 +4,7 @@
   <title><![CDATA[Category: PHP | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/php/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2013-12-06T01:30:07+01:00</updated>
+  <updated>2014-02-09T00:11:37+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -548,7 +548,7 @@ short_open_tag = Off
 <pre><code>sudo pear channel-discover pear.twig-project.org
 sudo pear install twig/CTwig
 
-sudo nano /etc/php5/conf.d/twig.ini
+sudo nano /etc/php5/mods-available/twig.ini
 </code></pre>
 
 <p>Paste inside</p>
