@@ -4,7 +4,7 @@
   <title><![CDATA[Category: monolog | Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/blog/categories/monolog/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2014-03-25T11:50:27+01:00</updated>
+  <updated>2014-03-25T11:51:38+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Solution to Couldn't find constant Monolog ogger::DEBUG]]></title>
+    <title type="html"><![CDATA[[Solution] Couldn't find constant Monolog\Logger::DEBUG]]></title>
     <link href="http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/"/>
     <updated>2014-03-25T11:46:00+01:00</updated>
     <id>http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug</id>
