@@ -9,7 +9,8 @@
   <meta name="author" content="Konrad Podgórski">
 
   
-  <meta name="description" content="I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api. This is &hellip;">
+  <meta name="description" content="Note for others having same problem 1
+PHP Warning: constant(): Couldn't find constant Monolog\Logger::DEBUG in [..] /vendor/symfony/monolog-bundle/ &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,54 @@
       <div class="blog-index">
 
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title" itemprop="name" ><a href="/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/">Solution to Couldn&#8217;t Find Constant Monolog ogger::DEBUG</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time itemprop="datePublished" content="2014-03-25T11:46:00+01:00" datetime="2014-03-25T11:46:00+01:00" pubdate data-updated="true">Mar 25<span>th</span>, 2014</time>
+        
+           | <a href="/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/#disqus_thread"
+             data-disqus-identifier="http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/">Comments</a>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Note for others having same problem</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PHP Warning:  constant(): Couldn't find constant Monolog\Logger::DEBUG in [..] /vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/DependencyInjection/MonologExtension.php on line 110</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is because composer version you are running doesn\&rsquo;t support PSR-4. to fix it update your composer with <code>composer self-update</code></p>
+
+<p>Credit:
+<a href="https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo">https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -734,54 +783,6 @@ $sudo rake deploy
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title" itemprop="name" ><a href="/blog/2013/09/01/wtf-of-the-day-d/">WTF of the Day :D</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time itemprop="datePublished" content="2013-09-01T00:00:00+02:00" datetime="2013-09-01T00:00:00+02:00" pubdate data-updated="true">Sep 1<span>st</span>, 2013</time>
-        
-           | <a href="/blog/2013/09/01/wtf-of-the-day-d/#disqus_thread"
-             data-disqus-identifier="http://konradpodgorski.com/blog/2013/09/01/wtf-of-the-day-d/">Comments</a>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Why bother to use forms when you can use routing!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">backend_new_user</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">/admin/new-user/{username}/{password}/{email}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>* of course this is not my code.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -797,6 +798,10 @@ $sudo rake deploy
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/">Solution to Couldn&#8217;t Find Constant Monolog ogger::DEBUG</a>
+      </li>
+    
+      <li class="post">
         <a href="/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/">How to Validate Emails Outside of Form With Symfony Validator Component</a>
       </li>
     
@@ -810,10 +815,6 @@ $sudo rake deploy
     
       <li class="post">
         <a href="/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/">How I Migrated My Blog From Wordpress to Octopress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a>
       </li>
     
   </ul>

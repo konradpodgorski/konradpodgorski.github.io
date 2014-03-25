@@ -4,7 +4,7 @@
   <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
   <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
-  <updated>2014-02-12T16:13:49+01:00</updated>
+  <updated>2014-03-25T11:50:27+01:00</updated>
   <id>http://konradpodgorski.com/</id>
   <author>
     <name><![CDATA[Konrad Podgórski]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Solution to Couldn't find constant Monolog ogger::DEBUG]]></title>
+    <link href="http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/"/>
+    <updated>2014-03-25T11:46:00+01:00</updated>
+    <id>http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug</id>
+    <content type="html"><![CDATA[<p>Note for others having same problem</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PHP Warning:  constant(): Couldn't find constant Monolog\Logger::DEBUG in [..] /vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/DependencyInjection/MonologExtension.php on line 110</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is because composer version you are running doesn\&rsquo;t support PSR-4. to fix it update your composer with <code>composer self-update</code></p>
+
+<p>Credit:
+<a href="https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo">https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[How to validate emails outside of form with Symfony Validator Component]]></title>
@@ -1627,15 +1645,6 @@ Thing is we never used bundle ztec/security-active_directory and CTRL + F on pro
 <p>Source:</p>
 
 <p><a href="http://help.directadmin.com/item.php?id=301">http://help.directadmin.com/item.php?id=301</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Postgresql 9.1 on Debian 6.0]]></title>
-    <link href="http://konradpodgorski.com/blog/2012/11/15/postgresql-9-1-on-debian-6-0/"/>
-    <updated>2012-11-15T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2012/11/15/postgresql-9-1-on-debian-6-0</id>
-    <content type="html"><![CDATA[<p><a href="http://serverfault.com/questions/413211/cannot-install-postgres-9-1-on-a-fresh-debian-6-0">http://serverfault.com/questions/413211/cannot-install-postgres-9-1-on-a-fresh-debian-6-0</a></p>
 ]]></content>
   </entry>
   

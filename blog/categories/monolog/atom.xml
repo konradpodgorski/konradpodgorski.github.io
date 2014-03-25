@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: symfony | Konrad Podgórski - Web Developer]]></title>
-  <link href="http://konradpodgorski.com/blog/categories/symfony/atom.xml" rel="self"/>
+  <title><![CDATA[Category: monolog | Konrad Podgórski - Web Developer]]></title>
+  <link href="http://konradpodgorski.com/blog/categories/monolog/atom.xml" rel="self"/>
   <link href="http://konradpodgorski.com/"/>
   <updated>2014-03-25T11:50:27+01:00</updated>
   <id>http://konradpodgorski.com/</id>
