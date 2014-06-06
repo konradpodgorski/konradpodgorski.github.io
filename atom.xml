@@ -1,153 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
+    <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
+    <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
+    <link href="http://konradpodgorski.com/"/>
+    <updated>2014-06-06T23:45:53+02:00</updated>
+    <id>http://konradpodgorski.com/</id>
+            <author>
+            <name><![CDATA[Konrad Podgórski]]></name>                    </author>
+        <generator uri="http://sculpin.io/">Sculpin</generator>
+            <entry>
+            <title type="html"><![CDATA[[Solution] Couldn&#039;t find constant Monolog\Logger::DEBUG]]></title>
+            <link href="http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug"/>
+            <updated>2014-03-25T11:46:00+01:00</updated>
+            <id>http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug</id>
+            <content type="html"><![CDATA[<p>Note for others having same problem</p>
 
-  <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
-  <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
-  <link href="http://konradpodgorski.com/"/>
-  <updated>2014-06-05T16:17:11+02:00</updated>
-  <id>http://konradpodgorski.com/</id>
-  <author>
-    <name><![CDATA[Konrad Podgórski]]></name>
-    
-  </author>
-  <generator uri="http://octopress.org/">Octopress</generator>
+<pre><code>PHP Warning:  constant(): Couldn't find constant Monolog\Logger::DEBUG in [..] /vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/DependencyInjection/MonologExtension.php on line 110
+</code></pre>
 
-  
-  <entry>
-    <title type="html"><![CDATA[[Solution] Couldn't find constant Monolog\Logger::DEBUG]]></title>
-    <link href="http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug/"/>
-    <updated>2014-03-25T11:46:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug</id>
-    <content type="html"><![CDATA[<p>Note for others having same problem</p>
+<p>This is because composer version you are running doesn\'t support PSR-4. to fix it update your composer with</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>PHP Warning:  constant(): Couldn't find constant Monolog\Logger::DEBUG in [..] /vendor/symfony/monolog-bundle/Symfony/Bundle/MonologBundle/DependencyInjection/MonologExtension.php on line 110</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is because composer version you are running doesn\&rsquo;t support PSR-4. to fix it update your composer with <code>composer self-update</code></p>
+<pre><code>composer self-update
+</code></pre>
 
 <p>Credit:
-<a href="https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo">https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo</a></p>
+https://groups.google.com/forum/?hl=en#!topic/symfony2/8cNR9IBjuDo</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to validate emails outside of form with Symfony Validator Component]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component/"/>
-    <updated>2013-10-29T14:09:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api.
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to validate emails outside of form with Symfony Validator Component]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component"/>
+            <updated>2013-10-29T14:09:00+01:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/29/how-to-validate-emails-outside-of-form-with-symfony-validator-component</id>
+            <content type="html"><![CDATA[<p>I'm building an invitation mechanism where owner of group can invite one or many users by providing email address(es) through rest api.
  This is very simple using Symfony Validator Component, but I noticed strange behavior when running tests. If I do
   not pass any emails I get wrong status code. 200 OK instead of 400 bad request.</p>
 
 <p>After a while I found that using only \Symfony\Component\Validator\Constraints\Email() is not enough. Validator will
  pass null values and empty string, which is obvious wrong in my case.
-  I had to also add NotBlank constraint, don&rsquo;t forget that in future.</p>
+  I had to also add NotBlank constraint, don't forget that in future.</p>
 
-<p>At first I thought that this is a bug, but since it&rsquo;s covered by separate 2 tests here
-<a href="https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35">https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35</a>
+<p>At first I thought that this is a bug, but since it's covered by separate 2 tests here
+https://github.com/symfony/symfony/blob/master/src/Symfony/Component/Validator/Tests/Constraints/EmailValidatorTest.php#L35
 I will leave it as it is.</p>
 
 <p>Credit goes to the functional tests! :)</p>
 
 <p>Snippet for further reference.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="sd">/**</span>
-</span><span class='line'><span class="sd"> * Validates single email (or an array of email addresses</span>
-</span><span class='line'><span class="sd"> *</span>
-</span><span class='line'><span class="sd"> * @param array|string $emails</span>
-</span><span class='line'><span class="sd"> *</span>
-</span><span class='line'><span class="sd"> * @return array</span>
-</span><span class='line'><span class="sd"> */</span>
-</span><span class='line'><span class="k">public</span> <span class="k">function</span> <span class="nf">validateEmails</span><span class="p">(</span><span class="nv">$emails</span><span class="p">){</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nv">$errors</span> <span class="o">=</span> <span class="k">array</span><span class="p">();</span>
-</span><span class='line'>    <span class="nv">$emails</span> <span class="o">=</span> <span class="nb">is_array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">)</span> <span class="o">?</span> <span class="nv">$emails</span> <span class="o">:</span> <span class="k">array</span><span class="p">(</span><span class="nv">$emails</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nv">$validator</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">container</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;validator&#39;</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="nv">$constraints</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\Email</span><span class="p">(),</span>
-</span><span class='line'>        <span class="k">new</span> <span class="nx">\Symfony\Component\Validator\Constraints\NotBlank</span><span class="p">()</span>
-</span><span class='line'>    <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">foreach</span> <span class="p">(</span><span class="nv">$emails</span> <span class="k">as</span> <span class="nv">$email</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="nv">$error</span> <span class="o">=</span> <span class="nv">$validator</span><span class="o">-&gt;</span><span class="na">validateValue</span><span class="p">(</span><span class="nv">$email</span><span class="p">,</span> <span class="nv">$constraints</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nb">count</span><span class="p">(</span><span class="nv">$error</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="nv">$errors</span><span class="p">[]</span> <span class="o">=</span> <span class="nv">$error</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">return</span> <span class="nv">$errors</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="php">    /**
+     * Validates single email (or an array of email addresses
+     *
+     * @param array|string $emails
+     *
+     * @return array
+     */
+    public function validateEmails($emails){
 
+        $errors = array();
+        $emails = is_array($emails) ? $emails : array($emails);
+
+        $validator = $this-&gt;container-&gt;get('validator');
+
+        $constraints = array(
+            new \Symfony\Component\Validator\Constraints\Email(),
+            new \Symfony\Component\Validator\Constraints\NotBlank()
+        );
+
+        foreach ($emails as $email) {
+
+            $error = $validator-&gt;validateValue($email, $constraints);
+
+            if (count($error) &gt; 0) {
+                $errors[] = $error;
+            }
+        }
+
+        return $errors;
+    }
+</code></pre>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Step by step guide how to configure server for PHP / Symfony project]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/"/>
-    <updated>2013-10-23T11:18:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony</id>
-    <content type="html"><![CDATA[<p>I decided to publish notes that I have been gathering lately about configuring servers.
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[Step by step guide how to configure server for PHP / Symfony project]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony"/>
+            <updated>2013-10-23T11:18:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony</id>
+            <content type="html"><![CDATA[<p>I decided to publish notes that I have been gathering lately about configuring servers.
 This is a complete guide how to configure server for production usage with Symfony or any PHP project.
 Instruction might seem to you very long and I totally agree with you. It took me few months to finish.</p>
 
 <!-- more -->
 
-
 <p>These steps are about preparing your server for PHP / Symfony application and do not cover code deployment itself.</p>
 
-<p>If you found this useful leave a comment or share link to your friends, it&rsquo;s always good to know that someone (besides Googlebot) actually read this :)</p>
+<p>If you found this useful leave a comment or share link to your friends, it's always good to know that someone (besides Googlebot) actually read this :)</p>
 
-<div class="sharing">
-  
-  <a href="http://konradpodgorski.com//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/" >Tweet</a>
-  
-  
-  <div class="g-plusone" data-size="medium"></div>
-  
-  
-    <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
-  
-</div>
-
+<p><div class="sharing">
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" >Tweet</a>
+      <div class="g-plusone" data-size="medium"></div>
+        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  </div>
+</p>
 
 <p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
-It was tested by me on ~10 machines, however if you find something not working don&rsquo;t hesitate to let me know.
+It was tested by me on ~10 machines, however if you find something not working don't hesitate to let me know.
 I try to help you and correct/expand guide to cover your problem.</strong></p>
 
 <p>Requirements:</p>
@@ -156,19 +113,17 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>OS: Debian 6.0 or 7.0</li>
 </ul>
 
-
 <p>You will get server with:</p>
 
 <ul>
 <li>Nginx (latest stable), using sockets to communicate with PHP rather than TCP/IP</li>
-<li>PHP 5.4 (latest stable)</li>
+<li>PHP 5.4 or 5.5 (latest stable)</li>
 <li>MySQL 5.5 (production settings)</li>
 <li>NodeJS (latest stable), including: Less, Uglify-JS</li>
 <li>Twig C extension</li>
 <li>GIT</li>
 <li>Optional: Zend OPCache, APCu</li>
 </ul>
-
 
 <p>Security:</p>
 
@@ -180,7 +135,6 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>Authorization using ssh keys</li>
 </ul>
 
-
 <p>Other</p>
 
 <ul>
@@ -189,7 +143,6 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>Color prompt</li>
 <li>Removed Apache2</li>
 </ul>
-
 
 <h1>Step by step guide how to configure server for PHP / Symfony project</h1>
 
@@ -202,9 +155,8 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <ul>
 <li>SERVERIPADDRESS to your actual IPv4 ip address</li>
 <li>NONPRIVILAGEUNIXUSERNAME to unix username you want to use, e.g. konrad</li>
-<li>APPDOMAINNAME to domain name without <a href="http://">http://</a> and trailing slash e.g. konradpodgorski.com</li>
+<li>APPDOMAINNAME to domain name without http:// and trailing slash e.g. konradpodgorski.com</li>
 </ul>
-
 
 <h3>Start</h3>
 
@@ -339,7 +291,7 @@ nano .ssh/authorized_keys
 <pre><code>#force_color_prompt=yes
 </code></pre>
 
-<h3>fail2ban &ndash; solution for brute force attacks</h3>
+<h3>fail2ban - solution for brute force attacks</h3>
 
 <pre><code>sudo apt-get install fail2ban
 </code></pre>
@@ -390,9 +342,11 @@ sudo apt-get install -y gcc g++ make
 <pre><code>sudo reboot
 </code></pre>
 
-<h3>DotDeb</h3>
+<h2 id="dotdeb">Dotdeb</h2>
 
-<p>DotDeb is reliable and up to date repository for most of packages required in web server</p>
+<p>DotDeb is a reliable and up to date repository for most of packages required in web server</p>
+
+<p>Instruction was copied from official DotDeb site <a href="http://www.dotdeb.org/instructions/">http://www.dotdeb.org/instructions/</a></p>
 
 <p>First add the dotdeb repo to your sources.list file:</p>
 
@@ -413,6 +367,24 @@ deb-src http://packages.dotdeb.org wheezy all
 deb-src http://packages.dotdeb.org squeeze all
 </code></pre>
 
+<p>If you want to install :</p>
+
+<ul>
+<li>PHP 5.5 on Debian 7.0 “Wheezy”, add these two lines too :</li>
+</ul>
+
+<pre><code>deb http://packages.dotdeb.org wheezy-php55 all
+deb-src http://packages.dotdeb.org wheezy-php55 all
+</code></pre>
+
+<ul>
+<li>PHP 5.4 on Debian 6.0 “Squeeze”, add these two lines too :</li>
+</ul>
+
+<pre><code>deb http://packages.dotdeb.org squeeze-php54 all
+deb-src http://packages.dotdeb.org squeeze-php54 all
+</code></pre>
+
 <p>Next, add the GnuPG key to your distribution:</p>
 
 <pre><code>wget http://www.dotdeb.org/dotdeb.gpg
@@ -421,24 +393,19 @@ cat dotdeb.gpg | sudo apt-key add -
 
 <p>Update APT:</p>
 
-<pre><code>sudo apt-get update
+<pre><code class="bash">sudo apt-get update
 </code></pre>
 
-<p>Ref: <a href="http://www.dotdeb.org/instructions/">http://www.dotdeb.org/instructions/</a></p>
+<h2 id="nginx">NGINX</h2>
 
-<h3>PHP 5</h3>
+<p>You probably won't need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p>
 
-<pre><code>sudo apt-get install -y php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd php5-intl php5-curl php5-dev
+<pre><code class="bash">sudo apt-get install nginx-light
 </code></pre>
 
-<h3>NGINX</h3>
+<h3>NGINX - General Configuration</h3>
 
-<p>You probably won&rsquo;t need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p>
-
-<pre><code>sudo apt-get install nginx-light
-</code></pre>
-
-<h3>NGINX &ndash; General Configuration</h3>
+<p><strong>Note:</strong> set <code>worker_processes 2;</code> to the number of cpu cores your server has</p>
 
 <pre><code>#/etc/nginx/nginx.conf
 user www-data;
@@ -471,16 +438,17 @@ http {
 }
 </code></pre>
 
-<h3>NGINX &ndash; configuration specific for application</h3>
+<h3>NGINX - configuration specific for application</h3>
 
 <p>create configuration file</p>
 
-<pre><code>sudo nano /etc/nginx/sites-available/APPDOMAINNAME
+<pre><code class="bash">sudo nano /etc/nginx/sites-available/APPDOMAINNAME
 </code></pre>
 
 <p>edit #/etc/nginx/sites-available/APPDOMAINNAME</p>
 
-<pre><code>upstream php5-fpm {
+<pre><code class="conf"># /etc/nginx/sites-available/APPDOMAINNAME
+upstream php5-fpm {
     server unix:/var/run/php5-fpm.sock;
 }
 
@@ -525,7 +493,7 @@ server {
 
 <p>Enable site</p>
 
-<pre><code>sudo ln -s /etc/nginx/sites-available/APPDOMAINNAME /etc/nginx/sites-enabled/APPDOMAINNAME
+<pre><code class="bash">sudo ln -s /etc/nginx/sites-available/APPDOMAINNAME /etc/nginx/sites-enabled/APPDOMAINNAME
 </code></pre>
 
 <p>Remove default</p>
@@ -533,9 +501,19 @@ server {
 <pre><code>sudo rm /etc/nginx/sites-enabled/default
 </code></pre>
 
-<h3>PHP5-FPM</h3>
+<h2 id="php-fpm">PHP5-FPM</h2>
 
-<p>Edit</p>
+<p>Installing required packages</p>
+
+<pre><code class="bash">sudo apt-get install -y php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd php5-intl php5-curl php5-dev
+</code></pre>
+
+<h3>pool.d/www.conf</h3>
+
+<p><strong>Update (June 2014):</strong> since the time I created this guide php5-fpm team changed <code>/etc/php5/fpm/pool.d/www.conf</code> default settings to described below. You don't have to change anything from this section. I'm leaving it as a reference in case someone use old config.</p>
+
+<p><strike>
+Edit</p>
 
 <pre><code># /etc/php5/fpm/pool.d/www.conf
 </code></pre>
@@ -559,9 +537,11 @@ group = www-data
 <pre><code>listen = /var/run/php5-fpm.sock
 </code></pre>
 
-<h3>PHP.ini configuration</h3>
+<p></strike></p>
 
-<p>FPM (used by web server &ndash; Nginx)</p>
+<h3>php.ini configuration</h3>
+
+<p>FPM (used by web server - Nginx)</p>
 
 <pre><code># /etc/php5/fpm/php.ini
 
@@ -682,13 +662,13 @@ innodb_file_per_table
 </code></pre>
 
 <p>Install MySQL Workbench for secure managing your database over a SSH tunnel.
-<a href="http://www.mysql.com/products/workbench/">http://www.mysql.com/products/workbench/</a></p>
+http://www.mysql.com/products/workbench/</p>
 
 <p><em>DO NOT expose your mysql to outside world nor install web management tools like PhpMyAdmin, they were great few years ago. Now we have a better solutions.</em></p>
 
 <h3>NodeJS</h3>
 
-<p><strong>optional &ndash; I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></p>
+<p><strong>optional - I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></p>
 
 <p>This is a common fact that NodeJS in Debian/Ubuntu is seriously outdated. Installing from source is nice and easy.</p>
 
@@ -700,7 +680,7 @@ sudo apt-get install -y gcc g++ make
 
 <p><em>Get source and install</em></p>
 
-<p>Sadly there are no permalink for latest stable version so you are on your own with that. Go to <a href="http://nodejs.org/dist/latest/">http://nodejs.org/dist/latest/</a> and change version</p>
+<p>Sadly there are no permalink for latest stable version so you are on your own with that. Go to http://nodejs.org/dist/latest/ and change version</p>
 
 <pre><code>wget http://nodejs.org/dist/latest/node-v0.10.21.tar.gz
 tar -zxvf node-v0.10.21.tar.gz
@@ -730,7 +710,7 @@ sudo make install
 <pre><code>sudo service apache2 stop
 </code></pre>
 
-<p>We don&rsquo;t need apache2 so remove it</p>
+<p>We don't need apache2 so remove it</p>
 
 <pre><code>sudo apt-get remove apache2
 </code></pre>
@@ -747,9 +727,9 @@ sudo make install
 sudo nano /var/www/.ssh/authorized_keys
 </code></pre>
 
-<p><strong>It&rsquo;s super important that owner and group of whole .ssh should be root. This way with read permission user www-data will be able to read public key but won&rsquo;t be able to add new one or edit existing.</strong></p>
+<p><strong>It's super important that owner and group of whole .ssh should be root. This way with read permission user www-data will be able to read public key but won't be able to add new one or edit existing.</strong></p>
 
-<p>With this we won&rsquo;t give www-data any more permissions than it already has.</p>
+<p>With this we won't give www-data any more permissions than it already has.</p>
 
 <h3>Directory for application</h3>
 
@@ -767,32 +747,32 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>Also a Curl is required if you are using Capifony for deployment</p>
 
-<p>   sudo apt-get install curl</p>
+<p>sudo apt-get install curl</p>
 
 <h3>Test everything by restarting server</h3>
 
 <pre><code>sudo reboot
 </code></pre>
 
-<h1>That&rsquo;s it!</h1>
+<h1>That's it!</h1>
 
 <p>Thank you for taking time to read this guide.</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist/"/>
-    <updated>2013-10-22T12:34:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist</id>
-    <content type="html"><![CDATA[<p>Quick reference for people upgrading Symfony</p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[Method &quot;getFlashes&quot; for object &quot;Symfony\Component\HttpFoundation\Session\Session&quot; does not exist]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist"/>
+            <updated>2013-10-22T12:34:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/22/method-getflashes-for-object-symfony-slash-component-slash-httpfoundation-slash-session-slash-session-does-not-exist</id>
+            <content type="html"><![CDATA[<p>Quick reference for people upgrading Symfony</p>
 
 <p>Error</p>
 
-<blockquote><p>Method &ldquo;getFlashes&rdquo; for object &ldquo;Symfony\Component\HttpFoundation\Session\Session&rdquo; does not exist</p></blockquote>
+<blockquote>
+  <p>Method "getFlashes" for object "Symfony\Component\HttpFoundation\Session\Session" does not exist</p>
+</blockquote>
 
 <!-- more -->
-
 
 <p>Change</p>
 
@@ -806,58 +786,51 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>Before</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{% for key, message in app.session.getFlashes() %}
-</span><span class='line'>&lt;div class="alert alert-{{ key }}" style="margin-top: 3px;"&gt;
-</span><span class='line'>    &lt;a class="close" data-dismiss="alert"&gt;×&lt;/a&gt;
-</span><span class='line'>    &lt;strong&gt;{{ ('alert_message.' ~ key)|trans }}&lt;/strong&gt; {{ message }}
-</span><span class='line'>&lt;/div&gt;
-</span><span class='line'>{% endfor %}</span></code></pre></td></tr></table></div></figure>
+<p></p>
 
+<pre><code>    {% for key, message in app.session.getFlashes() %}
+    &lt;div class="alert alert-{{ key }}" style="margin-top: 3px;"&gt;
+        &lt;a class="close" data-dismiss="alert"&gt;×&lt;/a&gt;
+        &lt;strong&gt;{{ ('alert_message.' ~ key)|trans }}&lt;/strong&gt; {{ message }}
+    &lt;/div&gt;
+    {% endfor %}
+</code></pre>
+
+<p></p>
 
 <p>After change</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>{% for key, message in app.session.get('flashes') %}
-</span><span class='line'>&lt;div class="alert alert-{{ key }}"&gt;
-</span><span class='line'>    &lt;a class="close" data-dismiss="alert"&gt;×&lt;/a&gt;
-</span><span class='line'>    &lt;strong&gt;{{ ('alert_message.' ~ key) | trans }}&lt;/strong&gt; {{ message | trans }}
-</span><span class='line'>&lt;/div&gt;
-</span><span class='line'>{% endfor %}</span></code></pre></td></tr></table></div></figure>
+<p></p>
 
+<pre><code>    {% for key, message in app.session.get('flashes') %}
+    &lt;div class="alert alert-{{ key }}"&gt;
+        &lt;a class="close" data-dismiss="alert"&gt;×&lt;/a&gt;
+        &lt;strong&gt;{{ ('alert_message.' ~ key) | trans }}&lt;/strong&gt; {{ message | trans }}
+    &lt;/div&gt;
+    {% endfor %}
+</code></pre>
 
-<p>That&rsquo;s it</p>
+<p></p>
+
+<p>That's it</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How I migrated my blog from Wordpress to Octopress]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/"/>
-    <updated>2013-10-21T08:40:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress</id>
-    <content type="html"><![CDATA[<p>Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting</p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How I migrated my blog from Wordpress to Octopress]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress"/>
+            <updated>2013-10-21T08:40:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress</id>
+            <content type="html"><![CDATA[<p>Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting</p>
 
 <p>Reason for this change is probably the same as yours, person who reads this</p>
 
 <ul>
 <li>Wordpress sucks at formatting code</li>
-<li>Most of my &ldquo;notes&rdquo; and &ldquo;readme&rdquo; from various projects are markdown files, so if I decided to publish one of them, copy paste wasn&rsquo;t enough</li>
-<li>3rd, and probably most important. &ldquo;Hey, we are programmers&rdquo; we can&rsquo;t use Wordpress ;&ndash;)</li>
+<li>Most of my "notes" and "readme" from various projects are markdown files, so if I decided to publish one of them, copy paste wasn't enough</li>
+<li>3rd, and probably most important. "Hey, we are programmers" we can't use Wordpress ;-)</li>
 </ul>
 
-
 <!-- more -->
-
 
 <p>If you have more reasons, fell free to give a comment below.</p>
 
@@ -865,7 +838,7 @@ sudo chown www-data:www-data /var/www/.composer
 
 <h2>Installing Octopress</h2>
 
-<p><a href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to setup Octopress on Ubuntu</a></p>
+<p><a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to setup Octopress on Ubuntu</a></p>
 
 <h2>Migrating permalinks</h2>
 
@@ -874,7 +847,7 @@ sudo chown www-data:www-data /var/www/.composer
 <pre><code>/blog/:id/:title
 </code></pre>
 
-<p>while it was ok back then, because I could modify title without loosing back links, with Octopress ids aren&rsquo;t used anymore.</p>
+<p>while it was ok back then, because I could modify title without loosing back links, with Octopress ids aren't used anymore.</p>
 
 <p>I decided to go with standard permalink structure</p>
 
@@ -883,19 +856,19 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>Ok, but problem is</p>
 
-<p>Now it&rsquo;s time to get old Wordpress links working in Octopress</p>
+<p>Now it's time to get old Wordpress links working in Octopress</p>
 
 <h2><a name="redirect-301-on-github-pages"></a>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
 
 <p>We want to keep old links working. Best solution would be 301 redirect all old posts.</p>
 
-<p>Unfortunately this cannot be done the &ldquo;HTTP way&rdquo; by sending proper response headers (without JS) on Github pages. But there is a solution for that.</p>
+<p>Unfortunately this cannot be done the "HTTP way" by sending proper response headers (without JS) on Github pages. But there is a solution for that.</p>
 
 <p>First, include an entire Wordpress blog in read only mode.</p>
 
 <p>Dump an entire Wordpress blog to your disk using wget</p>
 
-<p><a href="http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></p>
+<p><a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></p>
 
 <p>In my case all downloaded posts were in /blog directory, so to get them still working on Octopress I had to copy</p>
 
@@ -918,12 +891,9 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>Now edit each <code>/:title/index.html</code> file and put these inside <code>&lt;head&gt;</code></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;refresh&quot;</span> <span class="na">content=</span><span class="s">&quot;0; url=http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/&quot;</span><span class="nt">&gt;</span>
-</span><span class='line'><span class="nt">&lt;link</span> <span class="na">rel=</span><span class="s">&quot;canonical&quot;</span> <span class="na">href=</span><span class="s">&quot;http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/&quot;</span> <span class="nt">/&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="html">    &lt;meta http-equiv="refresh" content="0; url=http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/"&gt;
+    &lt;link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/" /&gt;
+</code></pre>
 
 <p>Unfortunately you need to do this manually in most cases.</p>
 
@@ -939,10 +909,9 @@ sudo chown www-data:www-data /var/www/.composer
 <ol>
 <li>Register on Disqus</li>
 <li>On still working Wordpress blog change permalink structure to the same as your new Octopress blog (very important!)</li>
-<li>With changed structure install &ldquo;Disqus&rdquo; plugin, log in and export current Comments.</li>
+<li>With changed structure install "Disqus" plugin, log in and export current Comments.</li>
 <li>Because we changed permalink structure all comments will get mapped to the one that will be used in Octopress</li>
 </ol>
-
 
 <p>edit _config.yml and enter your shortname</p>
 
@@ -951,18 +920,17 @@ disqus_short_name: konradpodgorski
 disqus_show_comment_count: true
 </code></pre>
 
-<h3>That&rsquo;s it</h3>
+<h3>That's it</h3>
 
 <p>for now</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to recursively download an entire website using WGET]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/"/>
-    <updated>2013-10-20T18:54:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget</id>
-    <content type="html"><![CDATA[<p>Wget snippet to recursively download an entire website using WGET</p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to recursively download an entire website using WGET]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget"/>
+            <updated>2013-10-20T18:54:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget</id>
+            <content type="html"><![CDATA[<p>Wget snippet to recursively download an entire website using WGET</p>
 
 <pre><code>wget http://example.com \
  --domains example.com \
@@ -975,8 +943,7 @@ disqus_show_comment_count: true
 
 <!-- more -->
 
-
-<p>Dump from wget &mdash;help for further reference</p>
+<p>Dump from wget --help for further reference</p>
 
 <pre><code>Usage: wget [OPTION]... [URL]...
 
@@ -1144,14 +1111,13 @@ Recursive accept/reject:
   -np, --no-parent                 don't ascend to the parent directory.
 </code></pre>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to Setup Octopress on Ubuntu]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/"/>
-    <updated>2013-10-20T16:54:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
-    <content type="html"><![CDATA[<p>Guide was copied from <a href="http://stackoverflow.com/a/14353864/1562884">http://stackoverflow.com/a/14353864/1562884</a> for my reference</p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to Setup Octopress on Ubuntu]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu"/>
+            <updated>2013-10-20T16:54:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
+            <content type="html"><![CDATA[<p>Guide was copied from http://stackoverflow.com/a/14353864/1562884 for my reference</p>
 
 <p>Helped me with this error during configuring Octopress on Ubuntu</p>
 
@@ -1189,463 +1155,109 @@ $sudo rake generate
 $sudo rake deploy
 </code></pre>
 
-<p>Hope it&rsquo;s helpful for you, thanks</p>
+<p>Hope it's helpful for you, thanks</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to implement a secure choice form field with Symfony]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony/"/>
-    <updated>2013-10-19T19:17:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
-    <content type="html"><![CDATA[<p>Create Util class for your entity, in my case entity is called &lsquo;Brand&rsquo;</p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to implement a secure choice form field with Symfony]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony"/>
+            <updated>2013-10-19T19:17:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
+            <content type="html"><![CDATA[<p>Create Util class for your entity, in my case entity is called 'Brand'</p>
 
 <p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">namespace</span> <span class="nx">KP\Brand\MainBundle\Util</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">use</span> <span class="nx">KP\Brand\MainBundle\Entity\Brand</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">BrandUtil</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="sd">/**</span>
-</span><span class='line'><span class="sd">     * @param bool $withLabels</span>
-</span><span class='line'><span class="sd">     *</span>
-</span><span class='line'><span class="sd">     * @return array</span>
-</span><span class='line'><span class="sd">     */</span>
-</span><span class='line'>    <span class="k">public</span> <span class="k">static</span> <span class="k">function</span> <span class="nf">getAvailableLanguageCodes</span><span class="p">(</span><span class="nv">$withLabels</span> <span class="o">=</span> <span class="k">false</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="nv">$choices</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>            <span class="s1">&#39;pl&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Polish&#39;</span><span class="p">,</span>
-</span><span class='line'>            <span class="s1">&#39;en&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;English&#39;</span>
-</span><span class='line'>        <span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="nv">$withLabels</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nv">$choices</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>            <span class="k">return</span> <span class="nb">array_keys</span><span class="p">(</span><span class="nv">$choices</span><span class="p">);</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="php">    &lt;?php
 
+    namespace KP\Brand\MainBundle\Util;
+
+    use KP\Brand\MainBundle\Entity\Brand;
+
+    class BrandUtil
+    {
+
+        /**
+         * @param bool $withLabels
+         *
+         * @return array
+         */
+        public static function getAvailableLanguageCodes($withLabels = false)
+        {
+            $choices = array(
+                'pl' =&gt; 'Polish',
+                'en' =&gt; 'English'
+            );
+
+            if ($withLabels) {
+                return $choices;
+            } else {
+                return array_keys($choices);
+            }
+        }
+    }
+</code></pre>
 
 <p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
 
 <p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="o">&lt;?</span><span class="nx">php</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">namespace</span> <span class="nx">KP\Brand\MainBundle\Form</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">use</span> <span class="nx">KP\Brand\MainBundle\Util\BrandUtil</span><span class="p">;</span>
-</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\Form\AbstractType</span><span class="p">;</span>
-</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\Form\FormBuilderInterface</span><span class="p">;</span>
-</span><span class='line'><span class="k">use</span> <span class="nx">Symfony\Component\OptionsResolver\OptionsResolverInterface</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">BrandType</span> <span class="k">extends</span> <span class="nx">AbstractType</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="sd">/**</span>
-</span><span class='line'><span class="sd">     * @param FormBuilderInterface $builder</span>
-</span><span class='line'><span class="sd">     * @param array $options</span>
-</span><span class='line'><span class="sd">     */</span>
-</span><span class='line'>    <span class="k">public</span> <span class="k">function</span> <span class="nf">buildForm</span><span class="p">(</span><span class="nx">FormBuilderInterface</span> <span class="nv">$builder</span><span class="p">,</span> <span class="k">array</span> <span class="nv">$options</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">{</span>
-</span><span class='line'>        <span class="nv">$builder</span>
-</span><span class='line'>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">)</span>
-</span><span class='line'>            <span class="o">-&gt;</span><span class="na">add</span><span class="p">(</span>
-</span><span class='line'>                <span class="s1">&#39;languageCode&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="s1">&#39;choice&#39;</span><span class="p">,</span>
-</span><span class='line'>                <span class="k">array</span><span class="p">(</span>
-</span><span class='line'>                    <span class="s1">&#39;label&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Language&#39;</span><span class="p">,</span>
-</span><span class='line'>                    <span class="s1">&#39;choices&#39;</span> <span class="o">=&gt;</span> <span class="nx">BrandUtil</span><span class="o">::</span><span class="na">getAvailableLanguageCodes</span><span class="p">(</span><span class="k">true</span><span class="p">),</span>
-</span><span class='line'>                <span class="p">)</span>
-</span><span class='line'>            <span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
+<pre><code class="php">    &lt;?php
 
+    namespace KP\Brand\MainBundle\Form;
+
+    use KP\Brand\MainBundle\Util\BrandUtil;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    class BrandType extends AbstractType
+    {
+        /**
+         * @param FormBuilderInterface $builder
+         * @param array $options
+         */
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                -&gt;add('name')
+                -&gt;add(
+                    'languageCode',
+                    'choice',
+                    array(
+                        'label' =&gt; 'Language',
+                        'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
+                    )
+                );
+        }
+
+    }
+</code></pre>
 
 <p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nx">KP\Brand\MainBundle\Entity\Brand</span><span class="o">:</span>
-</span><span class='line'><span class="nx">properties</span><span class="o">:</span>
-</span><span class='line'>    <span class="nx">languageCode</span><span class="o">:</span>
-</span><span class='line'>        <span class="o">-</span> <span class="nx">Choice</span><span class="o">:</span> <span class="p">{</span> <span class="nx">callback</span><span class="o">:</span> <span class="p">[</span><span class="nx">KP\Brand\MainBundle\Util\BrandUtil</span><span class="p">,</span> <span class="nx">getAvailableLanguageCodes</span><span class="p">]</span> <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
+<pre><code class="php">    KP\Brand\MainBundle\Entity\Brand:
+    properties:
+        languageCode:
+            - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
+</code></pre>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to handle Angular JS api errors using response interceptors]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/"/>
-    <updated>2013-10-08T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors</id>
-    <content type="html"><![CDATA[<p><a href="http://blog.brunoscopelliti.com/http-response-interceptors">http://blog.brunoscopelliti.com/http-response-interceptors</a></p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to handle Angular JS api errors using response interceptors]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors"/>
+            <updated>2013-10-08T00:00:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors</id>
+            <content type="html"><![CDATA[<p>http://blog.brunoscopelliti.com/http-response-interceptors</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Python 2.7 on Centos]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/09/25/python-2-7-on-centos/"/>
-    <updated>2013-09-25T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/09/25/python-2-7-on-centos</id>
-    <content type="html"><![CDATA[<p><a href="http://toomuchdata.com/2012/06/25/how-to-install-python-2-7-3-on-centos-6-2/">http://toomuchdata.com/2012/06/25/how-to-install-python-2-7-3-on-centos-6-2/</a></p>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[Python 2.7 on Centos]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/09/25/python-2-7-on-centos"/>
+            <updated>2013-09-25T00:00:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/09/25/python-2-7-on-centos</id>
+            <content type="html"><![CDATA[<p>http://toomuchdata.com/2012/06/25/how-to-install-python-2-7-3-on-centos-6-2/</p>
 
 <p>Thanks Daniel for this guide</p>
 ]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[WTF of the day :D]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/09/01/wtf-of-the-day-d/"/>
-    <updated>2013-09-01T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/09/01/wtf-of-the-day-d</id>
-    <content type="html"><![CDATA[<p>Why bother to use forms when you can use routing!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">backend_new_user</span><span class="p-Indicator">:</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">pattern</span><span class="p-Indicator">:</span>        <span class="l-Scalar-Plain">/admin/new-user/{username}/{password}/{email}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>* of course this is not my code.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Monitor your website with Status Monitor]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/08/30/monitor-your-website-with-status-monitor/"/>
-    <updated>2013-08-30T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/08/30/monitor-your-website-with-status-monitor</id>
-    <content type="html"><![CDATA[<p>Recently I launched a simple tool to help me and my colleagues monitor websites we developed.</p>
-
-<p>Its really simple and it will stay this way. You can use it for free.</p>
-
-<p><a href="http://status.konradpodgorski.com/">http://status.konradpodgorski.com/</a></p>
-
-<p>If you like it leave a comment, or even better spread a word around you. Any help promoting tool is welcome!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Enabling autocomplete for PHPUnit in PHP Storm]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm/"/>
-    <updated>2013-08-26T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/08/26/enabling-autocomplete-for-phpunit-in-php-storm</id>
-    <content type="html"><![CDATA[<p>To enable autocomplete in tests add to project External Libraries following path (assuming you used pear channel to install phpunit)</p>
-
-<pre><code>/usr/share/php/PHPUnit
-</code></pre>
-
-<p>Now autocomplete should work in all classes that extends \PHPUnit_Framework_TestCase</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Dropbox for storing backups? This is not what you think]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think/"/>
-    <updated>2013-08-24T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/08/24/dropbox-for-storing-backups-this-is-not-what-you-think</id>
-    <content type="html"><![CDATA[<p>Today I thought that maybe I should upgrade my dropbox account to pro. I don’t really need these 100GB but versioning files would be nice. Especially for keeping KeePass database. Last thing I would want is to lose that.</p>
-
-<p>So I started reading terms of service and found interesting paragraph there.</p>
-
-<blockquote><p>You, and not Dropbox, are responsible for maintaining and protecting all of your stuff. Dropbox will not be liable for any loss or corruption of your stuff, or for any costs or expenses associated with backing up or restoring any of your stuff.</p></blockquote>
-
-<p><a href="https://www.dropbox.com/pricing_terms#terms">https://www.dropbox.com/pricing_terms#terms</a></p>
-
-<p>Cool, so I COULD store my backups there but if something happen it’s MY not their problem, because I could backup my files (right?) :) Where? Maybe on S3? Nope, their TOS probably covers same topic in same way. Funny world, right?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to write better PHP code]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/06/05/how-to-write-better-php-code/"/>
-    <updated>2013-06-05T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/06/05/how-to-write-better-php-code</id>
-    <content type="html"><![CDATA[<p>Simple answer: use automated code inspectors with ruleset (coding standard) that is official for framework you currently use.</p>
-
-<h3>Installing Code Sniffer for PHP</h3>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo pear install PHP_CodeSniffer</span></code></pre></td></tr></table></div></figure>
-
-
-<p>DO NOT use version from other package managers because its seriously outdated at the moment and won’t work with most of IDE’s</p>
-
-<h3>Configure IDE</h3>
-
-<p>Personally I use PHP Storm, if you use other IDE unfortunately you’re on your own</p>
-
-<p><em>File &ndash;> Default Settings &ndash;> PHP &ndash;> Code Sniffer</em></p>
-
-<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/06/php-code-sniffer-configuration.png" title="php-code-sniffer-configuration" ></p>
-
-<h3>Enable in project</h3>
-
-<p>This step has to be repeated in each project, however if you for example develop only Symfony 2 applications you can set it to enabled by default in Default Settings, from this moment each project created will have this validation enabled by default.</p>
-
-<p><em>File &ndash;> Settings &ndash;> Inspections &ndash;> PHP &ndash;> PHP Code Sniffer validation</em></p>
-
-<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/06/php-code-sniffer-validation.png" title="php-code-sniffer-validation" ></p>
-
-<p>In Coding standard select ruleset you want to use</p>
-
-<h3>Ruleset for PSR-2</h3>
-
-<p><a href="https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml">https://github.com/squizlabs/PHP_CodeSniffer/blob/master/CodeSniffer/Standards/PSR2/ruleset.xml</a></p>
-
-<h3>Ruleset for Symfony 2</h3>
-
-<p><a href="https://github.com/opensky/Symfony2-coding-standard">https://github.com/opensky/Symfony2-coding-standard</a>
-If you encounter any problem with this how to please leave a comment so I can improve it. If this post helped you let me know, it’s always nice to know that I could help someone :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Nowe zastosowanie radio buttona według programistów home.pl]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl/"/>
-    <updated>2013-04-22T00:00:00+02:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/04/22/nowe-zastosowanie-radio-buttona-wedlug-programistow-home-pl</id>
-    <content type="html"><![CDATA[<p>Jeden z klientów poprosił mnie o utworzenie dla niego osobnego konta ftp w ramach usługi hostingu na home.pl</p>
-
-<p>Proste? Nie w home.pl</p>
-
-<p>Programiści home.pl chyba nie wiedzą czym różni się radio button od checkbox buttona. Nie ma to jak wolność wyboru. Jeżeli zaznaczymy tę opcję to jedyną opcją jej odznaczenia jest wyjście z formularza lub zabawa firebugiem/web inspectorem.</p>
-
-<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/04/Panel-home.pl_.png" title="Panel home.pl" ></p>
-
-<p>Ale zaraz! dodatkowo jest to wymagane pole. Bardzo ciekawe</p>
-
-<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/04/Panel-home.pl2_.png" title="Panel home.pl2" ></p>
-
-<p>No ale dobrze, gdy już w ramach testu zgodziłem się udostępnić kontu FTP dostęp do całej zawartości serwisu WWW (cokolwiek to znaczy, chyba powinno być serwera?).</p>
-
-<p>Próbujemy się zalogować wykorzystując bezpieczne hasło wygenerowane przez panel home.pl zapisane bezpiecznie w lokalnym keyringu lub po prostu przeniesione metodą kopiuj wklej.</p>
-
-<p>Efekt</p>
-
-<p><strong>530 Login incorrect.</strong></p>
-
-<p>Teraz pewnie liczą, że poświęcę swój czas (= pieniądze), żeby im to zgłosić, a jakiś “wykwalifikowany” Pan (lub Pani) z supportu będą mi tłumaczyć jak używać FTP, nie dzięki!</p>
-
-<p>Jest tyle lepszych alternatyw dla hostingu, czemu home.pl jest taki popularny?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Batch conversion SVG to PNG using ImageMagick]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick/"/>
-    <updated>2013-03-14T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/03/14/batch-conversion-svg-to-png-using-imagemagick</id>
-    <content type="html"><![CDATA[<p>This post is for my personal reference I will improve it in future.</p>
-
-<p>Create 2 folders in project web root:</p>
-
-<p>images/svg
-images/png</p>
-
-<p>Navigate to images/svg and run</p>
-
-<pre><code>for filename in `find . -regex ".*.svg"`; do `convert -background none $filename ../png/$filename.png` ; done
-</code></pre>
-
-<p>Now each file that used to be in a svg format has copy in images/png with suffix .png</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How to avoid memory leaks in Symfony 2 Commands]]></title>
-    <link href="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/"/>
-    <updated>2013-01-18T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands</id>
-    <content type="html"><![CDATA[<p>My recent job was to write Symfony 2 command that copies and transforms enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script would be running for days or even weeks.</p>
-
-<p>I found out that when I run my newly created command it takes a while for it to start gradually consume more and more memory.</p>
-
-<p>It’s always nice to have a method like this for monitoring memory usage.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="k">function</span> <span class="nf">printMemoryUsage</span><span class="p">()</span>
-</span><span class='line'><span class="p">{</span>
-</span><span class='line'>    <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">output</span><span class="o">-&gt;</span><span class="na">writeln</span><span class="p">(</span><span class="nb">sprintf</span><span class="p">(</span><span class="s1">&#39;Memory usage (currently) %dKB/ (max) %dKB&#39;</span><span class="p">,</span> <span class="nx">round</span><span class="p">(</span><span class="nb">memory_get_usage</span><span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">),</span> <span class="nb">memory_get_peak_usage</span><span class="p">(</span><span class="k">true</span><span class="p">)</span> <span class="o">/</span> <span class="mi">1024</span><span class="p">));</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Right after the start the command used around 30MB – not much since I have 8GB right now, normally I wouldn’t even bother to optimize it more.</p>
-
-<p>But after a while it reached 40MB, 50MB and kept going and since Ubuntu by default has php memory limit in CLI set to -1 (unlimited) this script could consume the whole RAM after a couple of days.</p>
-
-<p><img src="http://konradpodgorski.com/wp-content/uploads/2013/01/php-lazy-garbage-collector.png" title="php-lazy-garbage-collector" ></p>
-
-<p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but it doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nb">ini_set</span><span class="p">(</span><span class="s1">&#39;memory_limit&#39;</span><span class="p">,</span> <span class="s1">&#39;32M&#39;</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>caused standard exhausted memory limit error. Then I asked myself why garbage collector didn’t clear unused objects that I could miss?</p>
-
-<p>Ok, it’s not the time to be lazy and relay on g. collector, I spent some time adding unset() for every object that was created. That still didn’t help :(</p>
-
-<p>After hours of debugging I’ve found 3 issues:</p>
-
-<h3>1st issue, lazy Garbage Collector</h3>
-
-<p>If you use infinite loop like I did you should force GC to do its job by</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nb">gc_collect_cycles</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>2nd, dirty Entity Manager</h3>
-
-<p>Use clear() method once a while, it detaches doctrine objects that are not used any more.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span><span class="o">-&gt;</span><span class="na">flush</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span><span class="o">-&gt;</span><span class="na">clear</span><span class="p">();</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>3rd issue, SQL Logger, this one was the worst to find</h3>
-
-<p>Every time you query database SQL Logger stores information about that. Normally, it’s not a problem but in commands running  infinitely every KB counts.</p>
-
-<p>You can turn it off like this.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='php'><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">getContainer</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">get</span><span class="p">(</span><span class="s1">&#39;doctrine&#39;</span><span class="p">)</span>
-</span><span class='line'>                <span class="o">-&gt;</span><span class="na">getEntityManager</span><span class="p">();</span>
-</span><span class='line'><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">em</span><span class="o">-&gt;</span><span class="na">getConnection</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">getConfiguration</span><span class="p">()</span><span class="o">-&gt;</span><span class="na">setSQLLogger</span><span class="p">(</span><span class="k">null</span><span class="p">);</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>If this post helped you let me know by leaving a comment, it’s always nice to know that I could help someone :)</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Composer – Symfony Backdoor? Could not load package ztec/security-active_directory]]></title>
-    <link href="http://konradpodgorski.com/blog/2012/12/27/composer-symfony-backdoor-could-not-load-package-ztec-slash-security-active-directory/"/>
-    <updated>2012-12-27T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2012/12/27/composer-symfony-backdoor-could-not-load-package-ztec-slash-security-active-directory</id>
-    <content type="html"><![CDATA[<p>Today during routine production server update using capifony I got error like this</p>
-
-<pre><code>[RuntimeException]
-  Could not load package ztec/security-active_directory in http://packagist.org: [UnexpectedValueException] Could not parse version constraint v4.0-stable
-
-  [UnexpectedValueException]
-  Could not parse version constraint v4.0-stable
-Thing is we never used bundle ztec/security-active_directory and CTRL + F on project shows 0 results for this string.
-</code></pre>
-
-<p>Does anyone know why composer tries to install ztec/security-active_directory during php composer.phar install?</p>
-
-<p><strong>If you get here by Google please post your thoughts about this in comment, then maybe you could help me solve this issue by providing more information</strong></p>
-
-<p>If you want to use this bundle and get error from above it’s caused by dependency <a href="https://packagist.org/packages/adldap/adldap">https://packagist.org/packages/adldap/adldap</a> and disapered after running php composer.phar self-update</p>
-
-<p>Update #1</p>
-
-<p>Found commit that is cause of this error, but still we don’t have a clue why this bundle is loaded into our project :/</p>
-
-<p><a href="https://github.com/ztec/ZtecSecurityActiveDirectoryBundle/commit/19d2a5569e6585d498b379e21189ee307299b7ac#commitcomment-2318994">https://github.com/ztec/ZtecSecurityActiveDirectoryBundle/commit/19d2a5569e6585d498b379e21189ee307299b7ac#commitcomment-2318994</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[php.ini used by Direct Admin panel]]></title>
-    <link href="http://konradpodgorski.com/blog/2012/11/26/php-ini-used-by-direct-admin-panel/"/>
-    <updated>2012-11-26T00:00:00+01:00</updated>
-    <id>http://konradpodgorski.com/blog/2012/11/26/php-ini-used-by-direct-admin-panel</id>
-    <content type="html"><![CDATA[<p>Not so obvious location for php.in file that is used by Direct Admin</p>
-
-<pre><code>/usr/local/etc/php5/cgi/php.ini
-</code></pre>
-
-<p>Source:</p>
-
-<p><a href="http://help.directadmin.com/item.php?id=301">http://help.directadmin.com/item.php?id=301</a></p>
-]]></content>
-  </entry>
-  
-</feed>
+        </entry>
+    </feed>
