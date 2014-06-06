@@ -7,6 +7,12 @@
     <priority>0.8</priority>
   </url>
     <url>
+    <loc>http://konradpodgorski.com/blog/2014/06/06/how-to-record-a-screencast-under-ubuntu</loc>
+    <lastmod>2014-06-06T22:31:00+02:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+    <url>
     <loc>http://konradpodgorski.com/blog/2014/03/25/solution-to-couldnt-find-constant-monolog-logger-debug</loc>
     <lastmod>2014-03-25T11:46:00+01:00</lastmod>
     <changefreq>weekly</changefreq>
