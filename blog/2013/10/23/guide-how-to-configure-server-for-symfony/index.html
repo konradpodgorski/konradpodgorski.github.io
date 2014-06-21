@@ -622,7 +622,9 @@ http://www.mysql.com/products/workbench/</p>
 
 <h3>NodeJS</h3>
 
-<p><strong>optional - I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></p>
+<p><strike><strong>optional - I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></strike></p>
+
+<p>It's better to concat and minify assets before deployment. If you are working with multiple instances it will speed up deployment process by few seconds for each instance.</p>
 
 <p>This is a common fact that NodeJS in Debian/Ubuntu is seriously outdated. Installing from source is nice and easy.</p>
 
@@ -634,11 +636,12 @@ sudo apt-get install -y gcc g++ make
 
 <p><em>Get source and install</em></p>
 
-<p>Sadly there are no permalink for latest stable version so you are on your own with that. Go to http://nodejs.org/dist/latest/ and change version</p>
+<p>Sadly there are no permalink for latest stable version so you are on your own with that. Go to http://nodejs.org/dist/latest/ and search for file matching the following pattern
+<code>node-v0.10.*.tar.gz</code></p>
 
-<pre><code>wget http://nodejs.org/dist/latest/node-v0.10.21.tar.gz
-tar -zxvf node-v0.10.21.tar.gz
-cd node-v0.10.21
+<pre><code>wget http://nodejs.org/dist/latest/node-v0.10.29.tar.gz
+tar -zxvf node-v0.10.29.tar.gz
+cd node-v0.10.29
 ./configure
 make
 sudo make install
