@@ -2,9 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://konradpodgorski.com</loc>
-    <lastmod>2014-06-21</lastmod>
+    <lastmod>2014-06-22</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
+  </url>
+    <url>
+    <loc>http://konradpodgorski.com/blog/2014/06/22/how-to-install-node-js</loc>
+    <lastmod>2014-06-22T22:35:00+02:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
   </url>
     <url>
     <loc>http://konradpodgorski.com/blog/2014/06/06/how-to-record-a-screencast-under-ubuntu</loc>
