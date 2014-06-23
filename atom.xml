@@ -3,11 +3,571 @@
     <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
     <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
     <link href="http://konradpodgorski.com/"/>
-    <updated>2014-06-23T10:17:37+02:00</updated>
+    <updated>2014-06-23T22:35:39+02:00</updated>
     <id>http://konradpodgorski.com/</id>
             <author>
             <name><![CDATA[Konrad Podgórski]]></name>                    </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+            <entry>
+            <title type="html"><![CDATA[A better way to work with assets in Symfony 2]]></title>
+            <link href="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2"/>
+            <updated>2014-06-23T22:40:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2</id>
+            <content type="html"><![CDATA[<p>I will explain how to work with assets in Symfony framework without having to use Assetic Bundle at all.</p>
+
+<blockquote>
+  <p>We will build a stack that will</p>
+  
+  <ul>
+  <li>download and prepare dependencies (jQuery, Bootstrap and Font Awesome icons)</li>
+  <li>merge and minify css and javascript files</li>
+  <li>copy necessary fonts (font-awesome) in the right place so the path in css is correct</li>
+  <li>automate deploy to S3 bucket which you can optionally convert to CDN</li>
+  </ul>
+</blockquote>
+
+<p><div class="sharing">
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" >Tweet</a>
+      <div class="g-plusone" data-size="medium"></div>
+        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+  </div>
+</p>
+
+<p>The process will be really fast and easy to understand even if you never used software listed here. However if you experience any problems do not hesitate to ask for help in comments.
+Post is quite long because it contain a lot of different configs but don't run away just yet. They are ready to copy &amp; paste.</p>
+
+<p>Also ... I'm working with Symfony here but you can use it for literally any other web framework.</p>
+
+<h2>Table of contents</h2>
+
+<blockquote>
+  <ol>
+  <li><a href="#introduction">Introduction</a></li>
+  <li>Prerequisites
+  
+  <ol>
+  <li><a href="#nodejs">Installing NodeJS</a></li>
+  <li><a href="#bower">Installing Bower</a></li>
+  <li><a href="#gruntjs">Installing GruntJS</a></li>
+  </ol></li>
+  <li>Use cases
+  
+  <ol>
+  <li><a href="#scenario-1">Scenario</a> - download dependencies and copy them to <code>/web/assets/*</code> dir</li>
+  <li><a href="#scenario-2">Scenario</a> - download dependencies, copy and minify them</li>
+  <li><a href="#scenario-3">Scenario</a> - download, copy, concat (merge) and minify</li>
+  <li><a href="#deploy-to-cdn">Deploying to S3/CDN</a> - all above plus automated deploy to the CDN</li>
+  </ol></li>
+  </ol>
+</blockquote>
+
+<h1 id="introduction">Introduction</h1>
+
+<p>Why you would want to do it?</p>
+
+<ul>
+<li>assets are generated on your computer once, so the server doesn't have to do anything (less software on server = the better)</li>
+<li>if you are (or will be) using load balancer you definitely should (actually must) keep assets on CDN</li>
+<li>one less bundle to load in your Symfony application (Assetic)</li>
+</ul>
+
+<p>What we will use?
+NodeJS, Bower, Grunt JS and some grunt tasks</p>
+
+<p>Before we begin please add these to your <code>.gitignore</code> file, you don't want to keep vendor libraries in your repository.</p>
+
+<pre><code>bower_components/
+node_modules/
+</code></pre>
+
+<h2 id="nodejs">Install NodeJS</h2>
+
+<p>Those who already have node js installed can go to the next step</p>
+
+<blockquote>
+  <p><a href="/blog/2014/06/22/how-to-install-node-js">How to install Node JS</a></p>
+</blockquote>
+
+<h2 id="bower">Installing Bower</h2>
+
+<p>Bower is like a composer for frontend libraries. If you like composer you will definitely like Bower.</p>
+
+<pre><code>npm install -g bower
+</code></pre>
+
+<p>Create file <code>bower.json</code>, it will hold information about all required dependencies.</p>
+
+<pre><code>{
+    "name": "symfony-application",
+    "dependencies": {
+        "jquery": "1.11.*",
+        "bootstrap": "3.1.*",
+        "font-awesome": "4.1.*"
+    }
+}
+</code></pre>
+
+<p>run bower install</p>
+
+<pre><code>bower install
+</code></pre>
+
+<p>Folder structure will look like this</p>
+
+<pre><code>.
+├── bower_components
+│   ├── bootstrap
+│   ├── font-awesome
+│   └── jquery
+├── bower.json
+└── .gitignore
+</code></pre>
+
+<h2 id="gruntjs">Installing Grunt JS</h2>
+
+<pre><code>npm install -g grunt-cli
+</code></pre>
+
+<p>Create file <code>package.json</code>, it will hold all dependencies for grunt tasks</p>
+
+<pre><code>{
+  "name": "symfony-application",
+  "version": "0.1.0"
+}
+</code></pre>
+
+<p>Run the following commands (<code>--save-dev</code> option will add it to <code>package.json</code>)</p>
+
+<pre><code>npm install grunt --save-dev
+npm install grunt-bowercopy --save-dev
+npm install grunt-contrib-clean --save-dev
+npm install grunt-contrib-concat --save-dev
+npm install grunt-contrib-copy --save-dev
+npm install grunt-contrib-cssmin --save-dev
+npm install grunt-contrib-uglify --save-de
+npm install grunt-contrib-watch --save-dev
+</code></pre>
+
+<p>Now <code>package.json</code> should look like this.</p>
+
+<pre><code>{
+  "name": "symfony-application",
+  "version": "0.1.0",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bowercopy": "^1.0.1",
+    "grunt-contrib-clean": "^0.5.0",
+    "grunt-contrib-concat": "^0.4.0",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-uglify": "^0.5.0",
+    "grunt-contrib-watch": "^0.6.1"
+  }
+}
+</code></pre>
+
+<p>Once <code>package.json</code> is updated in the future you can use simple <code>npm install</code> to install grunt dependencies</p>
+
+<p>Now when all dependencies are ready we can configure how we want assets to be processed.</p>
+
+<h2 id="scenario-1">Scenario 1</h2>
+
+<p>Download latest jQuery, Bootstrap, Font Awesome with Bower and copy the only necessary files to <code>web/assets/*</code></p>
+
+<p>Create file <code>Gruntfile.js</code>, it will contain all configurations</p>
+
+<pre><code class="js">module.exports = function (grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        bowercopy: {
+            options: {
+                srcPrefix: 'bower_components',
+                destPrefix: 'web/assets'
+            },
+            scripts: {
+                files: {
+                    'js/jquery.js': 'jquery/dist/jquery.js',
+                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
+                }
+            },
+            stylesheets: {
+                files: {
+                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
+                }
+            },
+            fonts: {
+                files: {
+                    'fonts': 'font-awesome/fonts'
+                }
+            }
+        }
+    });
+
+    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.registerTask('default', ['bowercopy']);
+};
+</code></pre>
+
+<p>Run grunt with simple</p>
+
+<pre><code>grunt
+</code></pre>
+
+<p>It will fetch latest dependencies with Bower and copy them to desired locations</p>
+
+<pre><code>web
+└── assets
+    ├── css
+    │   ├── bootstrap.css
+    │   └── font-awesome.css
+    ├── fonts
+    │   ├── FontAwesome.otf
+    │   ├── fontawesome-webfont.eot
+    │   ├── fontawesome-webfont.svg
+    │   ├── fontawesome-webfont.ttf
+    │   └── fontawesome-webfont.woff
+    └── js
+        ├── bootstrap.js
+        └── jquery.js
+</code></pre>
+
+<h2 id="scenario-2">Scenario 2</h2>
+
+<p>Download dependencies with Bower, copy necessary files to <code>web/assets/*</code>. Then minify javascript and stylesheet files.</p>
+
+<blockquote>
+  <p>Although most frontend libraries comes with both normal and minified versions we will do it for the sake of learning.</p>
+</blockquote>
+
+<p>Update <code>Gruntfile.js</code> you created in previous scenario with configuration for <code>cssmin</code> and <code>uglify</code></p>
+
+<pre><code>module.exports = function (grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        bowercopy: {
+            options: {
+                srcPrefix: 'bower_components',
+                destPrefix: 'web/assets'
+            },
+            scripts: {
+                files: {
+                    'js/jquery.js': 'jquery/dist/jquery.js',
+                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
+                }
+            },
+            stylesheets: {
+                files: {
+                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
+                }
+            },
+            fonts: {
+                files: {
+                    'fonts': 'font-awesome/fonts'
+                }
+            }
+        },
+        cssmin : {
+            bootstrap:{
+                src: 'web/assets/css/bootstrap.css',
+                dest: 'web/assets/css/bootstrap.min.css'
+            },
+            "font-awesome":{
+                src: 'web/assets/css/font-awesome.css',
+                dest: 'web/assets/css/font-awesome.min.css'
+            }
+        },
+        uglify : {
+            js: {
+                files: {
+                    'web/assets/js/jquery.min.js': ['web/assets/js/jquery.js'],
+                    'web/assets/js/bootstrap.min.js': ['web/assets/js/bootstrap.js']
+                }
+            }
+        }
+    });
+
+    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.registerTask('default', ['bowercopy', 'cssmin', 'uglify']);
+};
+</code></pre>
+
+<p>Run grunt by typing <code>grunt</code> and the the structure should look like this</p>
+
+<pre><code>web
+└── assets
+    ├── css
+    │   ├── bootstrap.css
+    │   ├── bootstrap.min.css
+    │   ├── font-awesome.css
+    │   └── font-awesome.min.css
+    ├── fonts
+    │   ├── FontAwesome.otf
+    │   ├── fontawesome-webfont.eot
+    │   ├── fontawesome-webfont.svg
+    │   ├── fontawesome-webfont.ttf
+    │   └── fontawesome-webfont.woff
+    └── js
+        ├── bootstrap.js
+        ├── bootstrap.min.js
+        ├── jquery.js
+        └── jquery.min.js
+</code></pre>
+
+<h2 id="scenario-3">Scenario 3</h2>
+
+<p>Download dependencies with Bower, merge them with your custom css and js files, then minify.</p>
+
+<p>Assume we have the following structure</p>
+
+<pre><code>src
+└── KP
+    └── LearningBundle
+        └── Resources
+            └── public
+                ├── css
+                │   └── main.css
+                ├── images
+                │   └── no-photo.gif
+                └── js
+                    ├── editor.js
+                    └── notification.js
+</code></pre>
+
+<p>First task we configure will be <code>copy</code>, it will copy image(s) to <code>web/assets/images/*</code> directory.
+ Second task we will add is <code>concat</code>, it will merge all scripts into single file which we will later <code>uglify</code> to make it smaller
+  Same thing for stylesheet file</p>
+
+<p>Updated <code>Gruntfile.js</code></p>
+
+<pre><code>module.exports = function (grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        bowercopy: {
+            options: {
+                srcPrefix: 'bower_components',
+                destPrefix: 'web/assets'
+            },
+            scripts: {
+                files: {
+                    'js/jquery.js': 'jquery/dist/jquery.js',
+                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
+                }
+            },
+            stylesheets: {
+                files: {
+                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
+                }
+            },
+            fonts: {
+                files: {
+                    'fonts': 'font-awesome/fonts'
+                }
+            }
+        },
+        cssmin : {
+            bundled:{
+                src: 'web/assets/css/bundled.css',
+                dest: 'web/assets/css/bundled.min.css'
+            }
+        },
+        uglify : {
+            js: {
+                files: {
+                    'web/assets/js/bundled.min.js': ['web/assets/js/bundled.js']
+                }
+            }
+        },
+        concat: {
+            options: {
+                stripBanners: true
+            },
+            css: {
+                src: [
+                    'web/assets/css/bootstrap.css',
+                    'web/assets/css/font-awesome.css',
+                    'src/KP/LearningBundle/Resources/public/css/*.css'
+                ],
+                dest: 'web/assets/css/bundled.css'
+            },
+            js : {
+                src : [
+                    'web/assets/js/jquery.js',
+                    'web/assets/js/bootstrap.js',
+                    'src/KP/LearningBundle/Resources/public/js/*.js'
+                ],
+                dest: 'web/assets/js/bundled.js'
+            }
+        },
+        copy: {
+            images: {
+                expand: true,
+                cwd: 'src/KP/LearningBundle/Resources/public/images',
+                src: '*',
+                dest: 'web/assets/images/'
+            }
+        }
+    });
+
+    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+
+    grunt.registerTask('default', ['bowercopy','copy', 'concat', 'cssmin', 'uglify']);
+};
+</code></pre>
+
+<h1 id="deploy-to-cdn">Deploy to S3/CDN</h1>
+
+<p>Cloudfront is one of the most popular and in my opinion one of the easiest to begin with cdn servers
+Uploading assets to S3 storage and setting it as a source for CDN is enough to get started.</p>
+
+<p>Create new file where you will store credentials to the S3 bucket. Lets call it <code>aws-credentials.json</code></p>
+
+<p>Don't forget to add it to <code>.gitignore</code>, last thing you want to do is to push your key/secret to the repository.</p>
+
+<pre><code># .gitignore
+bower_components/
+node_modules/
+aws-credentials.json
+</code></pre>
+
+<p>and the content of <code>aws-credentials.json</code> should be like this</p>
+
+<pre><code class="json">{
+    "key": "your_aws_key",
+    "secret": "your_aws_secret",
+    "bucket": "name_of_your_bucket"
+}
+</code></pre>
+
+<p>Updated <code>Gruntfile.js</code> with <code>grunt-s3</code> task <a href="https://github.com/pifantastic/grunt-s3">https://github.com/pifantastic/grunt-s3</a></p>
+
+<pre><code class="js">module.exports = function (grunt) {
+    grunt.initConfig({
+        pkg: grunt.file.readJSON('package.json'),
+        bowercopy: {
+            options: {
+                srcPrefix: 'bower_components',
+                destPrefix: 'web/assets'
+            },
+            scripts: {
+                files: {
+                    'js/jquery.js': 'jquery/dist/jquery.js',
+                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
+                }
+            },
+            stylesheets: {
+                files: {
+                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
+                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
+                }
+            },
+            fonts: {
+                files: {
+                    'fonts': 'font-awesome/fonts'
+                }
+            }
+        },
+        cssmin : {
+            bundled:{
+                src: 'web/assets/css/bundled.css',
+                dest: 'web/assets/css/bundled.min.css'
+            }
+        },
+        uglify : {
+            js: {
+                files: {
+                    'web/assets/js/bundled.min.js': ['web/assets/js/bundled.js']
+                }
+            }
+        },
+        concat: {
+            options: {
+                stripBanners: true
+            },
+            css: {
+                src: [
+                    'web/assets/css/bootstrap.css',
+                    'web/assets/css/font-awesome.css',
+                    'src/KP/LearningBundle/Resources/public/css/*.css'
+                ],
+                dest: 'web/assets/css/bundled.css'
+            },
+            js : {
+                src : [
+                    'web/assets/js/jquery.js',
+                    'web/assets/js/bootstrap.js',
+                    'src/KP/LearningBundle/Resources/public/js/*.js'
+                ],
+                dest: 'web/assets/js/bundled.js'
+            }
+        },
+        copy: {
+            images: {
+                expand: true,
+                cwd: 'src/KP/LearningBundle/Resources/public/images',
+                src: '*',
+                dest: 'web/assets/images/'
+            }
+        },
+        aws: grunt.file.readJSON('aws-credentials.json'),
+        s3: {
+            options: {
+                key: '&lt;%= aws.key %&gt;',
+                secret: '&lt;%= aws.secret %&gt;',
+                bucket: '&lt;%= aws.bucket %&gt;'
+            },
+            cdn: {
+                upload: [
+                    {
+                        src: 'web/assets/css/*',
+                        dest: 'css/'
+                    },
+
+                    {
+                        src: 'web/assets/fonts/*',
+                        dest: 'fonts/'
+                    },
+                    {
+                        src: 'web/assets/images/*',
+                        dest: 'images/'
+                    },
+                    {
+                        src: 'web/assets/js/*',
+                        dest: 'js/'
+                    }
+                ]
+            }
+        }
+    });
+
+    grunt.loadNpmTasks('grunt-bowercopy');
+    grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-s3');
+
+    grunt.registerTask('default', ['bowercopy','copy', 'concat', 'cssmin', 'uglify']);
+    grunt.registerTask('deploy', ['s3']);
+};
+</code></pre>
+
+<p>Now you can generate assets like you did until now with command <code>grunt</code>, but also deploy them directly to the CDN with command <code>grunt:deploy</code>.</p>
+
+<pre><code class="shell">grunt
+grunt:deploy
+</code></pre>
+]]></content>
+        </entry>
             <entry>
             <title type="html"><![CDATA[Fixing the locale problem in Debian - mirror]]></title>
             <link href="http://konradpodgorski.com/blog/2014/06/23/fixing-locale-problem-debian"/>
@@ -1357,52 +1917,6 @@ Recursive accept/reject:
   -X,  --exclude-directories=LIST  list of excluded directories.
   -np, --no-parent                 don't ascend to the parent directory.
 </code></pre>
-]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[How to Setup Octopress on Ubuntu]]></title>
-            <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu"/>
-            <updated>2013-10-20T16:54:00+02:00</updated>
-            <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
-            <content type="html"><![CDATA[<p>Guide was copied from http://stackoverflow.com/a/14353864/1562884 for my reference</p>
-
-<p>Helped me with this error during configuring Octopress on Ubuntu</p>
-
-<pre><code>Error installing RedCloth:
-ERROR: Failed to build gem native extension.
-</code></pre>
-
-<p>Guide below was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
-
-<p>My Ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
-
-<pre><code>$sudo apt-get install ruby1.9.1-full
-</code></pre>
-
-<p>you can execute command:</p>
-
-<pre><code>$sudo update-alternatives --config ruby
-</code></pre>
-
-<p>to select the alternative ruby which you have installed. and then, execute below commands to finish the octopress deploy:</p>
-
-<pre><code>$git clone https://github.com/erizhang/octopress.git octopress
-$cd octopress/
-$sudo gem install bundler
-$sudo gem install RedCloth -v '4.2.9'
-$bundle install
-$rake install
-</code></pre>
-
-<p>below commands you can find from octopress deploy guideline page:</p>
-
-<pre><code>$rake setup_github_pages
-$sudo rake setup_github_pages
-$sudo rake generate
-$sudo rake deploy
-</code></pre>
-
-<p>Hope it's helpful for you, thanks</p>
 ]]></content>
         </entry>
     </feed>

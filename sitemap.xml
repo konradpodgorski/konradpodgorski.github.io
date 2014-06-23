@@ -7,6 +7,12 @@
     <priority>0.8</priority>
   </url>
     <url>
+    <loc>http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2</loc>
+    <lastmod>2014-06-23T22:40:00+02:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+    <url>
     <loc>http://konradpodgorski.com/blog/2014/06/23/fixing-locale-problem-debian</loc>
     <lastmod>2014-06-23T10:12:00+02:00</lastmod>
     <changefreq>weekly</changefreq>
