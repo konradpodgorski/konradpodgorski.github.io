@@ -61,6 +61,17 @@ Instruction might seem to you very long and I totally agree with you. It took me
 It was tested by me on ~10 machines, however if you find something not working don't hesitate to let me know.
 I try to help you and correct/expand guide to cover your problem.</strong></p>
 
+<p>Post index for quick navigation</p>
+
+<ul>
+<li><a href="#securing-server">Securing server</a></li>
+<li><a href="#dotdeb">Dotdeb</a></li>
+<li><a href="#nginx">Nginx</a></li>
+<li><a href="#php-fpm">PHP fpm</a></li>
+<li><a href="#mysql">MySQL</a></li>
+<li><a href="#nodejs">NodeJS</a></li>
+</ul>
+
 <p>Requirements:</p>
 
 <ul>
@@ -112,7 +123,7 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>APPDOMAINNAME to domain name without http:// and trailing slash e.g. konradpodgorski.com</li>
 </ul>
 
-<h3>Start</h3>
+<h1 id="securing-server">Securing server</h1>
 
 <p>First log in</p>
 
@@ -277,7 +288,9 @@ sudo apt-get install -y gcc g++ make
 
 <p>Get rid of annoying errors when not using EN_US locale</p>
 
-<p><a href="http://hexample.com/2012/02/05/fixing-locale-problem-debian/">http://hexample.com/2012/02/05/fixing-locale-problem-debian/</a></p>
+<blockquote>
+  <p><a href="/blog/2014/06/22/fixing-locale-problem-debian">Fixing the locale problem in Debian</a></p>
+</blockquote>
 
 <h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3>
 
@@ -296,7 +309,7 @@ sudo apt-get install -y gcc g++ make
 <pre><code>sudo reboot
 </code></pre>
 
-<h2 id="dotdeb">Dotdeb</h2>
+<h1 id="dotdeb">Dotdeb</h1>
 
 <p>DotDeb is a reliable and up to date repository for most of packages required in web server</p>
 
@@ -350,7 +363,7 @@ cat dotdeb.gpg | sudo apt-key add -
 <pre><code class="bash">sudo apt-get update
 </code></pre>
 
-<h2 id="nginx">NGINX</h2>
+<h1 id="nginx">NGINX</h1>
 
 <p>You probably won't need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p>
 
@@ -455,7 +468,7 @@ server {
 <pre><code>sudo rm /etc/nginx/sites-enabled/default
 </code></pre>
 
-<h2 id="php-fpm">PHP5-FPM</h2>
+<h1 id="php-fpm">PHP5-FPM</h1>
 
 <p>Installing required packages</p>
 
@@ -586,7 +599,7 @@ sudo ln -s ../mods-available/apcu.ini 20-apcu.ini
 <pre><code>sudo service php5-fpm restart
 </code></pre>
 
-<h3>MySQL</h3>
+<h1 id="mysql">MySQL</h1>
 
 <pre><code>sudo apt-get install -y mysql-server
 </code></pre>
@@ -620,7 +633,7 @@ http://www.mysql.com/products/workbench/</p>
 
 <p><em>DO NOT expose your mysql to outside world nor install web management tools like PhpMyAdmin, they were great few years ago. Now we have a better solutions.</em></p>
 
-<h1>Node JS</h1>
+<h1 id="nodejs">Node JS</h1>
 
 <blockquote>
   <p>I wrote a separate post about installing Node JS on Debian/Ubuntu</p>

@@ -3,11 +3,103 @@
     <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
     <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
     <link href="http://konradpodgorski.com/"/>
-    <updated>2014-06-22T22:52:52+02:00</updated>
+    <updated>2014-06-23T10:17:37+02:00</updated>
     <id>http://konradpodgorski.com/</id>
             <author>
             <name><![CDATA[Konrad Podgórski]]></name>                    </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
+            <entry>
+            <title type="html"><![CDATA[Fixing the locale problem in Debian - mirror]]></title>
+            <link href="http://konradpodgorski.com/blog/2014/06/23/fixing-locale-problem-debian"/>
+            <updated>2014-06-23T10:12:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2014/06/23/fixing-locale-problem-debian</id>
+            <content type="html"><![CDATA[<blockquote>
+  <p>Post was originally posted on <a href="http://hexample.com/2012/02/05/fixing-locale-problem-debian/">http://hexample.com/2012/02/05/fixing-locale-problem-debian/</a></p>
+  
+  <p>I was using this tutorial for a very long time, it was also linked from my other posts. However in last month I noticed it's no longer available.
+  Full credit for this awesome tutorial goes to Crypto, the original author.</p>
+</blockquote>
+
+<p>People who aren’t using the default locales (en_US) on their Debian based servers, often see error messages like perl: warning: Setting locale failed or perl: warning: Falling back to the standard locale (“C”). A listing of the complete error message is given in the full article. The error messages appear when installing packages with apt-get or when using some common perl commands like auto completion. On the internet you find a lot of different solutions that may work. This tutorial gives a more comprehensive approach to the matter. This way you understand the error and you are able to fight this annoying error message.</p>
+
+<p>This little tutorial and fix is for everyone who gets following error code.</p>
+
+<pre><code class="shell">perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+        LANGUAGE = (unset),
+        LC_ALL = (unset),
+        LC_CTYPE = "UTF-8",
+        LANG = "en_US"
+    are supported and installed on your system.
+
+locale: Cannot set LC_CTYPE to default locale: No such file or directory
+locale: Cannot set LC_MESSAGES to default locale: No such file or directory
+locale: Cannot set LC_ALL to default locale: No such file or directory
+</code></pre>
+
+<h2>Quick checklist</h2>
+
+<ol>
+<li>Check if locales is installed</li>
+<li>Check the used/needed locales</li>
+<li>Check the available locales</li>
+<li>Generate all needed locales</li>
+<li>Log out and back in</li>
+</ol>
+
+<h2>Full explanation</h2>
+
+<p>On the internet you will find fixes that tell you to do dpkg-reconfigure or locales-gen. They are correct, but aren’t enough if you do it brainlessly. What you have to do is first check if the locales package is installed.</p>
+
+<pre><code>apt-get install locales
+</code></pre>
+
+<p>In most cases it will report that locales is already installed and up to date.</p>
+
+<p>Second, what most how-to’s and fixes forget to mention, it is very important to know which locales are needed by the system.</p>
+
+<pre><code>sudo locale
+</code></pre>
+
+<p>By running this command, you will get a list of every needed locale. It is important to write down the locales other than en_US. On my system there was an extra locale nl_NL.UTF-8.</p>
+
+<p>Now, you have to check which locale is already present on the system. Do this by running the following listing.</p>
+
+<pre><code>sudo locale -a
+</code></pre>
+
+<p>Normally you will see some English locales. But your extra locales are probably missing.</p>
+
+<p>You have two options to add those extras. The first one is locale-gen, the second one is dpkg-reconfigure. I advise the latter if it is present on your system. I will discuss the two solutions.</p>
+
+<pre><code>dpkg-reconfigure
+
+sudo dpkg-reconfigure locales
+</code></pre>
+
+<p>First you’ll get a menu in which you have to select all needed locales. Select the English ones AND your extras with the space-bar.</p>
+
+<p>In the next window select en_US.UTF-8 as default locale.</p>
+
+<p>After regenerating the locales log out and back in. Your problem is solved!</p>
+
+<pre><code>locale-gen
+</code></pre>
+
+<p>If for some reason dpkg-reconfigure is not available on your environment or your local user doesn’t have admin privileges, you can always use locale-gen. Use this command and append every extra locale you need.</p>
+
+<p>If you need the nl_NL.UTF-8 locale:</p>
+
+<pre><code>locale-gen nl_NL.UTF-8
+</code></pre>
+
+<p>Repeat this step for every locale you need. You can check if it was successful by running locale -a. Normally all your generated locales should be listed. Log out and back in to activate the new locales for your session.</p>
+
+<h2>Conclusion</h2>
+
+<p>I hope this quick fix helped you to fix the annoying missing locale bug. If you find it helpful or have some questions, please leave a message below.</p>
+]]></content>
+        </entry>
             <entry>
             <title type="html"><![CDATA[How to install Node JS on Debian/Ubuntu]]></title>
             <link href="http://konradpodgorski.com/blog/2014/06/22/how-to-install-node-js"/>
@@ -240,6 +332,17 @@ Instruction might seem to you very long and I totally agree with you. It took me
 It was tested by me on ~10 machines, however if you find something not working don't hesitate to let me know.
 I try to help you and correct/expand guide to cover your problem.</strong></p>
 
+<p>Post index for quick navigation</p>
+
+<ul>
+<li><a href="#securing-server">Securing server</a></li>
+<li><a href="#dotdeb">Dotdeb</a></li>
+<li><a href="#nginx">Nginx</a></li>
+<li><a href="#php-fpm">PHP fpm</a></li>
+<li><a href="#mysql">MySQL</a></li>
+<li><a href="#nodejs">NodeJS</a></li>
+</ul>
+
 <p>Requirements:</p>
 
 <ul>
@@ -291,7 +394,7 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>APPDOMAINNAME to domain name without http:// and trailing slash e.g. konradpodgorski.com</li>
 </ul>
 
-<h3>Start</h3>
+<h1 id="securing-server">Securing server</h1>
 
 <p>First log in</p>
 
@@ -456,7 +559,9 @@ sudo apt-get install -y gcc g++ make
 
 <p>Get rid of annoying errors when not using EN_US locale</p>
 
-<p><a href="http://hexample.com/2012/02/05/fixing-locale-problem-debian/">http://hexample.com/2012/02/05/fixing-locale-problem-debian/</a></p>
+<blockquote>
+  <p><a href="/blog/2014/06/22/fixing-locale-problem-debian">Fixing the locale problem in Debian</a></p>
+</blockquote>
 
 <h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3>
 
@@ -475,7 +580,7 @@ sudo apt-get install -y gcc g++ make
 <pre><code>sudo reboot
 </code></pre>
 
-<h2 id="dotdeb">Dotdeb</h2>
+<h1 id="dotdeb">Dotdeb</h1>
 
 <p>DotDeb is a reliable and up to date repository for most of packages required in web server</p>
 
@@ -529,7 +634,7 @@ cat dotdeb.gpg | sudo apt-key add -
 <pre><code class="bash">sudo apt-get update
 </code></pre>
 
-<h2 id="nginx">NGINX</h2>
+<h1 id="nginx">NGINX</h1>
 
 <p>You probably won't need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p>
 
@@ -634,7 +739,7 @@ server {
 <pre><code>sudo rm /etc/nginx/sites-enabled/default
 </code></pre>
 
-<h2 id="php-fpm">PHP5-FPM</h2>
+<h1 id="php-fpm">PHP5-FPM</h1>
 
 <p>Installing required packages</p>
 
@@ -765,7 +870,7 @@ sudo ln -s ../mods-available/apcu.ini 20-apcu.ini
 <pre><code>sudo service php5-fpm restart
 </code></pre>
 
-<h3>MySQL</h3>
+<h1 id="mysql">MySQL</h1>
 
 <pre><code>sudo apt-get install -y mysql-server
 </code></pre>
@@ -799,7 +904,7 @@ http://www.mysql.com/products/workbench/</p>
 
 <p><em>DO NOT expose your mysql to outside world nor install web management tools like PhpMyAdmin, they were great few years ago. Now we have a better solutions.</em></p>
 
-<h1>Node JS</h1>
+<h1 id="nodejs">Node JS</h1>
 
 <blockquote>
   <p>I wrote a separate post about installing Node JS on Debian/Ubuntu</p>
@@ -1298,90 +1403,6 @@ $sudo rake deploy
 </code></pre>
 
 <p>Hope it's helpful for you, thanks</p>
-]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[How to implement a secure choice form field with Symfony]]></title>
-            <link href="http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony"/>
-            <updated>2013-10-19T19:17:00+02:00</updated>
-            <id>http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
-            <content type="html"><![CDATA[<p>Create Util class for your entity, in my case entity is called 'Brand'</p>
-
-<p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
-
-<pre><code class="php">    &lt;?php
-
-    namespace KP\Brand\MainBundle\Util;
-
-    use KP\Brand\MainBundle\Entity\Brand;
-
-    class BrandUtil
-    {
-
-        /**
-         * @param bool $withLabels
-         *
-         * @return array
-         */
-        public static function getAvailableLanguageCodes($withLabels = false)
-        {
-            $choices = array(
-                'pl' =&gt; 'Polish',
-                'en' =&gt; 'English'
-            );
-
-            if ($withLabels) {
-                return $choices;
-            } else {
-                return array_keys($choices);
-            }
-        }
-    }
-</code></pre>
-
-<p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
-
-<p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
-
-<pre><code class="php">    &lt;?php
-
-    namespace KP\Brand\MainBundle\Form;
-
-    use KP\Brand\MainBundle\Util\BrandUtil;
-    use Symfony\Component\Form\AbstractType;
-    use Symfony\Component\Form\FormBuilderInterface;
-    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-
-    class BrandType extends AbstractType
-    {
-        /**
-         * @param FormBuilderInterface $builder
-         * @param array $options
-         */
-        public function buildForm(FormBuilderInterface $builder, array $options)
-        {
-            $builder
-                -&gt;add('name')
-                -&gt;add(
-                    'languageCode',
-                    'choice',
-                    array(
-                        'label' =&gt; 'Language',
-                        'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
-                    )
-                );
-        }
-
-    }
-</code></pre>
-
-<p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
-
-<pre><code class="php">    KP\Brand\MainBundle\Entity\Brand:
-    properties:
-        languageCode:
-            - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
-</code></pre>
 ]]></content>
         </entry>
     </feed>
