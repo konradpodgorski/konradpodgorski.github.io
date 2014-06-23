@@ -3,7 +3,7 @@
     <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
     <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
     <link href="http://konradpodgorski.com/"/>
-    <updated>2014-06-23T22:35:39+02:00</updated>
+    <updated>2014-06-23T23:10:36+02:00</updated>
     <id>http://konradpodgorski.com/</id>
             <author>
             <name><![CDATA[Konrad Podgórski]]></name>                    </author>
@@ -566,6 +566,18 @@ aws-credentials.json
 <pre><code class="shell">grunt
 grunt:deploy
 </code></pre>
+
+<h1>What next?</h1>
+
+<p>Article is already pretty long and I still didn't cover everything I wanted. There will be another part of this article that will cover</p>
+
+<ul>
+<li>Working with less/sass</li>
+<li>Automated cleaning legacy assets</li>
+<li>Watching for changes in assets</li>
+<li>Better explain how to correctly configure S3 bucket to act as a CDN</li>
+<li>How to use Require JS (the most interesting topic)</li>
+</ul>
 ]]></content>
         </entry>
             <entry>
