@@ -37,9 +37,9 @@
                 <div class="col-md-10">
                     <article itemscope itemtype="http://schema.org/Article">
     <header>
-        <h2 itemprop="name">How to avoid memory leaks in Symfony 2 Commands</h2>
+        <h2 itemprop="headline">How to avoid memory leaks in Symfony 2 Commands</h2>
     </header>
-    <div>
+    <div itemprop="articleBody">
         <p>My recent job was to write Symfony 2 command that copies and transforms enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script would be running for days or even weeks.</p>
 
 <p>I found out that when I run my newly created command it takes a while for it to start gradually consume more and more memory.</p>
@@ -98,26 +98,22 @@
 <p><strong>If this post helped you let me know by leaving a comment, it’s always nice to know that I could help someone :)</strong></p>
 
     </div>
-
     <div class="row">
-
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-            <p class="meta pull-right">
-            <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                Posted by <span itemprop="name" class="fn">
-                                <a href="https://plus.google.com/114997465791213403444?rel=author">
-                    Konrad Podgórski
-                </a>
-                            </span>
-            </span>
-                on
-                <time itemprop="datePublished" content="Fri, 18 Jan 2013 00:00:00 +0100"
-                      datetime="Fri, 18 Jan 2013 00:00:00 +0100" pubdate="" data-updated="true">
+        <div class="col-md-6 col-md-offset-6">
+            <p class="text-right">
+                <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                    Posted by <span itemprop="name" class="fn">
+                    <a href="https://plus.google.com/114997465791213403444?rel=author">
+                        Konrad Podgórski
+                    </a>                    </span>
+                </span>
+                <br>
+                <small>
+                Published on
+                <time itemprop="datePublished" datetime="2013-01-18T00:00:00+01:00">
                     2013-01-18
                 </time>
+                                </small>
             </p>
         </div>
     </div>
@@ -126,7 +122,7 @@
 <div class="sharing">
     <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" >Tweet</a>
       <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
   </div>
 <section>
     <h1>Comments</h1>
@@ -137,7 +133,7 @@
     </div>
 </section>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 hidden-xs hidden-sm">
                                     </div>
             </div>
         </div>

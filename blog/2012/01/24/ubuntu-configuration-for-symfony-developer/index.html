@@ -37,9 +37,9 @@
                 <div class="col-md-10">
                     <article itemscope itemtype="http://schema.org/Article">
     <header>
-        <h2 itemprop="name">Ubuntu configuration for Symfony Developer</h2>
+        <h2 itemprop="headline">Ubuntu configuration for Symfony Developer</h2>
     </header>
-    <div>
+    <div itemprop="articleBody">
         <p><img src="/wp-content/uploads/2012/01/Symfony_with_Ubuntu.png" alt=""></p>
 
 <p>This is complete full instruction how to configure Ubuntu 11.10 / 11.04 fresh after installation to start developing with Symfony 2 Framework.</p>
@@ -139,26 +139,22 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 <p>http://symfony.com/doc/current/book/installation.html#configuration-and-setup</p>
 
     </div>
-
     <div class="row">
-
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-            <p class="meta pull-right">
-            <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                Posted by <span itemprop="name" class="fn">
-                                <a href="https://plus.google.com/114997465791213403444?rel=author">
-                    Konrad Podgórski
-                </a>
-                            </span>
-            </span>
-                on
-                <time itemprop="datePublished" content="Tue, 24 Jan 2012 02:40:00 +0100"
-                      datetime="Tue, 24 Jan 2012 02:40:00 +0100" pubdate="" data-updated="true">
+        <div class="col-md-6 col-md-offset-6">
+            <p class="text-right">
+                <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                    Posted by <span itemprop="name" class="fn">
+                    <a href="https://plus.google.com/114997465791213403444?rel=author">
+                        Konrad Podgórski
+                    </a>                    </span>
+                </span>
+                <br>
+                <small>
+                Published on
+                <time itemprop="datePublished" datetime="2012-01-24T02:40:00+01:00">
                     2012-01-24
                 </time>
+                                </small>
             </p>
         </div>
     </div>
@@ -167,7 +163,7 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
 <div class="sharing">
     <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2012/01/24/ubuntu-configuration-for-symfony-developer" >Tweet</a>
       <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
   </div>
 <section>
     <h1>Comments</h1>
@@ -178,7 +174,7 @@ sudo setfacl -dR -m u:www-data:rwx -m u:`whoami`:rwx app/cache app/logs
     </div>
 </section>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2 hidden-xs hidden-sm">
                                     </div>
             </div>
         </div>

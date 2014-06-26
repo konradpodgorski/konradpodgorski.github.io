@@ -37,9 +37,9 @@
                 <div class="col-md-10">
                     <article itemscope itemtype="http://schema.org/Article">
     <header>
-        <h2 itemprop="name">A better way to work with assets in Symfony 2</h2>
+        <h2 itemprop="headline">A better way to work with assets in Symfony 2</h2>
     </header>
-    <div>
+    <div itemprop="articleBody">
         <p>I will explain how to work with assets in Symfony framework without having to use Assetic Bundle at all.</p>
 
 <blockquote>
@@ -56,7 +56,7 @@
 <p><div class="sharing">
     <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" >Tweet</a>
       <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
   </div>
 </p>
 
@@ -109,6 +109,8 @@ node_modules/
 
 <h2 id="nodejs">Install NodeJS</h2>
 
+<p>NodeJS is a runtime platform for applications written in javascript, it's required by Bower and GruntJs we will install in a moment.</p>
+
 <p>Those who already have node js installed can go to the next step</p>
 
 <blockquote>
@@ -151,6 +153,10 @@ node_modules/
 </code></pre>
 
 <h2 id="gruntjs">Installing Grunt JS</h2>
+
+<p>GruntJS is our task runner, by adding a set of tasks created by Grunt community we can automate many tasks we used to do manually with a very little effort.</p>
+
+<p>To install it we will once again use node package manager, npm:</p>
 
 <pre><code>npm install -g grunt-cli
 </code></pre>
@@ -456,7 +462,16 @@ npm install grunt-contrib-watch --save-dev
 <p>Cloudfront is one of the most popular and in my opinion one of the easiest to begin with cdn servers
 Uploading assets to S3 storage and setting it as a source for CDN is enough to get started.</p>
 
-<p>Create new file where you will store credentials to the S3 bucket. Lets call it <code>aws-credentials.json</code></p>
+<p>S3 Integration is handled by another grunt task we will add to our stack</p>
+
+<pre><code>npm install grunt-s3 --save-dev
+</code></pre>
+
+<p>You can find the full documentation on the official repository <a href="https://github.com/pifantastic/grunt-s3">https://github.com/pifantastic/grunt-s3</a></p>
+
+<p>We will only use upload feature.</p>
+
+<p>Create a new file where you will store credentials to the S3 bucket. Lets call it <code>aws-credentials.json</code></p>
 
 <p>Don't forget to add it to <code>.gitignore</code>, last thing you want to do is to push your key/secret to the repository.</p>
 
@@ -475,7 +490,7 @@ aws-credentials.json
 }
 </code></pre>
 
-<p>Updated <code>Gruntfile.js</code> with <code>grunt-s3</code> task <a href="https://github.com/pifantastic/grunt-s3">https://github.com/pifantastic/grunt-s3</a></p>
+<p>Updated <code>Gruntfile.js</code> with <code>grunt-s3</code> task</p>
 
 <pre><code class="js">module.exports = function (grunt) {
     grunt.initConfig({
@@ -604,29 +619,29 @@ grunt:deploy
 <li>Watching for changes in assets</li>
 <li>Better explain how to correctly configure S3 bucket to act as a CDN</li>
 <li>How to use Require JS (the most interesting topic)</li>
+<li>Disabling Assetic Bundle from Symfony application</li>
 </ul>
 
     </div>
-
     <div class="row">
-
-        <div class="col-md-6">
-
-        </div>
-        <div class="col-md-6">
-            <p class="meta pull-right">
-            <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                Posted by <span itemprop="name" class="fn">
-                                <a href="https://plus.google.com/114997465791213403444?rel=author">
-                    Konrad Podgórski
-                </a>
-                            </span>
-            </span>
-                on
-                <time itemprop="datePublished" content="Mon, 23 Jun 2014 22:40:00 +0200"
-                      datetime="Mon, 23 Jun 2014 22:40:00 +0200" pubdate="" data-updated="true">
+        <div class="col-md-6 col-md-offset-6">
+            <p class="text-right">
+                <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                    Posted by <span itemprop="name" class="fn">
+                    <a href="https://plus.google.com/114997465791213403444?rel=author">
+                        Konrad Podgórski
+                    </a>                    </span>
+                </span>
+                <br>
+                <small>
+                Published on
+                <time itemprop="datePublished" datetime="2014-06-23T22:40:00+02:00">
                     2014-06-23
                 </time>
+                , last updated on
+                    <time itemprop="dateModified" datetime="2014-06-23T22:40:00+02:00">
+                        2014-06-26
+                    </time>                </small>
             </p>
         </div>
     </div>
@@ -635,7 +650,7 @@ grunt:deploy
 <div class="sharing">
     <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" >Tweet</a>
       <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
   </div>
 <section>
     <h1>Comments</h1>
@@ -646,8 +661,14 @@ grunt:deploy
     </div>
 </section>
                 </div>
-                <div class="col-md-2">
-                                    </div>
+                <div class="col-md-2 hidden-xs hidden-sm">
+                        <span class="label label-success">
+        Updated on
+        <time itemprop="dateModified" datetime="2014-06-23T22:40:00+02:00">
+            2014-06-26
+        </time>
+    </span>
+                </div>
             </div>
         </div>
         <footer class="container">

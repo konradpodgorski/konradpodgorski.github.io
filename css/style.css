@@ -11,6 +11,10 @@ article {
 article p {
     margin-bottom: 1.5em;
 }
+.sharing {
+    line-height: 14px; /** fix for lowered fb like button **/
+}
+
 
 body:before {
     left: 0;
