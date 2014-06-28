@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://konradpodgorski.com</loc>
-    <lastmod>2014-06-26</lastmod>
+    <lastmod>2014-06-28</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>
@@ -134,7 +134,7 @@
   </url>
     <url>
     <loc>http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands</loc>
-    <lastmod>2013-01-18T00:00:00+01:00</lastmod>
+    <lastmod>2014-06-28T12:27:00+02:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>

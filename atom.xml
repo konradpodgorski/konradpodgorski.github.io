@@ -3,7 +3,7 @@
     <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
     <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
     <link href="http://konradpodgorski.com/"/>
-    <updated>2014-06-26T19:31:09+02:00</updated>
+    <updated>2014-06-28T12:28:19+02:00</updated>
     <id>http://konradpodgorski.com/</id>
             <author>
             <name><![CDATA[Konrad Podgórski]]></name>                    </author>
@@ -699,12 +699,14 @@ sudo dpkg-reconfigure locales
 sudo apt-get install -y gcc g++ make
 </code></pre>
 
-<p>At the time of writing this post the latest version of node is <code>v0.10.29</code>. To find the latest number you can go to
- <a href="http://nodejs.org/dist/latest/">http://nodejs.org/dist/latest/</a> and search for file matching pattern <code>node-v0.*.*.tar.gz</code></p>
+<p><strike>At the time of writing this post the latest version of node is <code>v0.10.29</code>. To find the latest number you can go to
+ <a href="http://nodejs.org/dist/latest/">http://nodejs.org/dist/latest/</a> and search for file matching pattern <code>node-v0.*.*.tar.gz</code></strike></p>
 
-<pre><code>wget http://nodejs.org/dist/latest/node-v0.10.29.tar.gz
-tar -zxvf node-v0.10.29.tar.gz
-cd node-v0.10.29
+<p><strong>Update</strong>: permalink to the latest version of node is <a href="http://nodejs.org/dist/node-latest.tar.gz">http://nodejs.org/dist/node-latest.tar.gz</a></p>
+
+<pre><code>wget http://nodejs.org/dist/node-latest.tar.gz
+tar -zxvf node-latest.tar.gz
+cd node-v*
 ./configure
 make
 sudo make install

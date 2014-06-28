@@ -44,6 +44,13 @@
 
 <p>I found out that when I run my newly created command it takes a while for it to start gradually consume more and more memory.</p>
 
+<p><div class="sharing">
+    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" >Tweet</a>
+      <div class="g-plusone" data-size="medium"></div>
+        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+  </div>
+</p>
+
 <p>It’s always nice to have a method like this for monitoring memory usage.</p>
 
 <pre><code class="php">    function printMemoryUsage()
@@ -56,7 +63,7 @@
 
 <p>But after a while it reached 40MB, 50MB and kept going and since Ubuntu by default has php memory limit in CLI set to -1 (unlimited) this script could consume the whole RAM after a couple of days.</p>
 
-<p><img src="/wp-content/uploads/2013/01/php-lazy-garbage-collector.png php-lazy-garbage-collector" alt="PHP lazy garbage collector"></p>
+<p><img src="/wp-content/uploads/2013/01/php-lazy-garbage-collector.png" alt="PHP lazy garbage collector"></p>
 
 <p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but it doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p>
 
@@ -91,7 +98,7 @@
 <p>You can turn it off like this.</p>
 
 <pre><code class="php">    $this-&gt;em = $this-&gt;getContainer()-&gt;get('doctrine')
-                    -&gt;getEntityManager();
+                    -&gt;getManager();
     $this-&gt;em-&gt;getConnection()-&gt;getConfiguration()-&gt;setSQLLogger(null);
 </code></pre>
 
@@ -113,7 +120,10 @@
                 <time itemprop="datePublished" datetime="2013-01-18T00:00:00+01:00">
                     2013-01-18
                 </time>
-                                </small>
+                , last updated on
+                    <time itemprop="dateModified" datetime="2013-01-18T00:00:00+01:00">
+                        2014-06-28
+                    </time>                </small>
             </p>
         </div>
     </div>
@@ -134,7 +144,13 @@
 </section>
                 </div>
                 <div class="col-md-2 hidden-xs hidden-sm">
-                                    </div>
+                        <span class="label label-success">
+        Updated on
+        <time itemprop="dateModified" datetime="2013-01-18T00:00:00+01:00">
+            2014-06-28
+        </time>
+    </span>
+                </div>
             </div>
         </div>
         <footer class="container">
