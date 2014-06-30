@@ -1,201 +1,32 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>How I migrated my blog from Wordpress to Octopress &mdash; Konrad Podgórski - Web Developer</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-        <link href="/css/style.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        <link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress">
-        <link rel="stylesheet" href="/components/highlightjs/styles/tomorrow-night-bright.css" />
-        <link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" />
-        <meta property="robots" content="index, follow">
-        <style>
+<html><head><title>How I migrated my blog from Wordpress to Octopress &mdash; Konrad Podgórski - Web Developer</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" /><link href="/css/style.min.css" media="screen, projection" rel="stylesheet" type="text/css" /><!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /><meta property="robots" content="index, follow"><style>
         /** quick fix because bootstrap <pre> has a background-color. */
             pre { background-color: inherit; padding: 0; margin: 1em 0; border: 0; border-radius: 0;}
             code {font-family: monospace}
-        </style>
-        <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-    <div class="container">
-    <header role="banner">
-        <hgroup>
-            <h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1>
-                        <h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2>
-                    </hgroup>
-    </header>
-    </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <article itemscope itemtype="http://schema.org/Article">
-    <header>
-        <h2 itemprop="headline">How I migrated my blog from Wordpress to Octopress</h2>
-    </header>
-    <div itemprop="articleBody">
-        <p>Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting</p>
-
-<p>Reason for this change is probably the same as yours, person who reads this</p>
-
-<ul>
-<li>Wordpress sucks at formatting code</li>
-<li>Most of my "notes" and "readme" from various projects are markdown files, so if I decided to publish one of them, copy paste wasn't enough</li>
-<li>3rd, and probably most important. "Hey, we are programmers" we can't use Wordpress ;-)</li>
-</ul>
-
-<!-- more -->
-
-<p>If you have more reasons, fell free to give a comment below.</p>
-
-<p><strong>This is not a complete guide, I decided to write few keypoints that could help others with migrating their Wordpress to Octopress.</strong></p>
-
-<h2>Installing Octopress</h2>
-
-<p><a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to setup Octopress on Ubuntu</a></p>
-
-<h2>Migrating permalinks</h2>
-
-<p>On old Wordpress blog I had this permalink structure</p>
-
-<pre><code>/blog/:id/:title
-</code></pre>
-
-<p>while it was ok back then, because I could modify title without loosing back links, with Octopress ids aren't used anymore.</p>
-
-<p>I decided to go with standard permalink structure</p>
-
-<pre><code>/blog/:year/:month/:day/:title
-</code></pre>
-
-<p>Ok, but problem is</p>
-
-<p>Now it's time to get old Wordpress links working in Octopress</p>
-
-<h2><a name="redirect-301-on-github-pages"></a>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
-
-<p>We want to keep old links working. Best solution would be 301 redirect all old posts.</p>
-
-<p>Unfortunately this cannot be done the "HTTP way" by sending proper response headers (without JS) on Github pages. But there is a solution for that.</p>
-
-<p>First, include an entire Wordpress blog in read only mode.</p>
-
-<p>Dump an entire Wordpress blog to your disk using wget</p>
-
-<p><a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></p>
-
-<p>In my case all downloaded posts were in /blog directory, so to get them still working on Octopress I had to copy</p>
-
-<pre><code>/wp-content
+        </style><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><header><h2 itemprop="headline">How I migrated my blog from Wordpress to Octopress</h2></header><div itemprop="articleBody"><p>Yesterday I decided to try a markdown powered blog platform, Octopress with Github Pages hosting</p><p>Reason for this change is probably the same as yours, person who reads this</p><ul><li>Wordpress sucks at formatting code</li><li>Most of my "notes" and "readme" from various projects are markdown files, so if I decided to publish one of them, copy paste wasn't enough</li><li>3rd, and probably most important. "Hey, we are programmers" we can't use Wordpress ;-)</li></ul><!-- more --><p>If you have more reasons, fell free to give a comment below.</p><p><strong>This is not a complete guide, I decided to write few keypoints that could help others with migrating their Wordpress to Octopress.</strong></p><h2>Installing Octopress</h2><p><a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to setup Octopress on Ubuntu</a></p><h2>Migrating permalinks</h2><p>On old Wordpress blog I had this permalink structure</p><pre><code>/blog/:id/:title
+</code></pre><p>while it was ok back then, because I could modify title without loosing back links, with Octopress ids aren't used anymore.</p><p>I decided to go with standard permalink structure</p><pre><code>/blog/:year/:month/:day/:title
+</code></pre><p>Ok, but problem is</p><p>Now it's time to get old Wordpress links working in Octopress</p><h2><a name="redirect-301-on-github-pages"></a>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2><p>We want to keep old links working. Best solution would be 301 redirect all old posts.</p><p>Unfortunately this cannot be done the "HTTP way" by sending proper response headers (without JS) on Github pages. But there is a solution for that.</p><p>First, include an entire Wordpress blog in read only mode.</p><p>Dump an entire Wordpress blog to your disk using wget</p><p><a href="/blog/2013/10/20/how-to-recursively-download-an-entire-website-using-wget/">How to Recursively Download an Entire Website Using WGET</a></p><p>In my case all downloaded posts were in /blog directory, so to get them still working on Octopress I had to copy</p><pre><code>/wp-content
 /blog
-</code></pre>
-
-<p>to</p>
-
-<pre><code>/source/wp-content
+</code></pre><p>to</p><pre><code>/source/wp-content
 /source/blog
-</code></pre>
-
-<p>If you used other permalink structure for instance</p>
-
-<pre><code>/:title
-</code></pre>
-
-<p>You need to copy every directory, sorry! :(</p>
-
-<p>Now edit each <code>/:title/index.html</code> file and put these inside <code>&lt;head&gt;</code></p>
-
-<pre><code class="html">    &lt;meta http-equiv="refresh" content="0; url=http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/"&gt;
+</code></pre><p>If you used other permalink structure for instance</p><pre><code>/:title
+</code></pre><p>You need to copy every directory, sorry! :(</p><p>Now edit each <code>/:title/index.html</code> file and put these inside <code>&lt;head&gt;</code></p><pre><code class="html">    &lt;meta http-equiv="refresh" content="0; url=http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/"&gt;
     &lt;link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/" /&gt;
-</code></pre>
-
-<p>Unfortunately you need to do this manually in most cases.</p>
-
-<p>Using <code>&lt;meta http-equiv="refresh"</code> will redirect each visitor to the new post.
- As for Google Bot, it threats <code>&lt;link rel="canonical" href=</code> as 301 redirect, well.. not exactly but effect is that you get your pages reindexed and that is what you want.</p>
-
-<p>Now there is no longer need to put any notice about the fact that this is archived post etc.</p>
-
-<h3>Migrating comments</h3>
-
-<p>I decided to go with Disqus</p>
-
-<ol>
-<li>Register on Disqus</li>
-<li>On still working Wordpress blog change permalink structure to the same as your new Octopress blog (very important!)</li>
-<li>With changed structure install "Disqus" plugin, log in and export current Comments.</li>
-<li>Because we changed permalink structure all comments will get mapped to the one that will be used in Octopress</li>
-</ol>
-
-<p>edit _config.yml and enter your shortname</p>
-
-<pre><code># Disqus Comments
+</code></pre><p>Unfortunately you need to do this manually in most cases.</p><p>Using <code>&lt;meta http-equiv="refresh"</code> will redirect each visitor to the new post.
+ As for Google Bot, it threats <code>&lt;link rel="canonical" href=</code> as 301 redirect, well.. not exactly but effect is that you get your pages reindexed and that is what you want.</p><p>Now there is no longer need to put any notice about the fact that this is archived post etc.</p><h3>Migrating comments</h3><p>I decided to go with Disqus</p><ol><li>Register on Disqus</li><li>On still working Wordpress blog change permalink structure to the same as your new Octopress blog (very important!)</li><li>With changed structure install "Disqus" plugin, log in and export current Comments.</li><li>Because we changed permalink structure all comments will get mapped to the one that will be used in Octopress</li></ol><p>edit _config.yml and enter your shortname</p><pre><code># Disqus Comments
 disqus_short_name: konradpodgorski
 disqus_show_comment_count: true
-</code></pre>
-
-<h3>That's it</h3>
-
-<p>for now</p>
-
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-6">
-            <p class="text-right">
-                <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                    Posted by <span itemprop="name" class="fn">
-                    <a href="https://plus.google.com/114997465791213403444?rel=author">
+</code></pre><h3>That's it</h3><p>for now</p></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="text-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                    Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
                         Konrad Podgórski
-                    </a>                    </span>
-                </span>
-                <br>
-                <small>
+                    </a></span></span><br><small>
                 Published on
                 <time itemprop="datePublished" datetime="2013-10-21T08:40:00+02:00">
                     2013-10-21
-                </time>
-                                </small>
-            </p>
-        </div>
-    </div>
-</article>
-<h3>Find this post helpful? Spread the word, thanks.</h3>
-<div class="sharing">
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress" >Tweet</a>
-      <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-  </div>
-<section>
-    <h1>Comments</h1>
-
-    <div id="disqus_thread" aria-live="polite">
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript>
-    </div>
-</section>
-                </div>
-                <div class="col-md-2 hidden-xs hidden-sm">
-                                    </div>
-            </div>
-        </div>
-        <footer class="container">
-            <p>
+                </time></small></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript></div></section></div><div class="col-md-2 hidden-xs hidden-sm"></div></div></div><footer class="container"><p>
     Copyright &copy; 2014 - Konrad Podgórski -
-    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span>
-</p>
-        </footer>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/components/jquery/jquery.min.js"><\/script>')</script>
-        <script src="/components/bootstrap/js/bootstrap.min.js"></script>
-                
-                <script type="text/javascript">
+    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p></footer><script type="text/javascript" data-main="/app.min" src="/assets/js/require.min.js"></script><script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-21178598-2']);
             _gaq.push(['_trackPageview']);
@@ -205,10 +36,7 @@ disqus_show_comment_count: true
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
-        </script>
-                <script src="/components/highlightjs/highlight.pack.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script type="text/javascript">
+        </script><script type="text/javascript">
       var disqus_shortname = 'konradpodgorski';
               //var disqus_developer = 1;
         var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/21/how-i-migrated-my-blog-from-wordpress-to-octopress/';
@@ -219,23 +47,19 @@ disqus_show_comment_count: true
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
-</script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
+</script><div id="fb-root"></div><script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {return;}
   js = d.createElement(s); js.id = id; js.async = true;
   js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-  <script type="text/javascript">
+}(document, 'script', 'facebook-jssdk'));</script><script type="text/javascript">
     (function() {
       var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
       script.src = 'https://apis.google.com/js/plusone.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
     })();
-  </script>
-  <script type="text/javascript">
+  </script><script type="text/javascript">
     (function(){
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
@@ -243,6 +67,4 @@ disqus_show_comment_count: true
       twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
-  </script>
-    </body>
-</html>
+  </script></body></html>

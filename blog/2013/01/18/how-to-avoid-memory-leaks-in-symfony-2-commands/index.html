@@ -1,121 +1,23 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>How to avoid memory leaks in Symfony 2 Commands &mdash; Konrad Podgórski - Web Developer</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" />
-        <link href="/css/style.css" media="screen, projection" rel="stylesheet" type="text/css" />
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-            <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        <link rel="canonical" href="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands">
-        <link rel="stylesheet" href="/components/highlightjs/styles/tomorrow-night-bright.css" />
-        <link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" />
-        <meta property="robots" content="index, follow">
-        <style>
+<html><head><title>How to avoid memory leaks in Symfony 2 Commands &mdash; Konrad Podgórski - Web Developer</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" /><link href="/css/style.min.css" media="screen, projection" rel="stylesheet" type="text/css" /><!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><link rel="canonical" href="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /><meta property="robots" content="index, follow"><style>
         /** quick fix because bootstrap <pre> has a background-color. */
             pre { background-color: inherit; padding: 0; margin: 1em 0; border: 0; border-radius: 0;}
             code {font-family: monospace}
-        </style>
-        <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-        <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-    </head>
-    <body>
-    <div class="container">
-    <header role="banner">
-        <hgroup>
-            <h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1>
-                        <h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2>
-                    </hgroup>
-    </header>
-    </div>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-10">
-                    <article itemscope itemtype="http://schema.org/Article">
-    <header>
-        <h2 itemprop="headline">How to avoid memory leaks in Symfony 2 Commands</h2>
-    </header>
-    <div itemprop="articleBody">
-        <p>My recent job was to write Symfony 2 command that copies and transforms enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script would be running for days or even weeks.</p>
-
-<p>I found out that when I run my newly created command it takes a while for it to start gradually consume more and more memory.</p>
-
-<p><div class="sharing">
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" >Tweet</a>
-      <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-  </div>
-</p>
-
-<p>It’s always nice to have a method like this for monitoring memory usage.</p>
-
-<pre><code class="php">    function printMemoryUsage()
+        </style><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><header><h2 itemprop="headline">How to avoid memory leaks in Symfony 2 Commands</h2></header><div itemprop="articleBody"><p>My recent job was to write Symfony 2 command that copies and transforms enormous amount of SQL data (~70GB) from one database to another doing a lot of queries and data transformation in mean time. I knew that this script would be running for days or even weeks.</p><p>I found out that when I run my newly created command it takes a while for it to start gradually consume more and more memory.</p><p><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div></p><p>It’s always nice to have a method like this for monitoring memory usage.</p><pre><code class="php">    function printMemoryUsage()
     {
         $this-&gt;output-&gt;writeln(sprintf('Memory usage (currently) %dKB/ (max) %dKB', round(memory_get_usage(true) / 1024), memory_get_peak_usage(true) / 1024));
     }
-</code></pre>
-
-<p>Right after the start the command used around 30MB – not much since I have 8GB right now, normally I wouldn’t even bother to optimize it more.</p>
-
-<p>But after a while it reached 40MB, 50MB and kept going and since Ubuntu by default has php memory limit in CLI set to -1 (unlimited) this script could consume the whole RAM after a couple of days.</p>
-
-<p><img src="/wp-content/uploads/2013/01/php-lazy-garbage-collector.png" alt="PHP lazy garbage collector"></p>
-
-<p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but it doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p>
-
-<pre><code class="php">ini_set('memory_limit', '32M');
-</code></pre>
-
-<p>caused standard exhausted memory limit error. Then I asked myself why garbage collector didn’t clear unused objects that I could miss?</p>
-
-<p>Ok, it’s not the time to be lazy and relay on g. collector, I spent some time adding unset() for every object that was created. That still didn’t help :(</p>
-
-<p>After hours of debugging I’ve found 3 issues:</p>
-
-<h3>1st issue, lazy Garbage Collector</h3>
-
-<p>If you use infinite loop like I did you should force GC to do its job by</p>
-
-<pre><code class="php">    gc_collect_cycles();
-</code></pre>
-
-<h3>2nd, dirty Entity Manager</h3>
-
-<p>Use clear() method once a while, it detaches doctrine objects that are not used any more.</p>
-
-<pre><code class="php">    $this-&gt;em-&gt;flush();
+</code></pre><p>Right after the start the command used around 30MB – not much since I have 8GB right now, normally I wouldn’t even bother to optimize it more.</p><p>But after a while it reached 40MB, 50MB and kept going and since Ubuntu by default has php memory limit in CLI set to -1 (unlimited) this script could consume the whole RAM after a couple of days.</p><p><img src="/wp-content/uploads/2013/01/php-lazy-garbage-collector.png" alt="PHP lazy garbage collector"></p><p>I thought that garbage collector which is enabled by default in PHP 5.3 would clear memory at some point but it doesn’t, setting memory limit to reasonable 32MB in this case by putting in code</p><pre><code class="php">ini_set('memory_limit', '32M');
+</code></pre><p>caused standard exhausted memory limit error. Then I asked myself why garbage collector didn’t clear unused objects that I could miss?</p><p>Ok, it’s not the time to be lazy and relay on g. collector, I spent some time adding unset() for every object that was created. That still didn’t help :(</p><p>After hours of debugging I’ve found 3 issues:</p><h3>1st issue, lazy Garbage Collector</h3><p>If you use infinite loop like I did you should force GC to do its job by</p><pre><code class="php">    gc_collect_cycles();
+</code></pre><h3>2nd, dirty Entity Manager</h3><p>Use clear() method once a while, it detaches doctrine objects that are not used any more.</p><pre><code class="php">    $this-&gt;em-&gt;flush();
     $this-&gt;em-&gt;clear();
-</code></pre>
-
-<h3>3rd issue, SQL Logger, this one was the worst to find</h3>
-
-<p>Every time you query database SQL Logger stores information about that. Normally, it’s not a problem but in commands running  infinitely every KB counts.</p>
-
-<p>You can turn it off like this.</p>
-
-<pre><code class="php">    $this-&gt;em = $this-&gt;getContainer()-&gt;get('doctrine')
+</code></pre><h3>3rd issue, SQL Logger, this one was the worst to find</h3><p>Every time you query database SQL Logger stores information about that. Normally, it’s not a problem but in commands running  infinitely every KB counts.</p><p>You can turn it off like this.</p><pre><code class="php">    $this-&gt;em = $this-&gt;getContainer()-&gt;get('doctrine')
                     -&gt;getManager();
     $this-&gt;em-&gt;getConnection()-&gt;getConfiguration()-&gt;setSQLLogger(null);
-</code></pre>
-
-<p><strong>If this post helped you let me know by leaving a comment, it’s always nice to know that I could help someone :)</strong></p>
-
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-md-offset-6">
-            <p class="text-right">
-                <span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                    Posted by <span itemprop="name" class="fn">
-                    <a href="https://plus.google.com/114997465791213403444?rel=author">
+</code></pre><p><strong>If this post helped you let me know by leaving a comment, it’s always nice to know that I could help someone :)</strong></p></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="text-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                    Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
                         Konrad Podgórski
-                    </a>                    </span>
-                </span>
-                <br>
-                <small>
+                    </a></span></span><br><small>
                 Published on
                 <time itemprop="datePublished" datetime="2013-01-18T00:00:00+01:00">
                     2013-01-18
@@ -123,48 +25,14 @@
                 , last updated on
                     <time itemprop="dateModified" datetime="2013-01-18T00:00:00+01:00">
                         2014-06-28
-                    </time>                </small>
-            </p>
-        </div>
-    </div>
-</article>
-<h3>Find this post helpful? Spread the word, thanks.</h3>
-<div class="sharing">
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" >Tweet</a>
-      <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-  </div>
-<section>
-    <h1>Comments</h1>
-
-    <div id="disqus_thread" aria-live="polite">
-        <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript>
-    </div>
-</section>
-                </div>
-                <div class="col-md-2 hidden-xs hidden-sm">
-                        <span class="label label-success">
+                    </time></small></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript></div></section></div><div class="col-md-2 hidden-xs hidden-sm"><span class="label label-success">
         Updated on
         <time itemprop="dateModified" datetime="2013-01-18T00:00:00+01:00">
             2014-06-28
-        </time>
-    </span>
-                </div>
-            </div>
-        </div>
-        <footer class="container">
-            <p>
+        </time></span></div></div></div><footer class="container"><p>
     Copyright &copy; 2014 - Konrad Podgórski -
-    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span>
-</p>
-        </footer>
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/components/jquery/jquery.min.js"><\/script>')</script>
-        <script src="/components/bootstrap/js/bootstrap.min.js"></script>
-                
-                <script type="text/javascript">
+    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p></footer><script type="text/javascript" data-main="/app.min" src="/assets/js/require.min.js"></script><script type="text/javascript">
             var _gaq = _gaq || [];
             _gaq.push(['_setAccount', 'UA-21178598-2']);
             _gaq.push(['_trackPageview']);
@@ -174,10 +42,7 @@
                 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
                 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
             })();
-        </script>
-                <script src="/components/highlightjs/highlight.pack.js"></script>
-        <script>hljs.initHighlightingOnLoad();</script>
-        <script type="text/javascript">
+        </script><script type="text/javascript">
       var disqus_shortname = 'konradpodgorski';
               //var disqus_developer = 1;
         var disqus_identifier = 'http://konradpodgorski.com/blog/2013/01/18/how-to-avoid-memory-leaks-in-symfony-2-commands/';
@@ -188,23 +53,19 @@
       dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
-</script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
+</script><div id="fb-root"></div><script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) {return;}
   js = d.createElement(s); js.id = id; js.async = true;
   js.src = "//connect.facebook.net/en_US/all.js#appId=212934732101925&xfbml=1";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-  <script type="text/javascript">
+}(document, 'script', 'facebook-jssdk'));</script><script type="text/javascript">
     (function() {
       var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
       script.src = 'https://apis.google.com/js/plusone.js';
       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
     })();
-  </script>
-  <script type="text/javascript">
+  </script><script type="text/javascript">
     (function(){
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
@@ -212,6 +73,4 @@
       twitterWidgets.src = '//platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
-  </script>
-    </body>
-</html>
+  </script></body></html>
