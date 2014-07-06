@@ -86,7 +86,7 @@ nano .ssh/authorized_keys
 </code></pre><h3>We will need these to compile Node JS from sources later</h3><p>To do that install</p><pre><code>sudo apt-get update
 sudo apt-get install -y gcc g++ make
 </code></pre><h3>Server timezone</h3><pre><code>sudo dpkg-reconfigure tzdata
-</code></pre><h3>Locale stuff</h3><p>Get rid of annoying errors when not using EN_US locale</p><blockquote><p><a href="/blog/2014/06/22/fixing-locale-problem-debian">Fixing the locale problem in Debian</a></p></blockquote><h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3><p>This step is optional</p><pre><code>sudo nano /etc/hostname
+</code></pre><h3>Locale stuff</h3><p>Get rid of annoying errors when not using EN_US locale</p><blockquote><p><a href="/blog/2014/06/23/fixing-locale-problem-debian/">Fixing the locale problem in Debian</a></p></blockquote><h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3><p>This step is optional</p><pre><code>sudo nano /etc/hostname
 </code></pre><p>Put same host in /etc/hosts</p><pre><code>sudo nano /etc/hosts
 </code></pre><p>restart server</p><pre><code>sudo reboot
 </code></pre><h1 id="dotdeb">Dotdeb</h1><p>DotDeb is a reliable and up to date repository for most of packages required in web server</p><p>Instruction was copied from official DotDeb site <a href="http://www.dotdeb.org/instructions/">http://www.dotdeb.org/instructions/</a></p><p>First add the dotdeb repo to your sources.list file:</p><pre><code>sudo nano /etc/apt/sources.list

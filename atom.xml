@@ -3,7 +3,7 @@
     <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
     <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
     <link href="http://konradpodgorski.com/"/>
-    <updated>2014-07-02T22:43:50+02:00</updated>
+    <updated>2014-07-06T19:51:43+02:00</updated>
     <id>http://konradpodgorski.com/</id>
             <author>
             <name><![CDATA[Konrad Podgórski]]></name>                    </author>
@@ -1150,7 +1150,7 @@ sudo apt-get install -y gcc g++ make
 <p>Get rid of annoying errors when not using EN_US locale</p>
 
 <blockquote>
-  <p><a href="/blog/2014/06/22/fixing-locale-problem-debian">Fixing the locale problem in Debian</a></p>
+  <p><a href="/blog/2014/06/23/fixing-locale-problem-debian/">Fixing the locale problem in Debian</a></p>
 </blockquote>
 
 <h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3>
