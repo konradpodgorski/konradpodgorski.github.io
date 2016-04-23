@@ -3,18 +3,12 @@ h1, h2, h3, h4, h5, h6 {
     font-family: "PT Serif", "Georgia", "Helvetica Neue", Arial, sans-serif
 }
 
-article {
+article p {
     font-family: 'PT Serif', "Georgia", "Times", 'Times New Roman', serif;
     line-height: 1.7em;
     font-size: 1.2em;
-}
-article p {
     margin-bottom: 1.5em;
 }
-.sharing {
-    line-height: 14px; /** fix for lowered fb like button **/
-}
-
 
 body:before {
     left: 0;

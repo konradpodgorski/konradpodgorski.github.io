@@ -47,3 +47,32 @@
 // Utility classes
 @import "utilities.less";
 @import "responsive-utilities.less";
+
+@margin-base : 10px;
+
+.m-xs-t-n {
+  margin-top: 0;
+}
+
+.m-xs-b {
+  margin-bottom: (@margin-base)
+}
+.m-xs-b-2 {
+  margin-bottom: (@margin-base * 2)
+}
+
+ul {
+  padding-left: 20px;
+}
+
+.project-stack {
+  li {margin-bottom: 2px;}
+}
+
+h4 {
+
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  color: @gray;
+}

@@ -1,57 +1,45 @@
 <!DOCTYPE html>
-<html><head><title>How to handle Angular JS api errors using response interceptors &mdash; Konrad Podgórski - Web Developer</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" /><link href="/css/style.min.css" media="screen, projection" rel="stylesheet" type="text/css" /><!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /><meta property="robots" content="index, follow"><style>
-        /** quick fix because bootstrap <pre> has a background-color. */
-            pre { background-color: inherit; padding: 0; margin: 1em 0; border: 0; border-radius: 0;}
-            code {font-family: monospace}
-        </style><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><header><h2 itemprop="headline">How to handle Angular JS api errors using response interceptors</h2></header><div itemprop="articleBody"><p>http://blog.brunoscopelliti.com/http-response-interceptors</p></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="text-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                    Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
-                        Konrad Podgórski
-                    </a></span></span><br><small>
-                Published on
-                <time itemprop="datePublished" datetime="2013-10-08T00:00:00+02:00">
+<html><head><title>How to handle Angular JS api errors using response interceptors &mdash; Konrad Podgórski - Web Developer</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 , minimum-scale=0.5"><meta property="robots" content="index, follow"><meta name="google-site-verification" content="H0ByRMmd1xFah0HtauqAyvg1WPI-P1QNTMIvpDOk89I" /><link href="/assets/css/main.css" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><script src="/assets/js/vendor/require.js"></script><script>
+    require.config({
+        baseUrl: "/assets/js/vendor",
+        waitSeconds: 0,
+        paths: {
+            'app': '..' + '/app',
+            'module': '..' + '/module'
+        }
+    });
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-21178598-2', 'auto');
+    ga('send', 'pageview');
+</script><link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with PHP</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><h2 class="article-name" itemprop="name">How to handle Angular JS api errors using response interceptors</h2><!--googleoff: index--><div class="alert alert-warning">
+        Please keep in mind that this post was written more than 2 years ago and might be outdated.
+    </div><!--googleon: index--><div itemprop="text"><p>http://blog.brunoscopelliti.com/http-response-interceptors</p></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="meta pull-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
+                    Konrad Podgórski
+                </a></span></span>
+                on
+                <time itemprop="datePublished" content="Tue, 08 Oct 2013 00:00:00 +0200"
+                      datetime="Tue, 08 Oct 2013 00:00:00 +0200" data-updated="true">
                     2013-10-08
-                </time></small></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript></div></section></div><div class="col-md-2 hidden-xs hidden-sm"></div></div></div><footer class="container"><p>
-    Copyright &copy; 2014 - Konrad Podgórski -
-    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p></footer><script type="text/javascript" data-main="/app.min" src="/assets/js/require.min.js"></script><script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-21178598-2']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script><script type="text/javascript">
-      var disqus_shortname = 'konradpodgorski';
-              //var disqus_developer = 1;
-        var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/';
-        var disqus_url = 'http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/';
-        var disqus_script = 'embed.js';
-          (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                </time></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript></div></section></div><div class="col-md-2"></div></div></div><footer class="container"><p>
+    Copyright &copy; 2016 - Konrad Podgórski -
+    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p><div id="fb-root"></div></footer><script>
+    require(['app']);
+        var disqus_shortname = 'konradpodgorski';
+        //var disqus_developer = 1;
+    var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/';
+    var disqus_url = 'http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors/';
+    var disqus_script = 'embed.js';
+        (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
-</script><div id="fb-root"></div><script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/enl_US/sdk.js#xfbml=1&appId=685958968119083&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script><script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script><script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script></body></html>
+
+    </script></body></html>

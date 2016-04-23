@@ -1,9 +1,22 @@
 <!DOCTYPE html>
-<html><head><title>PostgreSQL full backup and restore reference &mdash; Konrad Podgórski - Web Developer</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" /><link href="/css/style.min.css" media="screen, projection" rel="stylesheet" type="text/css" /><!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><link rel="canonical" href="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /><meta property="robots" content="index, follow"><style>
-        /** quick fix because bootstrap <pre> has a background-color. */
-            pre { background-color: inherit; padding: 0; margin: 1em 0; border: 0; border-radius: 0;}
-            code {font-family: monospace}
-        </style><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><header><h2 itemprop="headline">PostgreSQL full backup and restore reference</h2></header><div itemprop="articleBody"><p>Here is a list of commands used by me most frequently to manage importing/exporting databases in PostgreSql using console.</p><p>Feel free to enhance them by creating automatic scripts. Sample codes in comments are welcome :)</p><h2>Full Backup selected database using pg_dump in PostreSQL</h2><p>example usage:</p><pre><code>pg_dump -i -h localhost -p 5432 -U postgres -F t -b -v -f "~/backups/backup-file.backup" database_name_to_backup
+<html><head><title>PostgreSQL full backup and restore reference &mdash; Konrad Podgórski - Web Developer</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 , minimum-scale=0.5"><meta property="robots" content="index, follow"><meta name="google-site-verification" content="H0ByRMmd1xFah0HtauqAyvg1WPI-P1QNTMIvpDOk89I" /><link href="/assets/css/main.css" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><script src="/assets/js/vendor/require.js"></script><script>
+    require.config({
+        baseUrl: "/assets/js/vendor",
+        waitSeconds: 0,
+        paths: {
+            'app': '..' + '/app',
+            'module': '..' + '/module'
+        }
+    });
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-21178598-2', 'auto');
+    ga('send', 'pageview');
+</script><link rel="canonical" href="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with PHP</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><h2 class="article-name" itemprop="name">PostgreSQL full backup and restore reference</h2><!--googleoff: index--><div class="alert alert-warning">
+        Please keep in mind that this post was written more than 2 years ago and might be outdated.
+    </div><!--googleon: index--><div itemprop="text"><p>Here is a list of commands used by me most frequently to manage importing/exporting databases in PostgreSql using console.</p><p>Feel free to enhance them by creating automatic scripts. Sample codes in comments are welcome :)</p><h2 id="full-backup-selected-database-using-pg_dump-in-postresql">Full Backup selected database using pg_dump in PostreSQL</h2><p>example usage:</p><pre><code>pg_dump -i -h localhost -p 5432 -U postgres -F t -b -v -f "~/backups/backup-file.backup" database_name_to_backup
 </code></pre><p>used arguments</p><pre><code>-i, –ignore-version proceed even when server version mismatches. Useful while migrating data between servers.
 -h localhost, host to connect, can be IP address
 -p 5432, default port used by PostgreSQL
@@ -13,7 +26,7 @@
 -v, –verbose
 -f "~/backups/test-database.backup", file where backup will be stored
 database_name_to_backup, database name which we want to backup
-</code></pre><p><em>in windows environment use pg_dump.exe instead</em></p><p>If you get the following error:</p><blockquote><p>pg_dump: [tar archiver] could not open TOC file "~/backups/test-database.backup" for output: No such file or directory</p></blockquote><p>There are 2 possible causes to this problem</p><ul><li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li><li>Create directory “/home/ec2-user/backups”, backup file is created automatically but directories are not!</li></ul><p>This is just an example of a correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p><h3>Complete help for pg_dump</h3><p>To get a list of commands for pg_dump just type</p><pre><code>pg_dump -?
+</code></pre><p><em>in windows environment use pg_dump.exe instead</em></p><p>If you get the following error:</p><blockquote><p>pg_dump: [tar archiver] could not open TOC file "~/backups/test-database.backup" for output: No such file or directory</p></blockquote><p>There are 2 possible causes to this problem</p><ul><li>Change “~/backups/test-database.backup” to “/home/ec2-user/backups/test-database.backup”</li><li>Create directory “/home/ec2-user/backups”, backup file is created automatically but directories are not!</li></ul><p>This is just an example of a correct path to represent your home directory. ec2-user is default user for Amazon EC2 instances.</p><h3 id="complete-help-for-pg_dump">Complete help for pg_dump</h3><p>To get a list of commands for pg_dump just type</p><pre><code>pg_dump -?
 
 -p, –port=PORT database server port number
 -i, –ignore-version proceed even when server version mismatches
@@ -27,7 +40,7 @@ database_name_to_backup, database name which we want to backup
 -b, –blobs include large objects in dump
 -v, –verbose verbose mode
 -f, –file=FILENAME output file name
-</code></pre><h2>Restore, load data using pg_restore</h2><pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
+</code></pre><h2 id="restore%2C-load-data-using-pg_restore">Restore, load data using pg_restore</h2><pre><code>pg_restore -i -h localhost -p 5432 -U postgres -d old_db -v "~/backups/backup-file.backup"
 </code></pre><p>To get a list of commands for pg_restore just type</p><pre><code>pg_restore -?
 
 
@@ -39,55 +52,30 @@ database_name_to_backup, database name which we want to backup
 -W, –password force password prompt (should happen automatically)
 -d, –dbname=NAME connect to database name
 -v, –verbose verbose mode
-</code></pre></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="text-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                    Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
-                        Konrad Podgórski
-                    </a></span></span><br><small>
-                Published on
-                <time itemprop="datePublished" datetime="2011-10-03T16:23:00+02:00">
+</code></pre></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="meta pull-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
+                    Konrad Podgórski
+                </a></span></span>
+                on
+                <time itemprop="datePublished" content="Mon, 03 Oct 2011 16:23:00 +0200"
+                      datetime="Mon, 03 Oct 2011 16:23:00 +0200" data-updated="true">
                     2011-10-03
-                </time></small></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript></div></section></div><div class="col-md-2 hidden-xs hidden-sm"></div></div></div><footer class="container"><p>
-    Copyright &copy; 2014 - Konrad Podgórski -
-    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p></footer><script type="text/javascript" data-main="/app.min" src="/assets/js/require.min.js"></script><script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-21178598-2']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script><script type="text/javascript">
-      var disqus_shortname = 'konradpodgorski';
-              //var disqus_developer = 1;
-        var disqus_identifier = 'http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/';
-        var disqus_url = 'http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/';
-        var disqus_script = 'embed.js';
-          (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                </time></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript></div></section></div><div class="col-md-2"></div></div></div><footer class="container"><p>
+    Copyright &copy; 2016 - Konrad Podgórski -
+    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p><div id="fb-root"></div></footer><script>
+    require(['app']);
+        var disqus_shortname = 'konradpodgorski';
+        //var disqus_developer = 1;
+    var disqus_identifier = 'http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/';
+    var disqus_url = 'http://konradpodgorski.com/blog/2011/10/03/postgresql-ssh-console-reference-for-dump-and-restore-database/';
+    var disqus_script = 'embed.js';
+        (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
-</script><div id="fb-root"></div><script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/enl_US/sdk.js#xfbml=1&appId=685958968119083&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script><script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script><script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script></body></html>
+
+    </script></body></html>

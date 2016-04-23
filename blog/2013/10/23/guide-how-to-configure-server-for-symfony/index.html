@@ -1,17 +1,30 @@
 <!DOCTYPE html>
-<html><head><title>Step by step guide how to configure server for PHP / Symfony project &mdash; Konrad Podgórski - Web Developer</title><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" /><link href="/components/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" type="text/css" /><link href="/css/style.min.css" media="screen, projection" rel="stylesheet" type="text/css" /><!-- HTML5 shim, for IE6-8 support of HTML5 elements --><!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]--><link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /><meta property="robots" content="index, follow"><style>
-        /** quick fix because bootstrap <pre> has a background-color. */
-            pre { background-color: inherit; padding: 0; margin: 1em 0; border: 0; border-radius: 0;}
-            code {font-family: monospace}
-        </style><link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with Symfony, Node JS and Angular JS</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><header><h2 itemprop="headline">Step by step guide how to configure server for PHP / Symfony project</h2></header><div itemprop="articleBody"><p>I decided to publish notes that I have been gathering lately about configuring servers.
+<html><head><title>Step by step guide how to configure server for PHP / Symfony project &mdash; Konrad Podgórski - Web Developer</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0 , minimum-scale=0.5"><meta property="robots" content="index, follow"><meta name="google-site-verification" content="H0ByRMmd1xFah0HtauqAyvg1WPI-P1QNTMIvpDOk89I" /><link href="/assets/css/main.css" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css"><script src="/assets/js/vendor/require.js"></script><script>
+    require.config({
+        baseUrl: "/assets/js/vendor",
+        waitSeconds: 0,
+        paths: {
+            'app': '..' + '/app',
+            'module': '..' + '/module'
+        }
+    });
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    ga('create', 'UA-21178598-2', 'auto');
+    ga('send', 'pageview');
+</script><link rel="canonical" href="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony"><link rel="alternate" type="application/atom+xml" href="http://konradpodgorski.com/atom.xml" title="Konrad Podgórski - Web Developer activity feed" /></head><body><div class="container"><header role="banner"><hgroup><h1><a href="http://konradpodgorski.com/">Konrad Podgórski - Web Developer</a></h1><h2>Personal blog about developing web applications with PHP</h2></hgroup></header></div><div class="container"><div class="row"><div class="col-md-10"><article itemscope itemtype="http://schema.org/Article"><h2 class="article-name" itemprop="name">Step by step guide how to configure server for PHP / Symfony project</h2><!--googleoff: index--><div class="alert alert-warning">
+        Please keep in mind that this post was written more than 2 years ago and might be outdated.
+    </div><!--googleon: index--><div itemprop="text"><p>I decided to publish notes that I have been gathering lately about configuring servers.
 This is a complete guide how to configure server for production usage with Symfony or any PHP project.
-Instruction might seem to you very long and I totally agree with you. It took me few months to finish.</p><!-- more --><p>These steps are about preparing your server for PHP / Symfony application and do not cover code deployment itself.</p><p>If you found this useful leave a comment or share link to your friends, it's always good to know that someone (besides Googlebot) actually read this :)</p><p><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div></p><p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
+Instruction might seem to you very long and I totally agree with you. It took me few months to finish.</p><!-- more --><p>These steps are about preparing your server for PHP / Symfony application and do not cover code deployment itself.</p><p>If you found this useful leave a comment or share link to your friends, it's always good to know that someone (besides Googlebot) actually read this :)</p><p><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div></div></p><p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
 It was tested by me on ~10 machines, however if you find something not working don't hesitate to let me know.
-I try to help you and correct/expand guide to cover your problem.</strong></p><p>Post index for quick navigation</p><ul><li><a href="#securing-server">Securing server</a></li><li><a href="#dotdeb">Dotdeb</a></li><li><a href="#nginx">Nginx</a></li><li><a href="#php-fpm">PHP fpm</a></li><li><a href="#mysql">MySQL</a></li><li><a href="#nodejs">NodeJS</a></li></ul><p>Requirements:</p><ul><li>OS: Debian 6.0 or 7.0</li></ul><p>You will get server with:</p><ul><li>Nginx (latest stable), using sockets to communicate with PHP rather than TCP/IP</li><li>PHP 5.4 or 5.5 (latest stable)</li><li>MySQL 5.5 (production settings)</li><li>NodeJS (latest stable), including: Less, Uglify-JS</li><li>Twig C extension</li><li>GIT</li><li>Optional: Zend OPCache, APCu</li></ul><p>Security:</p><ul><li>Disabled direct root access</li><li>Installed sudo</li><li>Installed fail2ban (deny access after 3 incorrect login attempts)</li><li>Non privileged user for deployments</li><li>Authorization using ssh keys</li></ul><p>Other</p><ul><li>Correct timezone</li><li>Fixed common locale warnings</li><li>Color prompt</li><li>Removed Apache2</li></ul><h1>Step by step guide how to configure server for PHP / Symfony project</h1><h3>Mass replace</h3><p>You can copy guide to your favorite editor and use mass replace function, this way later you can just copy paste all commands.</p><p>Use mass replace function to change following unique strings</p><ul><li>SERVERIPADDRESS to your actual IPv4 ip address</li><li>NONPRIVILAGEUNIXUSERNAME to unix username you want to use, e.g. konrad</li><li>APPDOMAINNAME to domain name without http:// and trailing slash e.g. konradpodgorski.com</li></ul><h1 id="securing-server">Securing server</h1><p>First log in</p><pre><code>ssh root@SERVERIPADDRESS
+I try to help you and correct/expand guide to cover your problem.</strong></p><p>Requirements:</p><ul><li>OS: Debian 6.0 or 7.0</li></ul><p>You will get server with:</p><ul><li>Nginx (latest stable), using sockets to communicate with PHP rather than TCP/IP</li><li>PHP 5.4 or 5.5 (latest stable)</li><li>MySQL 5.5 (production settings)</li><li>NodeJS (latest stable), including: Less, Uglify-JS</li><li>Twig C extension</li><li>GIT</li><li>Optional: Zend OPCache, APCu</li></ul><p>Security:</p><ul><li>Disabled direct root access</li><li>Installed sudo</li><li>Installed fail2ban (deny access after 3 incorrect login attempts)</li><li>Non privileged user for deployments</li><li>Authorization using ssh keys</li></ul><p>Other</p><ul><li>Correct timezone</li><li>Fixed common locale warnings</li><li>Color prompt</li><li>Removed Apache2</li></ul><h1 id="step-by-step-guide-how-to-configure-server-for-php-%2F-symfony-project">Step by step guide how to configure server for PHP / Symfony project</h1><h3 id="mass-replace">Mass replace</h3><p>You can copy guide to your favorite editor and use mass replace function, this way later you can just copy paste all commands.</p><p>Use mass replace function to change following unique strings</p><ul><li>SERVERIPADDRESS to your actual IPv4 ip address</li><li>NONPRIVILAGEUNIXUSERNAME to unix username you want to use, e.g. konrad</li><li>APPDOMAINNAME to domain name without http:// and trailing slash e.g. konradpodgorski.com</li></ul><h3 id="start">Start</h3><p>First log in</p><pre><code>ssh root@SERVERIPADDRESS
 </code></pre><p>On server create new user</p><pre><code>useradd NONPRIVILAGEUNIXUSERNAME -m -s /bin/bash
-</code></pre><h3>Update apt-get</h3><pre><code>apt-get update
-</code></pre><h3>Install nano</h3><pre><code>apt-get install nano
-</code></pre><h3>Install sudo</h3><pre><code>apt-get install sudo
+</code></pre><h3 id="update-apt-get">Update apt-get</h3><pre><code>apt-get update
+</code></pre><h3 id="install-nano">Install nano</h3><pre><code>apt-get install nano
+</code></pre><h3 id="install-sudo">Install sudo</h3><pre><code>apt-get install sudo
 
 nano /etc/sudoers
 </code></pre><p>Before</p><pre><code>#
@@ -71,25 +84,25 @@ NONPRIVILAGEUNIXUSERNAME    ALL=(ALL) NOPASSWD: ALL
 %sudo   ALL=(ALL:ALL) ALL
 
 # See sudoers(5) for more information on "#include" directives:
-</code></pre><h3>Switch user you just created</h3><pre><code>su NONPRIVILAGEUNIXUSERNAME
+</code></pre><h3 id="switch-user-you-just-created">Switch user you just created</h3><pre><code>su NONPRIVILAGEUNIXUSERNAME
 </code></pre><p>Add your public key to an authorized keys</p><pre><code>cd ~
 mkdir .ssh
 nano .ssh/authorized_keys
 </code></pre><p>Paste your public key and save, set proper chmod</p><pre><code>chmod 700 .ssh -R
 </code></pre><p>logout and check if you can log in as NONPRIVILAGEUNIXUSERNAME directly without password</p><pre><code>ssh NONPRIVILAGEUNIXUSERNAME@SERVERIPADDRESS
-</code></pre><h3>Disable log in with password (you will use public key anyway)</h3><pre><code>sudo passwd -l NONPRIVILAGEUNIXUSERNAME
-</code></pre><p>This command locks the password</p><h3>Color prompt (optional)</h3><pre><code>nano ~/.bashrc
+</code></pre><h3 id="disable-log-in-with-password-you-will-use-public-key-anyway">Disable log in with password (you will use public key anyway)</h3><pre><code>sudo passwd -l NONPRIVILAGEUNIXUSERNAME
+</code></pre><p>This command locks the password</p><h3 id="color-prompt-optional">Color prompt (optional)</h3><pre><code>nano ~/.bashrc
 </code></pre><p>Uncomment following line (remove #)</p><pre><code>#force_color_prompt=yes
-</code></pre><h3>fail2ban - solution for brute force attacks</h3><pre><code>sudo apt-get install fail2ban
-</code></pre><h3>Disable direct log in on root account</h3><pre><code>sudo nano /etc/ssh/sshd_config
+</code></pre><h3 id="fail2ban---solution-for-brute-force-attacks">fail2ban - solution for brute force attacks</h3><pre><code>sudo apt-get install fail2ban
+</code></pre><h3 id="disable-direct-log-in-on-root-account">Disable direct log in on root account</h3><pre><code>sudo nano /etc/ssh/sshd_config
 </code></pre><p>Find and change from <strong>yes</strong> to <strong>no</strong> (Ctrl + W in nano)</p><pre><code>PermitRootLogin no
-</code></pre><h3>We will need these to compile Node JS from sources later</h3><p>To do that install</p><pre><code>sudo apt-get update
+</code></pre><h3 id="we-will-need-these-to-compile-node-js-from-sources-later">We will need these to compile Node JS from sources later</h3><p>To do that install</p><pre><code>sudo apt-get update
 sudo apt-get install -y gcc g++ make
-</code></pre><h3>Server timezone</h3><pre><code>sudo dpkg-reconfigure tzdata
-</code></pre><h3>Locale stuff</h3><p>Get rid of annoying errors when not using EN_US locale</p><blockquote><p><a href="/blog/2014/06/23/fixing-locale-problem-debian/">Fixing the locale problem in Debian</a></p></blockquote><h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3><p>This step is optional</p><pre><code>sudo nano /etc/hostname
+</code></pre><h3 id="server-timezone">Server timezone</h3><pre><code>sudo dpkg-reconfigure tzdata
+</code></pre><h3 id="locale-stuff">Locale stuff</h3><p>Get rid of annoying errors when not using EN_US locale</p><p><a href="http://hexample.com/2012/02/05/fixing-locale-problem-debian/">http://hexample.com/2012/02/05/fixing-locale-problem-debian/</a></p><h3 id="change-hostname-to-something-better-e.g.-symfony-app-server-you-cannot-use-dots">Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3><p>This step is optional</p><pre><code>sudo nano /etc/hostname
 </code></pre><p>Put same host in /etc/hosts</p><pre><code>sudo nano /etc/hosts
 </code></pre><p>restart server</p><pre><code>sudo reboot
-</code></pre><h1 id="dotdeb">Dotdeb</h1><p>DotDeb is a reliable and up to date repository for most of packages required in web server</p><p>Instruction was copied from official DotDeb site <a href="http://www.dotdeb.org/instructions/">http://www.dotdeb.org/instructions/</a></p><p>First add the dotdeb repo to your sources.list file:</p><pre><code>sudo nano /etc/apt/sources.list
+</code></pre><h2 id="dotdeb">Dotdeb</h2><p>DotDeb is a reliable and up to date repository for most of packages required in web server</p><p>Instruction was copied from official DotDeb site <a href="http://www.dotdeb.org/instructions/">http://www.dotdeb.org/instructions/</a></p><p>First add the dotdeb repo to your sources.list file:</p><pre><code>sudo nano /etc/apt/sources.list
 </code></pre><p>add this to the bottom of the file:</p><p>Debian 7.0 Wheezy</p><pre><code>deb http://packages.dotdeb.org wheezy all
 deb-src http://packages.dotdeb.org wheezy all
 </code></pre><p>or Debian 6.0 Squeeze</p><pre><code>deb http://packages.dotdeb.org squeeze all
@@ -101,8 +114,8 @@ deb-src http://packages.dotdeb.org squeeze-php54 all
 </code></pre><p>Next, add the GnuPG key to your distribution:</p><pre><code>wget http://www.dotdeb.org/dotdeb.gpg
 cat dotdeb.gpg | sudo apt-key add -
 </code></pre><p>Update APT:</p><pre><code class="bash">sudo apt-get update
-</code></pre><h1 id="nginx">NGINX</h1><p>You probably won't need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p><pre><code class="bash">sudo apt-get install nginx-light
-</code></pre><h3>NGINX - General Configuration</h3><p><strong>Note:</strong> set <code>worker_processes 2;</code> to the number of cpu cores your server has</p><pre><code>#/etc/nginx/nginx.conf
+</code></pre><h2 id="nginx">NGINX</h2><p>You probably won't need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p><pre><code class="bash">sudo apt-get install nginx-light
+</code></pre><h3 id="nginx---general-configuration">NGINX - General Configuration</h3><p><strong>Note:</strong> set <code>worker_processes 2;</code> to the number of cpu cores your server has</p><pre><code>#/etc/nginx/nginx.conf
 user www-data;
 worker_processes 2;
 pid /var/run/nginx.pid;
@@ -131,7 +144,7 @@ http {
     include /etc/nginx/conf.d/*.conf;
     include /etc/nginx/sites-enabled/*;
 }
-</code></pre><h3>NGINX - configuration specific for application</h3><p>create configuration file</p><pre><code class="bash">sudo nano /etc/nginx/sites-available/APPDOMAINNAME
+</code></pre><h3 id="nginx---configuration-specific-for-application">NGINX - configuration specific for application</h3><p>create configuration file</p><pre><code class="bash">sudo nano /etc/nginx/sites-available/APPDOMAINNAME
 </code></pre><p>edit #/etc/nginx/sites-available/APPDOMAINNAME</p><pre><code class="conf"># /etc/nginx/sites-available/APPDOMAINNAME
 upstream php5-fpm {
     server unix:/var/run/php5-fpm.sock;
@@ -176,8 +189,8 @@ server {
 }
 </code></pre><p>Enable site</p><pre><code class="bash">sudo ln -s /etc/nginx/sites-available/APPDOMAINNAME /etc/nginx/sites-enabled/APPDOMAINNAME
 </code></pre><p>Remove default</p><pre><code>sudo rm /etc/nginx/sites-enabled/default
-</code></pre><h1 id="php-fpm">PHP5-FPM</h1><p>Installing required packages</p><pre><code class="bash">sudo apt-get install -y php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd php5-intl php5-curl php5-dev
-</code></pre><h3>pool.d/www.conf</h3><p><strong>Update (June 2014):</strong> since the time I created this guide php5-fpm team changed <code>/etc/php5/fpm/pool.d/www.conf</code> default settings to described below. You don't have to change anything from this section. I'm leaving it as a reference in case someone use old config.</p><p><strike>
+</code></pre><h2 id="php-fpm">PHP5-FPM</h2><p>Installing required packages</p><pre><code class="bash">sudo apt-get install -y php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd php5-intl php5-curl php5-dev
+</code></pre><h3 id="pool.d%2Fwww.conf">pool.d/www.conf</h3><p><strong>Update (June 2014):</strong> since the time I created this guide php5-fpm team changed <code>/etc/php5/fpm/pool.d/www.conf</code> default settings to described below. You don't have to change anything from this section. I'm leaving it as a reference in case someone use old config.</p><p><strike>
 Edit</p><pre><code># /etc/php5/fpm/pool.d/www.conf
 </code></pre><p>Find and edit if needed user and group</p><pre><code>; Unix user/group of processes
 ; Note: The user is mandatory. If the group is not set, the default user's group
@@ -186,7 +199,7 @@ user = www-data
 group = www-data
 </code></pre><p>Find and replace</p><pre><code>listen = 127.0.0.1:9000
 </code></pre><p>with</p><pre><code>listen = /var/run/php5-fpm.sock
-</code></pre><p></strike></p><h3>php.ini configuration</h3><p>FPM (used by web server - Nginx)</p><pre><code># /etc/php5/fpm/php.ini
+</code></pre><p></strike></p><h3 id="php.ini-configuration">php.ini configuration</h3><p>FPM (used by web server - Nginx)</p><pre><code># /etc/php5/fpm/php.ini
 
 date.timezone = Europe/Warsaw
 
@@ -205,12 +218,12 @@ upload_max_filesize = 128M
 date.timezone = Europe/Warsaw
 
 short_open_tag = Off
-</code></pre><h3>Twig extension</h3><pre><code>sudo pear channel-discover pear.twig-project.org
+</code></pre><h3 id="twig-extension">Twig extension</h3><pre><code>sudo pear channel-discover pear.twig-project.org
 sudo pear install twig/CTwig
 
 sudo nano /etc/php5/mods-available/twig.ini
 </code></pre><p>Paste inside</p><pre><code>extension=twig.so
-</code></pre><h3>Zend OPCache</h3><pre><code>sudo pecl install zendopcache-7.0.2
+</code></pre><h3 id="zend-opcache">Zend OPCache</h3><pre><code>sudo pecl install zendopcache-7.0.2
 
 sudo nano /etc/php5/mods-available/opcache.ini
 
@@ -226,7 +239,7 @@ opcache.enable_cli=1
 
 cd /etc/php5/conf.d
 sudo ln -s ../mods-available/opcache.ini 05-opcache.ini
-</code></pre><h3>APCu</h3><pre><code>git clone https://github.com/krakjoe/apcu
+</code></pre><h3 id="apcu">APCu</h3><pre><code>git clone https://github.com/krakjoe/apcu
 cd apcu
 phpize
 ./configure
@@ -246,8 +259,8 @@ apc.enable_cli=0
 
 cd /etc/php5/conf.d
 sudo ln -s ../mods-available/apcu.ini 20-apcu.ini
-</code></pre><h3>Restart PHP5-FPM</h3><p>For all changes to take an effect you need to restart php</p><pre><code>sudo service php5-fpm restart
-</code></pre><h1 id="mysql">MySQL</h1><pre><code>sudo apt-get install -y mysql-server
+</code></pre><h3 id="restart-php5-fpm">Restart PHP5-FPM</h3><p>For all changes to take an effect you need to restart php</p><pre><code>sudo service php5-fpm restart
+</code></pre><h3 id="mysql">MySQL</h3><pre><code>sudo apt-get install -y mysql-server
 </code></pre><p>In a window that popped up enter root password, use program like KeePassX to generate secure password</p><p><em>Tweak configuration</em></p><pre><code>sudo nano /etc/mysql/my.cnf
 </code></pre><p>Add <em>innodb_file_per_table</em> right after <em>[mysqld]</em></p><pre><code>[mysqld]
 
@@ -255,7 +268,7 @@ innodb_file_per_table
 </code></pre><p>Restart mysql for changes to take effect</p><pre><code>sudo service mysql restart
 </code></pre><p>Next run and follow instructions</p><pre><code>sudo mysql_secure_installation
 </code></pre><p>Install MySQL Workbench for secure managing your database over a SSH tunnel.
-http://www.mysql.com/products/workbench/</p><p><em>DO NOT expose your mysql to outside world nor install web management tools like PhpMyAdmin, they were great few years ago. Now we have a better solutions.</em></p><h1 id="nodejs">Node JS</h1><blockquote><p>I wrote a separate post about installing Node JS on Debian/Ubuntu</p><p>You can find the post here: <a href="/blog/2014/06/22/how-to-install-node-js">How to install Node JS</a></p></blockquote><p><strike><strong>optional - I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></strike></p><p>It's better to concat and minify assets before deployment. If you are working with multiple instances it will speed up deployment process by few seconds for each instance.</p><p>This is a common fact that NodeJS in Debian/Ubuntu is seriously outdated. Installing from source is nice and easy.</p><p><em>Install make and required compilers</em></p><pre><code>sudo apt-get update
+http://www.mysql.com/products/workbench/</p><p><em>DO NOT expose your mysql to outside world nor install web management tools like PhpMyAdmin, they were great few years ago. Now we have a better solutions.</em></p><h3 id="nodejs">NodeJS</h3><p><strike><strong>optional - I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></strike></p><p>It's better to concat and minify assets before deployment. If you are working with multiple instances it will speed up deployment process by few seconds for each instance.</p><p>This is a common fact that NodeJS in Debian/Ubuntu is seriously outdated. Installing from source is nice and easy.</p><p><em>Install make and required compilers</em></p><pre><code>sudo apt-get update
 sudo apt-get install -y gcc g++ make
 </code></pre><p><em>Get source and install</em></p><p>Sadly there are no permalink for latest stable version so you are on your own with that. Go to http://nodejs.org/dist/latest/ and search for file matching the following pattern
 <code>node-v0.10.*.tar.gz</code></p><pre><code>wget http://nodejs.org/dist/latest/node-v0.10.29.tar.gz
@@ -266,73 +279,40 @@ make
 sudo make install
 </code></pre><p><em>Installing LESS compiler</em></p><pre><code>sudo npm install -g less
 </code></pre><p><em>Installing uglify-js</em></p><pre><code>sudo npm install -g uglify-js
-</code></pre><h3>GIT</h3><pre><code>sudo apt-get install -y git
-</code></pre><h3>Remove Apache2, important!</h3><pre><code>sudo service apache2 stop
+</code></pre><h3 id="git">GIT</h3><pre><code>sudo apt-get install -y git
+</code></pre><h3 id="remove-apache2%2C-important%21">Remove Apache2, important!</h3><pre><code>sudo service apache2 stop
 </code></pre><p>We don't need apache2 so remove it</p><pre><code>sudo apt-get remove apache2
-</code></pre><p>Otherwise it will take 80 port after next reboot and nginx will not work</p><h3>User for deploying</h3><p>We will use www-data user to deploy code.</p><p>Add your public key</p><pre><code>sudo mkdir /var/www/.ssh -p
+</code></pre><p>Otherwise it will take 80 port after next reboot and nginx will not work</p><h3 id="user-for-deploying">User for deploying</h3><p>We will use www-data user to deploy code.</p><p>Add your public key</p><pre><code>sudo mkdir /var/www/.ssh -p
 sudo nano /var/www/.ssh/authorized_keys
-</code></pre><p><strong>It's super important that owner and group of whole .ssh should be root. This way with read permission user www-data will be able to read public key but won't be able to add new one or edit existing.</strong></p><p>With this we won't give www-data any more permissions than it already has.</p><h3>Directory for application</h3><pre><code>sudo mkdir /var/www/APPDOMAINNAME -p
+</code></pre><p><strong>It's super important that owner and group of whole .ssh should be root. This way with read permission user www-data will be able to read public key but won't be able to add new one or edit existing.</strong></p><p>With this we won't give www-data any more permissions than it already has.</p><h3 id="directory-for-application">Directory for application</h3><pre><code>sudo mkdir /var/www/APPDOMAINNAME -p
 sudo chown www-data:www-data /var/www/APPDOMAINNAME
-</code></pre><h3>Deploying with Capifony</h3><p>This is super important step. Github allows only for 60 requests per hour for non authenticated connections. Using composer cache will prevent getting banned</p><pre><code>sudo mkdir /var/www/.composer
+</code></pre><h3 id="deploying-with-capifony">Deploying with Capifony</h3><p>This is super important step. Github allows only for 60 requests per hour for non authenticated connections. Using composer cache will prevent getting banned</p><pre><code>sudo mkdir /var/www/.composer
 sudo chown www-data:www-data /var/www/.composer
-</code></pre><p>Also a Curl is required if you are using Capifony for deployment</p><p>sudo apt-get install curl</p><h3>Test everything by restarting server</h3><pre><code>sudo reboot
-</code></pre><h1>That's it!</h1><p>Thank you for taking time to read this guide.</p></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="text-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
-                    Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
-                        Konrad Podgórski
-                    </a></span></span><br><small>
-                Published on
-                <time itemprop="datePublished" datetime="2013-10-23T11:18:00+02:00">
+</code></pre><p>Also a Curl is required if you are using Capifony for deployment</p><p>sudo apt-get install curl</p><h3 id="test-everything-by-restarting-server">Test everything by restarting server</h3><pre><code>sudo reboot
+</code></pre><h1 id="that%27s-it%21">That's it!</h1><p>Thank you for taking time to read this guide.</p></div><div class="row"><div class="col-md-6 col-md-offset-6"><p class="meta pull-right"><span itemprop="author" itemscope="" itemtype="http://schema.org/Person" class="byline author vcard">
+                Posted by <span itemprop="name" class="fn"><a href="https://plus.google.com/114997465791213403444?rel=author">
+                    Konrad Podgórski
+                </a></span></span>
+                on
+                <time itemprop="datePublished" content="Wed, 23 Oct 2013 11:18:00 +0200"
+                      datetime="Wed, 23 Oct 2013 11:18:00 +0200" data-updated="true">
                     2013-10-23
-                </time>
-                , last updated on
-                    <time itemprop="dateModified" datetime="2013-10-23T11:18:00+02:00">
-                        2014-06-23
-                    </time></small></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
-            Disqus.</a></noscript></div></section></div><div class="col-md-2 hidden-xs hidden-sm"><span class="label label-success">
-        Updated on
-        <time itemprop="dateModified" datetime="2013-10-23T11:18:00+02:00">
-            2014-06-23
-        </time></span></div></div></div><footer class="container"><p>
-    Copyright &copy; 2014 - Konrad Podgórski -
-    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p></footer><script type="text/javascript" data-main="/app.min" src="/assets/js/require.min.js"></script><script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-21178598-2']);
-            _gaq.push(['_trackPageview']);
-
-            (function() {
-                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-            })();
-        </script><script type="text/javascript">
-      var disqus_shortname = 'konradpodgorski';
-              //var disqus_developer = 1;
-        var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/';
-        var disqus_url = 'http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/';
-        var disqus_script = 'embed.js';
-          (function () {
-      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
-      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                </time></p></div></div></article><h3>Find this post helpful? Spread the word, thanks.</h3><div class="sharing"><a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" >Tweet</a><div class="g-plusone" data-size="medium"></div><div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div></div><section><h1>Comments</h1><div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by
+            Disqus.</a></noscript></div></section></div><div class="col-md-2"></div></div></div><footer class="container"><p>
+    Copyright &copy; 2016 - Konrad Podgórski -
+    <span class="credit">Powered by <a href="http://sculpin.io">Sculpin</a></span></p><div id="fb-root"></div></footer><script>
+    require(['app']);
+        var disqus_shortname = 'konradpodgorski';
+        //var disqus_developer = 1;
+    var disqus_identifier = 'http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/';
+    var disqus_url = 'http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony/';
+    var disqus_script = 'embed.js';
+        (function () {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
-</script><div id="fb-root"></div><script>(function(d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) return;
-        js = d.createElement(s); js.id = id;
-        js.src = "//connect.facebook.net/enl_US/sdk.js#xfbml=1&appId=685958968119083&version=v2.0";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));</script><script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script><script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script></body></html>
+
+    </script></body></html>

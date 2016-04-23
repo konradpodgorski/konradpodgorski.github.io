@@ -3,722 +3,17 @@
     <title><![CDATA[Konrad Podgórski - Web Developer]]></title>
     <link href="http://konradpodgorski.com/atom.xml" rel="self"/>
     <link href="http://konradpodgorski.com/"/>
-    <updated>2014-07-06T19:51:43+02:00</updated>
+    <updated>2016-04-23T18:48:38+02:00</updated>
     <id>http://konradpodgorski.com/</id>
             <author>
             <name><![CDATA[Konrad Podgórski]]></name>                    </author>
         <generator uri="http://sculpin.io/">Sculpin</generator>
             <entry>
-            <title type="html"><![CDATA[A better way to work with assets in Symfony 2]]></title>
-            <link href="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2"/>
-            <updated>2014-06-26T18:14:00+02:00</updated>
-            <id>http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2</id>
-            <content type="html"><![CDATA[<p>I will explain how to work with assets in Symfony framework without having to use Assetic Bundle at all.</p>
-
-<blockquote>
-  <p>We will build a stack that will</p>
-  
-  <ul>
-  <li>download and prepare dependencies (jQuery, Bootstrap and Font Awesome icons)</li>
-  <li>merge and minify css and javascript files</li>
-  <li>copy necessary fonts (font-awesome) in the right place so the path in css is correct</li>
-  <li>automate deploy to S3 bucket which you can optionally convert to CDN</li>
-  </ul>
-</blockquote>
-
-<p><div class="sharing">
-    <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2014/06/23/better-way-to-work-with-assets-in-symfony-2" >Tweet</a>
-      <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
-  </div>
-</p>
-
-<p>The process will be really fast and easy to understand even if you never used software listed here. However if you experience any problems do not hesitate to ask for help in comments.
-Post is quite long because it contain a lot of different configs but don't run away just yet. They are ready to copy &amp; paste.</p>
-
-<p>Also ... I'm working with Symfony here but you can use it for literally any other web framework.</p>
-
-<h2>Table of contents</h2>
-
-<blockquote>
-  <ol>
-  <li><a href="#introduction">Introduction</a></li>
-  <li>Prerequisites
-  
-  <ol>
-  <li><a href="#nodejs">Installing NodeJS</a></li>
-  <li><a href="#bower">Installing Bower</a></li>
-  <li><a href="#gruntjs">Installing GruntJS</a></li>
-  </ol></li>
-  <li>Use cases
-  
-  <ol>
-  <li><a href="#scenario-1">Scenario</a> - download dependencies and copy them to <code>/web/assets/*</code> dir</li>
-  <li><a href="#scenario-2">Scenario</a> - download dependencies, copy and minify them</li>
-  <li><a href="#scenario-3">Scenario</a> - download, copy, concat (merge) and minify</li>
-  <li><a href="#deploy-to-cdn">Deploying to S3/CDN</a> - all above plus automated deploy to the CDN</li>
-  </ol></li>
-  </ol>
-</blockquote>
-
-<h1 id="introduction">Introduction</h1>
-
-<p>Why you would want to do it?</p>
-
-<ul>
-<li>assets are generated on your computer once, so the server doesn't have to do anything (less software on server = the better)</li>
-<li>if you are (or will be) using load balancer you definitely should (actually must) keep assets on CDN</li>
-<li>one less bundle to load in your Symfony application (Assetic)</li>
-</ul>
-
-<p>What we will use?
-NodeJS, Bower, Grunt JS and some grunt tasks</p>
-
-<p>Before we begin please add these to your <code>.gitignore</code> file, you don't want to keep vendor libraries in your repository.</p>
-
-<pre><code>bower_components/
-node_modules/
-</code></pre>
-
-<h2 id="nodejs">Install NodeJS</h2>
-
-<p>NodeJS is a runtime platform for applications written in javascript, it's required by Bower and GruntJs we will install in a moment.</p>
-
-<p>Those who already have node js installed can go to the next step</p>
-
-<blockquote>
-  <p><a href="/blog/2014/06/22/how-to-install-node-js">How to install Node JS</a></p>
-</blockquote>
-
-<h2 id="bower">Installing Bower</h2>
-
-<p>Bower is like a composer for frontend libraries. If you like composer you will definitely like Bower.</p>
-
-<pre><code>npm install -g bower
-</code></pre>
-
-<p>Create file <code>bower.json</code>, it will hold information about all required dependencies.</p>
-
-<pre><code>{
-    "name": "symfony-application",
-    "dependencies": {
-        "jquery": "1.11.*",
-        "bootstrap": "3.1.*",
-        "font-awesome": "4.1.*"
-    }
-}
-</code></pre>
-
-<p>run bower install</p>
-
-<pre><code>bower install
-</code></pre>
-
-<p>Folder structure will look like this</p>
-
-<pre><code>.
-├── bower_components
-│   ├── bootstrap
-│   ├── font-awesome
-│   └── jquery
-├── bower.json
-└── .gitignore
-</code></pre>
-
-<h2 id="gruntjs">Installing Grunt JS</h2>
-
-<p>GruntJS is our task runner, by adding a set of tasks created by Grunt community we can automate many tasks we used to do manually with a very little effort.</p>
-
-<p>To install it we will once again use node package manager, npm:</p>
-
-<pre><code>npm install -g grunt-cli
-</code></pre>
-
-<p>Create file <code>package.json</code>, it will hold all dependencies for grunt tasks</p>
-
-<pre><code>{
-  "name": "symfony-application",
-  "version": "0.1.0"
-}
-</code></pre>
-
-<p>Run the following commands (<code>--save-dev</code> option will add it to <code>package.json</code>)</p>
-
-<pre><code>npm install grunt --save-dev
-npm install grunt-bowercopy --save-dev
-npm install grunt-contrib-clean --save-dev
-npm install grunt-contrib-concat --save-dev
-npm install grunt-contrib-copy --save-dev
-npm install grunt-contrib-cssmin --save-dev
-npm install grunt-contrib-uglify --save-de
-npm install grunt-contrib-watch --save-dev
-</code></pre>
-
-<p>Now <code>package.json</code> should look like this.</p>
-
-<pre><code>{
-  "name": "symfony-application",
-  "version": "0.1.0",
-  "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-bowercopy": "^1.0.1",
-    "grunt-contrib-clean": "^0.5.0",
-    "grunt-contrib-concat": "^0.4.0",
-    "grunt-contrib-copy": "^0.5.0",
-    "grunt-contrib-cssmin": "^0.10.0",
-    "grunt-contrib-uglify": "^0.5.0",
-    "grunt-contrib-watch": "^0.6.1"
-  }
-}
-</code></pre>
-
-<p>Once <code>package.json</code> is updated in the future you can use simple <code>npm install</code> to install grunt dependencies</p>
-
-<p>Now when all dependencies are ready we can configure how we want assets to be processed.</p>
-
-<h2 id="scenario-1">Scenario 1</h2>
-
-<p>Download latest jQuery, Bootstrap, Font Awesome with Bower and copy the only necessary files to <code>web/assets/*</code></p>
-
-<p>Create file <code>Gruntfile.js</code>, it will contain all configurations</p>
-
-<pre><code class="js">module.exports = function (grunt) {
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        bowercopy: {
-            options: {
-                srcPrefix: 'bower_components',
-                destPrefix: 'web/assets'
-            },
-            scripts: {
-                files: {
-                    'js/jquery.js': 'jquery/dist/jquery.js',
-                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
-                }
-            },
-            stylesheets: {
-                files: {
-                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
-                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
-                }
-            },
-            fonts: {
-                files: {
-                    'fonts': 'font-awesome/fonts'
-                }
-            }
-        }
-    });
-
-    grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.registerTask('default', ['bowercopy']);
-};
-</code></pre>
-
-<p>Run grunt with simple</p>
-
-<pre><code>grunt
-</code></pre>
-
-<p>It will fetch latest dependencies with Bower and copy them to desired locations</p>
-
-<pre><code>web
-└── assets
-    ├── css
-    │   ├── bootstrap.css
-    │   └── font-awesome.css
-    ├── fonts
-    │   ├── FontAwesome.otf
-    │   ├── fontawesome-webfont.eot
-    │   ├── fontawesome-webfont.svg
-    │   ├── fontawesome-webfont.ttf
-    │   └── fontawesome-webfont.woff
-    └── js
-        ├── bootstrap.js
-        └── jquery.js
-</code></pre>
-
-<h2 id="scenario-2">Scenario 2</h2>
-
-<p>Download dependencies with Bower, copy necessary files to <code>web/assets/*</code>. Then minify javascript and stylesheet files.</p>
-
-<blockquote>
-  <p>Although most frontend libraries comes with both normal and minified versions we will do it for the sake of learning.</p>
-</blockquote>
-
-<p>Update <code>Gruntfile.js</code> you created in previous scenario with configuration for <code>cssmin</code> and <code>uglify</code></p>
-
-<pre><code>module.exports = function (grunt) {
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        bowercopy: {
-            options: {
-                srcPrefix: 'bower_components',
-                destPrefix: 'web/assets'
-            },
-            scripts: {
-                files: {
-                    'js/jquery.js': 'jquery/dist/jquery.js',
-                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
-                }
-            },
-            stylesheets: {
-                files: {
-                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
-                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
-                }
-            },
-            fonts: {
-                files: {
-                    'fonts': 'font-awesome/fonts'
-                }
-            }
-        },
-        cssmin : {
-            bootstrap:{
-                src: 'web/assets/css/bootstrap.css',
-                dest: 'web/assets/css/bootstrap.min.css'
-            },
-            "font-awesome":{
-                src: 'web/assets/css/font-awesome.css',
-                dest: 'web/assets/css/font-awesome.min.css'
-            }
-        },
-        uglify : {
-            js: {
-                files: {
-                    'web/assets/js/jquery.min.js': ['web/assets/js/jquery.js'],
-                    'web/assets/js/bootstrap.min.js': ['web/assets/js/bootstrap.js']
-                }
-            }
-        }
-    });
-
-    grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    grunt.registerTask('default', ['bowercopy', 'cssmin', 'uglify']);
-};
-</code></pre>
-
-<p>Run grunt by typing <code>grunt</code> and the the structure should look like this</p>
-
-<pre><code>web
-└── assets
-    ├── css
-    │   ├── bootstrap.css
-    │   ├── bootstrap.min.css
-    │   ├── font-awesome.css
-    │   └── font-awesome.min.css
-    ├── fonts
-    │   ├── FontAwesome.otf
-    │   ├── fontawesome-webfont.eot
-    │   ├── fontawesome-webfont.svg
-    │   ├── fontawesome-webfont.ttf
-    │   └── fontawesome-webfont.woff
-    └── js
-        ├── bootstrap.js
-        ├── bootstrap.min.js
-        ├── jquery.js
-        └── jquery.min.js
-</code></pre>
-
-<h2 id="scenario-3">Scenario 3</h2>
-
-<p>Download dependencies with Bower, merge them with your custom css and js files, then minify.</p>
-
-<p>Assume we have the following structure</p>
-
-<pre><code>src
-└── KP
-    └── LearningBundle
-        └── Resources
-            └── public
-                ├── css
-                │   └── main.css
-                ├── images
-                │   └── no-photo.gif
-                └── js
-                    ├── editor.js
-                    └── notification.js
-</code></pre>
-
-<p>First task we configure will be <code>copy</code>, it will copy image(s) to <code>web/assets/images/*</code> directory.
- Second task we will add is <code>concat</code>, it will merge all scripts into single file which we will later <code>uglify</code> to make it smaller
-  Same thing for stylesheet file</p>
-
-<p>Updated <code>Gruntfile.js</code></p>
-
-<pre><code>module.exports = function (grunt) {
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        bowercopy: {
-            options: {
-                srcPrefix: 'bower_components',
-                destPrefix: 'web/assets'
-            },
-            scripts: {
-                files: {
-                    'js/jquery.js': 'jquery/dist/jquery.js',
-                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
-                }
-            },
-            stylesheets: {
-                files: {
-                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
-                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
-                }
-            },
-            fonts: {
-                files: {
-                    'fonts': 'font-awesome/fonts'
-                }
-            }
-        },
-        cssmin : {
-            bundled:{
-                src: 'web/assets/css/bundled.css',
-                dest: 'web/assets/css/bundled.min.css'
-            }
-        },
-        uglify : {
-            js: {
-                files: {
-                    'web/assets/js/bundled.min.js': ['web/assets/js/bundled.js']
-                }
-            }
-        },
-        concat: {
-            options: {
-                stripBanners: true
-            },
-            css: {
-                src: [
-                    'web/assets/css/bootstrap.css',
-                    'web/assets/css/font-awesome.css',
-                    'src/KP/LearningBundle/Resources/public/css/*.css'
-                ],
-                dest: 'web/assets/css/bundled.css'
-            },
-            js : {
-                src : [
-                    'web/assets/js/jquery.js',
-                    'web/assets/js/bootstrap.js',
-                    'src/KP/LearningBundle/Resources/public/js/*.js'
-                ],
-                dest: 'web/assets/js/bundled.js'
-            }
-        },
-        copy: {
-            images: {
-                expand: true,
-                cwd: 'src/KP/LearningBundle/Resources/public/images',
-                src: '*',
-                dest: 'web/assets/images/'
-            }
-        }
-    });
-
-    grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    grunt.registerTask('default', ['bowercopy','copy', 'concat', 'cssmin', 'uglify']);
-};
-</code></pre>
-
-<h1 id="deploy-to-cdn">Deploy to S3/CDN</h1>
-
-<p>Cloudfront is one of the most popular and in my opinion one of the easiest to begin with cdn servers
-Uploading assets to S3 storage and setting it as a source for CDN is enough to get started.</p>
-
-<p>S3 Integration is handled by another grunt task we will add to our stack</p>
-
-<pre><code>npm install grunt-s3 --save-dev
-</code></pre>
-
-<p>You can find the full documentation on the official repository <a href="https://github.com/pifantastic/grunt-s3">https://github.com/pifantastic/grunt-s3</a></p>
-
-<p>We will only use upload feature.</p>
-
-<p>Create a new file where you will store credentials to the S3 bucket. Lets call it <code>aws-credentials.json</code></p>
-
-<p>Don't forget to add it to <code>.gitignore</code>, last thing you want to do is to push your key/secret to the repository.</p>
-
-<pre><code># .gitignore
-bower_components/
-node_modules/
-aws-credentials.json
-</code></pre>
-
-<p>and the content of <code>aws-credentials.json</code> should be like this</p>
-
-<pre><code class="json">{
-    "key": "your_aws_key",
-    "secret": "your_aws_secret",
-    "bucket": "name_of_your_bucket"
-}
-</code></pre>
-
-<p>Updated <code>Gruntfile.js</code> with <code>grunt-s3</code> task</p>
-
-<pre><code class="js">module.exports = function (grunt) {
-    grunt.initConfig({
-        pkg: grunt.file.readJSON('package.json'),
-        bowercopy: {
-            options: {
-                srcPrefix: 'bower_components',
-                destPrefix: 'web/assets'
-            },
-            scripts: {
-                files: {
-                    'js/jquery.js': 'jquery/dist/jquery.js',
-                    'js/bootstrap.js': 'bootstrap/dist/js/bootstrap.js'
-                }
-            },
-            stylesheets: {
-                files: {
-                    'css/bootstrap.css': 'bootstrap/dist/css/bootstrap.css',
-                    'css/font-awesome.css': 'font-awesome/css/font-awesome.css'
-                }
-            },
-            fonts: {
-                files: {
-                    'fonts': 'font-awesome/fonts'
-                }
-            }
-        },
-        cssmin : {
-            bundled:{
-                src: 'web/assets/css/bundled.css',
-                dest: 'web/assets/css/bundled.min.css'
-            }
-        },
-        uglify : {
-            js: {
-                files: {
-                    'web/assets/js/bundled.min.js': ['web/assets/js/bundled.js']
-                }
-            }
-        },
-        concat: {
-            options: {
-                stripBanners: true
-            },
-            css: {
-                src: [
-                    'web/assets/css/bootstrap.css',
-                    'web/assets/css/font-awesome.css',
-                    'src/KP/LearningBundle/Resources/public/css/*.css'
-                ],
-                dest: 'web/assets/css/bundled.css'
-            },
-            js : {
-                src : [
-                    'web/assets/js/jquery.js',
-                    'web/assets/js/bootstrap.js',
-                    'src/KP/LearningBundle/Resources/public/js/*.js'
-                ],
-                dest: 'web/assets/js/bundled.js'
-            }
-        },
-        copy: {
-            images: {
-                expand: true,
-                cwd: 'src/KP/LearningBundle/Resources/public/images',
-                src: '*',
-                dest: 'web/assets/images/'
-            }
-        },
-        aws: grunt.file.readJSON('aws-credentials.json'),
-        s3: {
-            options: {
-                key: '&lt;%= aws.key %&gt;',
-                secret: '&lt;%= aws.secret %&gt;',
-                bucket: '&lt;%= aws.bucket %&gt;'
-            },
-            cdn: {
-                upload: [
-                    {
-                        src: 'web/assets/css/*',
-                        dest: 'css/'
-                    },
-
-                    {
-                        src: 'web/assets/fonts/*',
-                        dest: 'fonts/'
-                    },
-                    {
-                        src: 'web/assets/images/*',
-                        dest: 'images/'
-                    },
-                    {
-                        src: 'web/assets/js/*',
-                        dest: 'js/'
-                    }
-                ]
-            }
-        }
-    });
-
-    grunt.loadNpmTasks('grunt-bowercopy');
-    grunt.loadNpmTasks('grunt-contrib-concat');
-    grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-contrib-cssmin');
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-s3');
-
-    grunt.registerTask('default', ['bowercopy','copy', 'concat', 'cssmin', 'uglify']);
-    grunt.registerTask('deploy', ['s3']);
-};
-</code></pre>
-
-<p>Now you can generate assets like you did until now with command <code>grunt</code>, but also deploy them directly to the CDN with command <code>grunt:deploy</code>.</p>
-
-<pre><code class="shell">grunt
-grunt:deploy
-</code></pre>
-
-<h1>What next?</h1>
-
-<p>Article is already pretty long and I still didn't cover everything I wanted. There will be another part of this article that will cover</p>
-
-<ul>
-<li>Working with less/sass</li>
-<li>Automated cleaning legacy assets</li>
-<li>Watching for changes in assets</li>
-<li>Better explain how to correctly configure S3 bucket to act as a CDN</li>
-<li>How to use Require JS (the most interesting topic)</li>
-<li>Disabling Assetic Bundle from Symfony application</li>
-</ul>
-]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[Fixing the locale problem in Debian - mirror]]></title>
-            <link href="http://konradpodgorski.com/blog/2014/06/23/fixing-locale-problem-debian"/>
-            <updated>2014-06-23T10:12:00+02:00</updated>
-            <id>http://konradpodgorski.com/blog/2014/06/23/fixing-locale-problem-debian</id>
-            <content type="html"><![CDATA[<blockquote>
-  <p>Post was originally posted on <a href="http://hexample.com/2012/02/05/fixing-locale-problem-debian/">http://hexample.com/2012/02/05/fixing-locale-problem-debian/</a></p>
-  
-  <p>I was using this tutorial for a very long time, it was also linked from my other posts. However in last month I noticed it's no longer available.
-  Full credit for this awesome tutorial goes to Crypto, the original author.</p>
-</blockquote>
-
-<p>People who aren’t using the default locales (en_US) on their Debian based servers, often see error messages like perl: warning: Setting locale failed or perl: warning: Falling back to the standard locale (“C”). A listing of the complete error message is given in the full article. The error messages appear when installing packages with apt-get or when using some common perl commands like auto completion. On the internet you find a lot of different solutions that may work. This tutorial gives a more comprehensive approach to the matter. This way you understand the error and you are able to fight this annoying error message.</p>
-
-<p>This little tutorial and fix is for everyone who gets following error code.</p>
-
-<pre><code class="shell">perl: warning: Setting locale failed.
-perl: warning: Please check that your locale settings:
-        LANGUAGE = (unset),
-        LC_ALL = (unset),
-        LC_CTYPE = "UTF-8",
-        LANG = "en_US"
-    are supported and installed on your system.
-
-locale: Cannot set LC_CTYPE to default locale: No such file or directory
-locale: Cannot set LC_MESSAGES to default locale: No such file or directory
-locale: Cannot set LC_ALL to default locale: No such file or directory
-</code></pre>
-
-<h2>Quick checklist</h2>
-
-<ol>
-<li>Check if locales is installed</li>
-<li>Check the used/needed locales</li>
-<li>Check the available locales</li>
-<li>Generate all needed locales</li>
-<li>Log out and back in</li>
-</ol>
-
-<h2>Full explanation</h2>
-
-<p>On the internet you will find fixes that tell you to do dpkg-reconfigure or locales-gen. They are correct, but aren’t enough if you do it brainlessly. What you have to do is first check if the locales package is installed.</p>
-
-<pre><code>apt-get install locales
-</code></pre>
-
-<p>In most cases it will report that locales is already installed and up to date.</p>
-
-<p>Second, what most how-to’s and fixes forget to mention, it is very important to know which locales are needed by the system.</p>
-
-<pre><code>sudo locale
-</code></pre>
-
-<p>By running this command, you will get a list of every needed locale. It is important to write down the locales other than en_US. On my system there was an extra locale nl_NL.UTF-8.</p>
-
-<p>Now, you have to check which locale is already present on the system. Do this by running the following listing.</p>
-
-<pre><code>sudo locale -a
-</code></pre>
-
-<p>Normally you will see some English locales. But your extra locales are probably missing.</p>
-
-<p>You have two options to add those extras. The first one is locale-gen, the second one is dpkg-reconfigure. I advise the latter if it is present on your system. I will discuss the two solutions.</p>
-
-<pre><code>dpkg-reconfigure
-
-sudo dpkg-reconfigure locales
-</code></pre>
-
-<p>First you’ll get a menu in which you have to select all needed locales. Select the English ones AND your extras with the space-bar.</p>
-
-<p>In the next window select en_US.UTF-8 as default locale.</p>
-
-<p>After regenerating the locales log out and back in. Your problem is solved!</p>
-
-<pre><code>locale-gen
-</code></pre>
-
-<p>If for some reason dpkg-reconfigure is not available on your environment or your local user doesn’t have admin privileges, you can always use locale-gen. Use this command and append every extra locale you need.</p>
-
-<p>If you need the nl_NL.UTF-8 locale:</p>
-
-<pre><code>locale-gen nl_NL.UTF-8
-</code></pre>
-
-<p>Repeat this step for every locale you need. You can check if it was successful by running locale -a. Normally all your generated locales should be listed. Log out and back in to activate the new locales for your session.</p>
-
-<h2>Conclusion</h2>
-
-<p>I hope this quick fix helped you to fix the annoying missing locale bug. If you find it helpful or have some questions, please leave a message below.</p>
-]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[How to install Node JS on Debian/Ubuntu]]></title>
-            <link href="http://konradpodgorski.com/blog/2014/06/22/how-to-install-node-js"/>
-            <updated>2014-06-22T22:35:00+02:00</updated>
-            <id>http://konradpodgorski.com/blog/2014/06/22/how-to-install-node-js</id>
-            <content type="html"><![CDATA[<p>Installing Node JS from source is very simple, although it might take some time to compile.</p>
-
-<pre><code>sudo apt-get update
-sudo apt-get install -y gcc g++ make
-</code></pre>
-
-<p><strike>At the time of writing this post the latest version of node is <code>v0.10.29</code>. To find the latest number you can go to
- <a href="http://nodejs.org/dist/latest/">http://nodejs.org/dist/latest/</a> and search for file matching pattern <code>node-v0.*.*.tar.gz</code></strike></p>
-
-<p><strong>Update</strong>: permalink to the latest version of node is <a href="http://nodejs.org/dist/node-latest.tar.gz">http://nodejs.org/dist/node-latest.tar.gz</a></p>
-
-<pre><code>wget http://nodejs.org/dist/node-latest.tar.gz
-tar -zxvf node-latest.tar.gz
-cd node-v*
-./configure
-make
-sudo make install
-</code></pre>
-]]></content>
-        </entry>
-            <entry>
-            <title type="html"><![CDATA[How to record a screencast under Ubuntu]]></title>
+            <title type="html"><![CDATA[How to record a screencast in Ubuntu]]></title>
             <link href="http://konradpodgorski.com/blog/2014/06/06/how-to-record-a-screencast-under-ubuntu"/>
             <updated>2014-06-06T22:31:00+02:00</updated>
             <id>http://konradpodgorski.com/blog/2014/06/06/how-to-record-a-screencast-under-ubuntu</id>
-            <content type="html"><![CDATA[<h3>Simplest solution to record a screencast in Ubuntu</h3>
+            <content type="html"><![CDATA[<h3 id="simplest-solution-to-record-a-screencast-in-ubuntu">Simplest solution to record a screencast in Ubuntu</h3>
 
 <pre><code>sudo apt-get install recordmydesktop
 </code></pre>
@@ -899,7 +194,7 @@ I will leave it as it is.</p>
             <entry>
             <title type="html"><![CDATA[Step by step guide how to configure server for PHP / Symfony project]]></title>
             <link href="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony"/>
-            <updated>2014-06-23T22:30:00+02:00</updated>
+            <updated>2013-10-23T11:18:00+02:00</updated>
             <id>http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony</id>
             <content type="html"><![CDATA[<p>I decided to publish notes that I have been gathering lately about configuring servers.
 This is a complete guide how to configure server for production usage with Symfony or any PHP project.
@@ -914,24 +209,13 @@ Instruction might seem to you very long and I totally agree with you. It took me
 <p><div class="sharing">
     <a href="//twitter.com/share" class="twitter-share-button" data-url="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" data-via="konradpodgorski" data-counturl="http://konradpodgorski.com/blog/2013/10/23/guide-how-to-configure-server-for-symfony" >Tweet</a>
       <div class="g-plusone" data-size="medium"></div>
-        <div class="fb-like" data-layout="button_count" data-action="like" data-show-faces="false" data-share="true"></div>
+        <div class="fb-like" data-send="true" data-width="450" data-show-faces="false"></div>
   </div>
 </p>
 
 <p><strong>All steps should be done in order of reading. Configuration should not take you more than two hours.
 It was tested by me on ~10 machines, however if you find something not working don't hesitate to let me know.
 I try to help you and correct/expand guide to cover your problem.</strong></p>
-
-<p>Post index for quick navigation</p>
-
-<ul>
-<li><a href="#securing-server">Securing server</a></li>
-<li><a href="#dotdeb">Dotdeb</a></li>
-<li><a href="#nginx">Nginx</a></li>
-<li><a href="#php-fpm">PHP fpm</a></li>
-<li><a href="#mysql">MySQL</a></li>
-<li><a href="#nodejs">NodeJS</a></li>
-</ul>
 
 <p>Requirements:</p>
 
@@ -970,9 +254,9 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>Removed Apache2</li>
 </ul>
 
-<h1>Step by step guide how to configure server for PHP / Symfony project</h1>
+<h1 id="step-by-step-guide-how-to-configure-server-for-php-%2F-symfony-project">Step by step guide how to configure server for PHP / Symfony project</h1>
 
-<h3>Mass replace</h3>
+<h3 id="mass-replace">Mass replace</h3>
 
 <p>You can copy guide to your favorite editor and use mass replace function, this way later you can just copy paste all commands.</p>
 
@@ -984,7 +268,7 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <li>APPDOMAINNAME to domain name without http:// and trailing slash e.g. konradpodgorski.com</li>
 </ul>
 
-<h1 id="securing-server">Securing server</h1>
+<h3 id="start">Start</h3>
 
 <p>First log in</p>
 
@@ -996,17 +280,17 @@ I try to help you and correct/expand guide to cover your problem.</strong></p>
 <pre><code>useradd NONPRIVILAGEUNIXUSERNAME -m -s /bin/bash
 </code></pre>
 
-<h3>Update apt-get</h3>
+<h3 id="update-apt-get">Update apt-get</h3>
 
 <pre><code>apt-get update
 </code></pre>
 
-<h3>Install nano</h3>
+<h3 id="install-nano">Install nano</h3>
 
 <pre><code>apt-get install nano
 </code></pre>
 
-<h3>Install sudo</h3>
+<h3 id="install-sudo">Install sudo</h3>
 
 <pre><code>apt-get install sudo
 
@@ -1078,7 +362,7 @@ NONPRIVILAGEUNIXUSERNAME    ALL=(ALL) NOPASSWD: ALL
 # See sudoers(5) for more information on "#include" directives:
 </code></pre>
 
-<h3>Switch user you just created</h3>
+<h3 id="switch-user-you-just-created">Switch user you just created</h3>
 
 <pre><code>su NONPRIVILAGEUNIXUSERNAME
 </code></pre>
@@ -1100,14 +384,14 @@ nano .ssh/authorized_keys
 <pre><code>ssh NONPRIVILAGEUNIXUSERNAME@SERVERIPADDRESS
 </code></pre>
 
-<h3>Disable log in with password (you will use public key anyway)</h3>
+<h3 id="disable-log-in-with-password-you-will-use-public-key-anyway">Disable log in with password (you will use public key anyway)</h3>
 
 <pre><code>sudo passwd -l NONPRIVILAGEUNIXUSERNAME
 </code></pre>
 
 <p>This command locks the password</p>
 
-<h3>Color prompt (optional)</h3>
+<h3 id="color-prompt-optional">Color prompt (optional)</h3>
 
 <pre><code>nano ~/.bashrc
 </code></pre>
@@ -1117,12 +401,12 @@ nano .ssh/authorized_keys
 <pre><code>#force_color_prompt=yes
 </code></pre>
 
-<h3>fail2ban - solution for brute force attacks</h3>
+<h3 id="fail2ban---solution-for-brute-force-attacks">fail2ban - solution for brute force attacks</h3>
 
 <pre><code>sudo apt-get install fail2ban
 </code></pre>
 
-<h3>Disable direct log in on root account</h3>
+<h3 id="disable-direct-log-in-on-root-account">Disable direct log in on root account</h3>
 
 <pre><code>sudo nano /etc/ssh/sshd_config
 </code></pre>
@@ -1132,7 +416,7 @@ nano .ssh/authorized_keys
 <pre><code>PermitRootLogin no
 </code></pre>
 
-<h3>We will need these to compile Node JS from sources later</h3>
+<h3 id="we-will-need-these-to-compile-node-js-from-sources-later">We will need these to compile Node JS from sources later</h3>
 
 <p>To do that install</p>
 
@@ -1140,20 +424,18 @@ nano .ssh/authorized_keys
 sudo apt-get install -y gcc g++ make
 </code></pre>
 
-<h3>Server timezone</h3>
+<h3 id="server-timezone">Server timezone</h3>
 
 <pre><code>sudo dpkg-reconfigure tzdata
 </code></pre>
 
-<h3>Locale stuff</h3>
+<h3 id="locale-stuff">Locale stuff</h3>
 
 <p>Get rid of annoying errors when not using EN_US locale</p>
 
-<blockquote>
-  <p><a href="/blog/2014/06/23/fixing-locale-problem-debian/">Fixing the locale problem in Debian</a></p>
-</blockquote>
+<p><a href="http://hexample.com/2012/02/05/fixing-locale-problem-debian/">http://hexample.com/2012/02/05/fixing-locale-problem-debian/</a></p>
 
-<h3>Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3>
+<h3 id="change-hostname-to-something-better-e.g.-symfony-app-server-you-cannot-use-dots">Change hostname to something better e.g. symfony-app-server (you cannot use dots)</h3>
 
 <p>This step is optional</p>
 
@@ -1170,7 +452,7 @@ sudo apt-get install -y gcc g++ make
 <pre><code>sudo reboot
 </code></pre>
 
-<h1 id="dotdeb">Dotdeb</h1>
+<h2 id="dotdeb">Dotdeb</h2>
 
 <p>DotDeb is a reliable and up to date repository for most of packages required in web server</p>
 
@@ -1224,14 +506,14 @@ cat dotdeb.gpg | sudo apt-key add -
 <pre><code class="bash">sudo apt-get update
 </code></pre>
 
-<h1 id="nginx">NGINX</h1>
+<h2 id="nginx">NGINX</h2>
 
 <p>You probably won't need most of it features (like proxy, mail) so nginx-light should be enough. Latest stable release from dotdeb.org</p>
 
 <pre><code class="bash">sudo apt-get install nginx-light
 </code></pre>
 
-<h3>NGINX - General Configuration</h3>
+<h3 id="nginx---general-configuration">NGINX - General Configuration</h3>
 
 <p><strong>Note:</strong> set <code>worker_processes 2;</code> to the number of cpu cores your server has</p>
 
@@ -1266,7 +548,7 @@ http {
 }
 </code></pre>
 
-<h3>NGINX - configuration specific for application</h3>
+<h3 id="nginx---configuration-specific-for-application">NGINX - configuration specific for application</h3>
 
 <p>create configuration file</p>
 
@@ -1329,14 +611,14 @@ server {
 <pre><code>sudo rm /etc/nginx/sites-enabled/default
 </code></pre>
 
-<h1 id="php-fpm">PHP5-FPM</h1>
+<h2 id="php-fpm">PHP5-FPM</h2>
 
 <p>Installing required packages</p>
 
 <pre><code class="bash">sudo apt-get install -y php5 php5-fpm php-pear php5-common php5-mcrypt php5-mysql php5-cli php5-gd php5-intl php5-curl php5-dev
 </code></pre>
 
-<h3>pool.d/www.conf</h3>
+<h3 id="pool.d%2Fwww.conf">pool.d/www.conf</h3>
 
 <p><strong>Update (June 2014):</strong> since the time I created this guide php5-fpm team changed <code>/etc/php5/fpm/pool.d/www.conf</code> default settings to described below. You don't have to change anything from this section. I'm leaving it as a reference in case someone use old config.</p>
 
@@ -1367,7 +649,7 @@ group = www-data
 
 <p></strike></p>
 
-<h3>php.ini configuration</h3>
+<h3 id="php.ini-configuration">php.ini configuration</h3>
 
 <p>FPM (used by web server - Nginx)</p>
 
@@ -1396,7 +678,7 @@ date.timezone = Europe/Warsaw
 short_open_tag = Off
 </code></pre>
 
-<h3>Twig extension</h3>
+<h3 id="twig-extension">Twig extension</h3>
 
 <pre><code>sudo pear channel-discover pear.twig-project.org
 sudo pear install twig/CTwig
@@ -1409,7 +691,7 @@ sudo nano /etc/php5/mods-available/twig.ini
 <pre><code>extension=twig.so
 </code></pre>
 
-<h3>Zend OPCache</h3>
+<h3 id="zend-opcache">Zend OPCache</h3>
 
 <pre><code>sudo pecl install zendopcache-7.0.2
 
@@ -1429,7 +711,7 @@ cd /etc/php5/conf.d
 sudo ln -s ../mods-available/opcache.ini 05-opcache.ini
 </code></pre>
 
-<h3>APCu</h3>
+<h3 id="apcu">APCu</h3>
 
 <pre><code>git clone https://github.com/krakjoe/apcu
 cd apcu
@@ -1453,14 +735,14 @@ cd /etc/php5/conf.d
 sudo ln -s ../mods-available/apcu.ini 20-apcu.ini
 </code></pre>
 
-<h3>Restart PHP5-FPM</h3>
+<h3 id="restart-php5-fpm">Restart PHP5-FPM</h3>
 
 <p>For all changes to take an effect you need to restart php</p>
 
 <pre><code>sudo service php5-fpm restart
 </code></pre>
 
-<h1 id="mysql">MySQL</h1>
+<h3 id="mysql">MySQL</h3>
 
 <pre><code>sudo apt-get install -y mysql-server
 </code></pre>
@@ -1494,13 +776,7 @@ http://www.mysql.com/products/workbench/</p>
 
 <p><em>DO NOT expose your mysql to outside world nor install web management tools like PhpMyAdmin, they were great few years ago. Now we have a better solutions.</em></p>
 
-<h1 id="nodejs">Node JS</h1>
-
-<blockquote>
-  <p>I wrote a separate post about installing Node JS on Debian/Ubuntu</p>
-  
-  <p>You can find the post here: <a href="/blog/2014/06/22/how-to-install-node-js">How to install Node JS</a></p>
-</blockquote>
+<h3 id="nodejs">NodeJS</h3>
 
 <p><strike><strong>optional - I use it for compiling less files and minimizing javascripts with Uglify-JS</strong></strike></p>
 
@@ -1537,12 +813,12 @@ sudo make install
 <pre><code>sudo npm install -g uglify-js
 </code></pre>
 
-<h3>GIT</h3>
+<h3 id="git">GIT</h3>
 
 <pre><code>sudo apt-get install -y git
 </code></pre>
 
-<h3>Remove Apache2, important!</h3>
+<h3 id="remove-apache2%2C-important%21">Remove Apache2, important!</h3>
 
 <pre><code>sudo service apache2 stop
 </code></pre>
@@ -1554,7 +830,7 @@ sudo make install
 
 <p>Otherwise it will take 80 port after next reboot and nginx will not work</p>
 
-<h3>User for deploying</h3>
+<h3 id="user-for-deploying">User for deploying</h3>
 
 <p>We will use www-data user to deploy code.</p>
 
@@ -1568,13 +844,13 @@ sudo nano /var/www/.ssh/authorized_keys
 
 <p>With this we won't give www-data any more permissions than it already has.</p>
 
-<h3>Directory for application</h3>
+<h3 id="directory-for-application">Directory for application</h3>
 
 <pre><code>sudo mkdir /var/www/APPDOMAINNAME -p
 sudo chown www-data:www-data /var/www/APPDOMAINNAME
 </code></pre>
 
-<h3>Deploying with Capifony</h3>
+<h3 id="deploying-with-capifony">Deploying with Capifony</h3>
 
 <p>This is super important step. Github allows only for 60 requests per hour for non authenticated connections. Using composer cache will prevent getting banned</p>
 
@@ -1586,12 +862,12 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>sudo apt-get install curl</p>
 
-<h3>Test everything by restarting server</h3>
+<h3 id="test-everything-by-restarting-server">Test everything by restarting server</h3>
 
 <pre><code>sudo reboot
 </code></pre>
 
-<h1>That's it!</h1>
+<h1 id="that%27s-it%21">That's it!</h1>
 
 <p>Thank you for taking time to read this guide.</p>
 ]]></content>
@@ -1673,11 +949,11 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p><strong>This is not a complete guide, I decided to write few keypoints that could help others with migrating their Wordpress to Octopress.</strong></p>
 
-<h2>Installing Octopress</h2>
+<h2 id="installing-octopress">Installing Octopress</h2>
 
 <p><a href="/blog/2013/10/20/how-to-setup-octopress-on-ubuntu/">How to setup Octopress on Ubuntu</a></p>
 
-<h2>Migrating permalinks</h2>
+<h2 id="migrating-permalinks">Migrating permalinks</h2>
 
 <p>On old Wordpress blog I had this permalink structure</p>
 
@@ -1695,7 +971,7 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>Now it's time to get old Wordpress links working in Octopress</p>
 
-<h2><a name="redirect-301-on-github-pages"></a>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
+<h2 id="redirect-301-on-github-pages%2C-move-old-posts-to-the-new-permalink-structure"><a name="redirect-301-on-github-pages"></a>Redirect 301 on Github Pages, move old posts to the new permalink structure</h2>
 
 <p>We want to keep old links working. Best solution would be 301 redirect all old posts.</p>
 
@@ -1739,7 +1015,7 @@ sudo chown www-data:www-data /var/www/.composer
 
 <p>Now there is no longer need to put any notice about the fact that this is archived post etc.</p>
 
-<h3>Migrating comments</h3>
+<h3 id="migrating-comments">Migrating comments</h3>
 
 <p>I decided to go with Disqus</p>
 
@@ -1757,7 +1033,7 @@ disqus_short_name: konradpodgorski
 disqus_show_comment_count: true
 </code></pre>
 
-<h3>That's it</h3>
+<h3 id="that%27s-it">That's it</h3>
 
 <p>for now</p>
 ]]></content>
@@ -1947,6 +1223,144 @@ Recursive accept/reject:
   -X,  --exclude-directories=LIST  list of excluded directories.
   -np, --no-parent                 don't ascend to the parent directory.
 </code></pre>
+]]></content>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to Setup Octopress on Ubuntu]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu"/>
+            <updated>2013-10-20T16:54:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/20/how-to-setup-octopress-on-ubuntu</id>
+            <content type="html"><![CDATA[<p>Guide was copied from http://stackoverflow.com/a/14353864/1562884 for my reference</p>
+
+<p>Helped me with this error during configuring Octopress on Ubuntu</p>
+
+<pre><code>Error installing RedCloth:
+ERROR: Failed to build gem native extension.
+</code></pre>
+
+<p>Guide below was written by <a href="http://stackoverflow.com/users/673057/eric-zhang">Eric Zhang</a></p>
+
+<p>My Ubuntu 12.04 solution is install the ruby1.9.1-full version, that can resolve this issue.</p>
+
+<pre><code>$sudo apt-get install ruby1.9.1-full
+</code></pre>
+
+<p>you can execute command:</p>
+
+<pre><code>$sudo update-alternatives --config ruby
+</code></pre>
+
+<p>to select the alternative ruby which you have installed. and then, execute below commands to finish the octopress deploy:</p>
+
+<pre><code>$git clone https://github.com/erizhang/octopress.git octopress
+$cd octopress/
+$sudo gem install bundler
+$sudo gem install RedCloth -v '4.2.9'
+$bundle install
+$rake install
+</code></pre>
+
+<p>below commands you can find from octopress deploy guideline page:</p>
+
+<pre><code>$rake setup_github_pages
+$sudo rake setup_github_pages
+$sudo rake generate
+$sudo rake deploy
+</code></pre>
+
+<p>Hope it's helpful for you, thanks</p>
+]]></content>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to implement a secure choice form field with Symfony]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony"/>
+            <updated>2013-10-19T19:17:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/19/how-to-implement-a-secure-choice-form-field-with-symfony</id>
+            <content type="html"><![CDATA[<p>Create Util class for your entity, in my case entity is called 'Brand'</p>
+
+<p><strong>src/KP/Brand/MainBundle/Util/BrandUtil.php</strong></p>
+
+<pre><code class="php">    &lt;?php
+
+    namespace KP\Brand\MainBundle\Util;
+
+    use KP\Brand\MainBundle\Entity\Brand;
+
+    class BrandUtil
+    {
+
+        /**
+         * @param bool $withLabels
+         *
+         * @return array
+         */
+        public static function getAvailableLanguageCodes($withLabels = false)
+        {
+            $choices = array(
+                'pl' =&gt; 'Polish',
+                'en' =&gt; 'English'
+            );
+
+            if ($withLabels) {
+                return $choices;
+            } else {
+                return array_keys($choices);
+            }
+        }
+    }
+</code></pre>
+
+<p>Create standard form type for your entity (I skipped required getName and setDefaultOptions methods here)</p>
+
+<p><strong>src/KP/Brand/MainBundle/Form/BrandType.php</strong></p>
+
+<pre><code class="php">    &lt;?php
+
+    namespace KP\Brand\MainBundle\Form;
+
+    use KP\Brand\MainBundle\Util\BrandUtil;
+    use Symfony\Component\Form\AbstractType;
+    use Symfony\Component\Form\FormBuilderInterface;
+    use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+    class BrandType extends AbstractType
+    {
+        /**
+         * @param FormBuilderInterface $builder
+         * @param array $options
+         */
+        public function buildForm(FormBuilderInterface $builder, array $options)
+        {
+            $builder
+                -&gt;add('name')
+                -&gt;add(
+                    'languageCode',
+                    'choice',
+                    array(
+                        'label' =&gt; 'Language',
+                        'choices' =&gt; BrandUtil::getAvailableLanguageCodes(true),
+                    )
+                );
+        }
+
+    }
+</code></pre>
+
+<p><strong>src/KP/Brand/MainBundle/Resource/config/validation.yml</strong></p>
+
+<pre><code class="php">    KP\Brand\MainBundle\Entity\Brand:
+    properties:
+        languageCode:
+            - Choice: { callback: [KP\Brand\MainBundle\Util\BrandUtil, getAvailableLanguageCodes] }
+</code></pre>
+]]></content>
+        </entry>
+            <entry>
+            <title type="html"><![CDATA[How to handle Angular JS api errors using response interceptors]]></title>
+            <link href="http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors"/>
+            <updated>2013-10-08T00:00:00+02:00</updated>
+            <id>http://konradpodgorski.com/blog/2013/10/08/handle-angular-js-api-errors-using-response-interceptors</id>
+            <content type="html"><![CDATA[<p>http://blog.brunoscopelliti.com/http-response-interceptors</p>
 ]]></content>
         </entry>
     </feed>
